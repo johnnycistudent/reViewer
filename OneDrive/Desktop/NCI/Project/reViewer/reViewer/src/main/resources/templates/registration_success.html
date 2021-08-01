@@ -5,20 +5,17 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-    <title>reViewer Homepage</title>
+    <title>Registration Success</title>
 </head>
 <body>
     <div class="container">
         <div align="center">
             <div>
-                <h1>reViewer HomePage</h1>
+                <h3>You have signed up successfully!</h3>
+                <h4><a th:href="@{/login}">Click here to login</a></h4>
             </div>
 
-            <div>
-                <h3><a th:href="@{/register}">Register</a></h3>
-                <h3><a th:href="@{/login}">Login</a></h3>
-                <h3><a th:href="@{/list_users}">List All Users</a></h3>
-            </div>
+
         </div>
     </div>
 

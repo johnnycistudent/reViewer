@@ -1,0 +1,49 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <title>Movies</title>
+</head>
+<body>
+    <div class="container">
+        <div align="center">
+            <h1>Movie Manager</h1>
+            <a href="new_movie">Create new Movie entry</a>
+            <br>
+            <table border="1" cellpadding="10">
+                <thead>
+                <tr>
+                    <th>Movie ID</th>
+                    <th>Title</th>
+                    <th>Genre</th>
+                    <th>Director</th>
+                    <th>Synopsis</th>
+                    <th>Actions</th>
+                </tr>
+                <tbody></tbody>
+                    <tr th:each="movie : ${listMovies}">
+                        <td th:text="${movie.movieID}">Movie ID</td>
+                        <td th:text="${movie.title}">Title</td>
+                        <td th:text="${movie.genre}">Genre</td>
+                        <td th:text="${movie.director}">Director</td>
+                        <td th:text="${movie.synopsis}">Synopsis</td>
+                        <td>
+                            <a th:href="@{'/edit_movie/' + ${movie.movieID}}" href="">Edit</a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <a th:href="@{'/delete_movie/' + ${movie.movieID}}" href="">Delete</a>
+                        </td>
+
+
+                    </tr>
+                </thead>
+
+
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
