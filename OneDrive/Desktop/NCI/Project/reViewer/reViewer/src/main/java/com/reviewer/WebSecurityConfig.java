@@ -52,6 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/new_movie/**").hasAuthority("ADMIN")
                     .antMatchers("/edit_movie/**").hasAuthority("ADMIN")
                     .antMatchers("/delete_movie/**").hasAuthority("ADMIN")
+                    .antMatchers("/images/**", "/js/**", "/css/**").permitAll()
                     .anyRequest().permitAll()
                 .and()
                 .formLogin()
