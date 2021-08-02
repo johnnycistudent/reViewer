@@ -1,5 +1,7 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -18,6 +20,7 @@
                 <h3><a th:href="@{/register}">Register</a></h3>
                 <h3><a th:href="@{/login}">Login</a></h3>
                 <h3><a th:href="@{/list_users}">List All Users</a></h3>
+                <h3><a th:href="@{/movies}">List All Movies</a></h3>
             </div>
         </div>
     </div>

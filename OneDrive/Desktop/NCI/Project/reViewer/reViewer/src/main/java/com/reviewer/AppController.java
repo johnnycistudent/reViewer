@@ -13,6 +13,7 @@ import java.util.List;
 public class AppController {
     @Autowired
     private UserRepository repo;
+    @Autowired
     private MovieService service;
 
     // home
@@ -49,7 +50,7 @@ public class AppController {
 
     // Movie endpoints
     @GetMapping("/movies")
-    public String viewMovies(Model model){
+    public String listMovies(Model model){
         List<Movie> listMovies = service.listAll();
         model.addAttribute("listMovies", listMovies);
 
@@ -87,6 +88,11 @@ public class AppController {
         service.delete(movieID);
 
         return "redirect:/movies";
+    }
+
+    @GetMapping("/403")
+    public String error403() {
+        return "403";
     }
 
 }

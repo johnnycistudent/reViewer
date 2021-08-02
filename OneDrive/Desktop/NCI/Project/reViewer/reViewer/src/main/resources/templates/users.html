@@ -1,5 +1,7 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -10,6 +12,12 @@
 <body>
     <div class="container">
         <div align="center">
+            <div sec:authorize="isAuthenticated()">
+                Test welcome with "name": <span sec:authentication="name"></span>
+                <br>
+                Test principal.sessionName: <span sec:authentication="principal.sessionName">Username</span>
+                &nbsp; <span sec:authentication="principal.authorities">Roles</span>
+            </div>
             <div>
                 <form th:action="@{/logout}" method="post">
                     <p>
