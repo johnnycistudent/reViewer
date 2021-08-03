@@ -1,4 +1,4 @@
-package com.reviewer;
+package com.reviewer.user;
 
 import javax.persistence.*;
 import java.util.HashSet;

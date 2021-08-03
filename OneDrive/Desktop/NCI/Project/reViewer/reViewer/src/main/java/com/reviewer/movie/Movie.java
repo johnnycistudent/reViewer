@@ -1,4 +1,4 @@
-package com.reviewer;
+package com.reviewer.movie;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

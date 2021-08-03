@@ -1,4 +1,4 @@
-package com.reviewer;
+package com.reviewer.user;
 
 import org.springframework.data.repository.cdi.Eager;
 
