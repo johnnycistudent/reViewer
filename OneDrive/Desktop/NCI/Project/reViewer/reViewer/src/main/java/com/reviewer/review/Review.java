@@ -18,6 +18,10 @@ public class Review {
     @JoinColumn(name = "movieID")
     private Movie movie;
 
+    @ManyToOne
+    @JoinColumn(name = "userID")
+    private User user;
+
     public Long getReviewID() {
         return reviewID;
     }
@@ -48,5 +52,13 @@ public class Review {
 
     public void setMovie(Movie movie) {
         this.movie = movie;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

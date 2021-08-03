@@ -8,6 +8,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
     <link th:rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link th:rel="stylesheet" th:href="@{/css/custom.css}">
     <title>Movies</title>
 </head>
 <body>
@@ -57,11 +58,12 @@
             <h1>Movie Manager</h1>
             <a href="new_movie">Create new Movie entry</a>
             <br>
-            <table border="1" cellpadding="10">
+            <table class="table table-hover" border="1" cellpadding="10">
                 <thead>
                     <tr>
                         <th>Movie ID</th>
                         <th>Title</th>
+                        <th>Year</th>
                         <th>Genre</th>
                         <th>Director</th>
                         <th>Synopsis</th>
@@ -69,12 +71,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="movie : ${listMovies}">
-                        <td th:text="${movie.movieID}">Movie ID</td>
-                        <td th:text="${movie.title}">Title</td>
-                        <td th:text="${movie.genre}">Genre</td>
-                        <td th:text="${movie.director}">Director</td>
-                        <td th:text="${movie.synopsis}">Synopsis</td>
+                <th:block th:each="movie : ${listMovies}">
+                <tr >
+                        <td>[[${movie.movieID}]]</td>
+                        <td>[[${movie.title}]]</td>
+                        <td>[[${movie.year}]]</td>
+                        <td>[[${movie.genre}]]</td>
+                        <td>[[${movie.director}]]</td>
+                        <td>[[${movie.synopsis}]]</td>
                         <td sec:authorize="hasAnyAuthority('ADMIN')">
                             <a th:href="@{'/edit_movie/' + ${movie.movieID}}" href="">Edit</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
@@ -83,13 +87,30 @@
 
 
                     </tr>
+                </th:block>
                 </tbody>
-
-
-
             </table>
+            <div>
+                <a th:href="@{new_review}">Create new Review entry</a>
+            </div>
+
+            <th:block th:each="movie : ${listMovies}">
+
+                <div class="movie-card"><img th:src="@{images/popcorn.jpg}" class="img img-responsive">
+                    <div class="movie-name">[[${movie.title}]] <span>[[${movie.year}]]</span></div>
+                    <div class="movie-director">[[${movie.director}]]</div>
+                    <div class="movie-director">[[${movie.poster}]]</div>
+                    <div class="profile-icons"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-linkedin"></i></a></div>
+                    <a href="#" class="stretched-link"></a>
+                </div>
+
+            </th:block>
         </div>
     </div>
+
+    <script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
+    <script th:src="@{/webjars/popper.js/2.9.2/umd/popper.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/5.0.2/js/bootstrap.min.js}"></script>
 
 </body>
 </html>

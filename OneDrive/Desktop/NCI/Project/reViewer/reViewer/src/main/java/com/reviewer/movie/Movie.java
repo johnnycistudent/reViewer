@@ -9,17 +9,21 @@ import javax.persistence.Id;
 public class Movie {
     private Long movieID;
     private String title;
+    private int year;
     private String genre;
     private String director;
     private String synopsis;
+    private String poster;
 
     // Constructors
-    public Movie(Long movieID, String title, String genre, String director, String synopsis) {
+    public Movie(Long movieID, String title, int year, String genre, String director, String synopsis, String poster) {
         this.movieID = movieID;
         this.title = title;
+        this.year = year;
         this.genre = genre;
         this.director = director;
         this.synopsis = synopsis;
+        this.poster = poster;
     }
 
     public Movie() {
@@ -45,6 +49,14 @@ public class Movie {
         this.title = title;
     }
 
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
     public String getGenre() {
         return genre;
     }
@@ -67,5 +79,13 @@ public class Movie {
 
     public void setSynopsis(String synopsis) {
         this.synopsis = synopsis;
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
     }
 }

@@ -22,7 +22,7 @@ public class MovieController {
         return "movies";
     }
 
-    @RequestMapping("/new_movie")
+    @GetMapping("/new_movie")
     public String showNewMovieForm(Model model){
         Movie movie = new Movie();
         model.addAttribute("movie", movie);
