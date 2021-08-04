@@ -14,7 +14,7 @@
     <link th:rel="stylesheet" th:href="@{/css/custom.css}">
     <!-- font awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.css" rel="stylesheet" type="text/css" />
-    <title>All Users</title>
+    <title>Movies</title>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -55,7 +55,6 @@
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/login}">Sign In</a>
                     </li>
-                </ul>
                 <form class="d-flex">
                     <input class="form-control me-sm-2" type="text" placeholder="Search">
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
@@ -65,43 +64,50 @@
     </nav>
     <div class="container">
         <div align="center">
-            <div sec:authorize="isAuthenticated()">
-                Test welcome with "name": <span sec:authentication="name"></span>
-                <br>
-                Test principal.sessionName: <span sec:authentication="principal.sessionName">Username</span>
-                &nbsp; <span sec:authentication="principal.authorities">Roles</span>
-            </div>
-            <div>
-                <form th:action="@{/logout}" method="post">
-                    <p>
-                        Welcome <b>[[${#request.userPrincipal.principal.sessionName}]]</b>
-                    </p>
-                    <input type="submit" value="Sign Out">
-                </form>
-            </div>
+            <h1>Single Movie View</h1>
+            <a th:href="@{/movies}">View All Movies</a>
+            <br>
 
-            <div>
-                <h1>List of All Users</h1>
+            <div th:object="${movie}">
+                <p>[[${movie.title}]]</p>
+                <p>[[${movie.year}]]</p>
+                <p>[[${movie.director}]]</p>
+
             </div>
-            <div>
-                <table class="table table-striped table-bordered">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>User ID</th>
-                            <th>Email Address</th>
-                            <th>Username</th>
-                            <th>Avatar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="user: ${listUsers}">
-                            <td th:text="${user.userID}">User ID</td>
-                            <td th:text="${user.emailAddress}">Email Address</td>
-                            <td th:text="${user.userName}">Username</td>
-                            <td th:text="${user.avatar}">Avatar</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="card mb-3">
+                <h3 class="card-header">Movie Title</h3>
+                <div class="card-body">
+                    <h5 class="card-title">Director</h5>
+                    <h6 class="card-subtitle text-muted">Year</h6>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="d-block user-select-none" width="100%" height="200" aria-label="Placeholder: Image cap" focusable="false" role="img" preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180" style="font-size:1.125rem;text-anchor:middle">
+                    <rect width="100%" height="100%" fill="#868e96"></rect>
+                    <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
+                </svg>
+                <div class="card-body">
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Cras justo odio</li>
+                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <li class="list-group-item">Vestibulum at eros</li>
+                </ul>
+                <div class="card-body">
+                    <a href="#" class="card-link">Card link</a>
+                    <a href="#" class="card-link">Another link</a>
+                </div>
+                <div class="card-footer text-muted">
+                    2 days ago
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Card title</h4>
+                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="card-link">Card link</a>
+                    <a href="#" class="card-link">Another link</a>
+                </div>
             </div>
 
         </div>
@@ -110,5 +116,6 @@
     <script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
     <script th:src="@{/webjars/popper.js/2.9.2/umd/popper.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/5.0.2/js/bootstrap.min.js}"></script>
+
 </body>
 </html>

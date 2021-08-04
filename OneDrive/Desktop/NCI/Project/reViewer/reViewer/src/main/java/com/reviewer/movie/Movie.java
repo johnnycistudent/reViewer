@@ -1,12 +1,11 @@
 package com.reviewer.movie;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Movie {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long movieID;
     private String title;
     private int year;
@@ -31,8 +30,7 @@ public class Movie {
 
     // Getters and Setters
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     public Long getMovieID() {
         return movieID;
     }
