@@ -3,6 +3,7 @@ package com.reviewer.movie;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "movie")
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,6 +13,7 @@ public class Movie {
     private String genre;
     private String director;
     private String synopsis;
+    @Column(nullable = true)
     private String poster;
 
     // Constructors
@@ -85,5 +87,12 @@ public class Movie {
 
     public void setPoster(String poster) {
         this.poster = poster;
+    }
+
+    @Transient
+    public String getPosterImagePath(){
+        if (poster == null || movieID == null) return null;
+
+        return "/movie-posters/" + movieID + "/" + poster;
     }
 }

@@ -57,10 +57,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .anyRequest().permitAll()
                 .and()
                 .formLogin()
-                    .usernameParameter("emailAddress")
+                    .loginPage("/login")
+                    .usernameParameter("email")
                     .defaultSuccessUrl("/")
                 .and()
-                .logout().logoutSuccessUrl("/").permitAll()
+                .logout().permitAll()
                 .and()
                 .exceptionHandling().accessDeniedPage("/403");
     }

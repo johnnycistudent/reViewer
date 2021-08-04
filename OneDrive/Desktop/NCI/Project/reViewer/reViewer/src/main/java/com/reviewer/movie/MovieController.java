@@ -1,13 +1,23 @@
 package com.reviewer.movie;
 
+import com.reviewer.FileUploadUtil;
+import org.springframework.util.StringUtils;
 import com.reviewer.review.Review;
 import com.reviewer.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 @Controller
@@ -46,9 +56,17 @@ public class MovieController {
     }
 
     // save movie
-    @RequestMapping(value = "/save_movie", method = RequestMethod.POST)
-    public String saveMovie(@ModelAttribute("movie") Movie movie){
-        service.save(movie);
+    @PostMapping ( "/save_movie")
+    public String saveMovie(@ModelAttribute(name = "movie") Movie movie,
+        @RequestParam("fileImage") MultipartFile multipartFile) throws IOException{
+        
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        movie.setPoster(fileName);
+
+        Movie savedMovie = movieRepo.save(movie);
+
+        String uploadDir = "movie-posters/" + savedMovie.getMovieID();
+        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 
         return "redirect:/movies";
 
@@ -56,10 +74,11 @@ public class MovieController {
 
     // edit movie
     @RequestMapping("/edit_movie/{movieID}")
-    public ModelAndView showEditMovieForm(@PathVariable(name = "movieID") Long movieID){
+    public ModelAndView showEditMovieForm(@PathVariable(name = "movieID") Long movieID) {
         ModelAndView mav = new ModelAndView("edit_movie");
 
         Movie movie = service.get(movieID);
+
         mav.addObject("movie", movie);
 
         return mav;

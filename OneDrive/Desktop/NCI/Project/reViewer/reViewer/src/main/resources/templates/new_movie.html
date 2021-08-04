@@ -60,43 +60,46 @@
         <div align="center">
             <h1>Create New Movie</h1>
             <br>
-            <form action="#" th:action="@{/save_movie}" th:object="${movie}" method="post">
-                <table border="0" cellpadding="10">
-                    <tr>
-                        <td>Movie Title: </td>
-                        <td><input type="text" th:field="*{title}"></td>
-                    </tr>
-                    <tr>
-                        <td>Year: </td>
-                        <td><input type="number" th:field="*{year}"></td>
-                    </tr>
-                    <tr>
-                        <td>Genre: </td>
-                        <td><input type="text" th:field="*{genre}"></td>
-                    </tr>
-                    <tr>
-                        <td>Director: </td>
-                        <td><input type="text" th:field="*{director}"></td>
-                    </tr>
-                    <tr>
-                        <td>Synopsis: </td>
-                        <td><input type="text" th:field="*{synopsis}"></td>
-                    </tr>
-                    <tr>
-                        <td>Poster: </td>
-                        <td><input type="text" th:field="*{poster}"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><button type="submit">Save</button></td>
-                    </tr>
-                </table>
+            <form th:action="@{/save_movie}" th:object="${movie}" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="title" class="form-label mt-4">Movie Title: </label>
+                    <input th:field="*{title}" type="text" name="title" class="form-control" aria-describedby="title"  required>
+                </div>
+                <div class="form-group">
+                    <label for="year" class="form-label mt-4">Year: </label>
+                    <input th:field="*{year}" type="number" name="year" class="form-control" aria-describedby="year"  required>
+                </div>
+                <div class="form-group">
+                    <label for="genre" class="form-label mt-4">Genre: </label>
+                    <input th:field="*{genre}" type="text" name="genre" class="form-control" aria-describedby="genre"  required>
+                </div>
+                <div class="form-group">
+                    <label for="director" class="form-label mt-4">Director: </label>
+                    <input th:field="*{director}" type="text" name="director" class="form-control" aria-describedby="director"  required>
+                </div>
+                <div class="form-group">
+                    <label for="synopsis" class="form-label mt-4">Synopsis: </label>
+                    <input th:field="*{synopsis}" type="text" name="synopsis" class="form-control" aria-describedby="synopsis"  required>
+                </div>
+                <div class="form-group">
+                    <label for="fileImage" class="form-label mt-4">Poster: </label>
+                    <input type="file" name="fileImage" id="fileImage"  accept="image/png, image/jpeg"
+                           class="form-control" aria-describedby="fileImage">
+                    <img src="" height="200" id="thumbnail" alt="Poster Preview">
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+
             </form>
         </div>
     </div>
 
+
     <script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
     <script th:src="@{/webjars/popper.js/2.9.2/umd/popper.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/5.0.2/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/custom.js}"></script>
 
 </body>
 </html>

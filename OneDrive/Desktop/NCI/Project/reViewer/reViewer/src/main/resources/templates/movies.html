@@ -45,7 +45,7 @@
                         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">All Links</a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" th:href="@{/movies}">Movies</a>
-                            <a class="dropdown-item" th:href="@{/users}">Users</a>
+                            <a class="dropdown-item" th:href="@{/list_users}">Users</a>
                             <a class="dropdown-item" th:href="@{/reviews}">Reviews</a>
                             <a class="dropdown-item" th:href="@{/login}">Login</a>
                             <a class="dropdown-item" th:href="@{/register}">Register</a>
@@ -78,6 +78,7 @@
                         <th>Genre</th>
                         <th>Director</th>
                         <th>Synopsis</th>
+                        <th>Poster</th>
                         <th sec:authorize="hasAnyAuthority('ADMIN')">Actions</th>
                     </tr>
                 </thead>
@@ -90,6 +91,7 @@
                         <td>[[${movie.genre}]]</td>
                         <td>[[${movie.director}]]</td>
                         <td>[[${movie.synopsis}]]</td>
+                        <td><img th:src="@{${movie.posterImagePath}}" height="50" width="50" alt=""></td>
                         <td sec:authorize="hasAnyAuthority('ADMIN')">
                             <a th:href="@{/edit_movie/{id}(id=${movie.movieID})}"
                                href="">Edit</a>
