@@ -62,6 +62,7 @@ public class UserController {
     public String showUser(@PathVariable(name = "id") Long id, Model model){
         User user = repo.findById(id).get();
         model.addAttribute("user", user);
+        model.addAttribute("reviewList", user.getReviews());
 
         return "user";
     }

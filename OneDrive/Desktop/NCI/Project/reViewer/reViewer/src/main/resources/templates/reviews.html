@@ -66,7 +66,6 @@
     <div class="container">
         <div align="center">
             <h1>Review Manager</h1>
-            <a th:href="@{new_review}">Create new Review entry</a>
             <br>
             <table border="1" cellpadding="10">
                 <thead>
@@ -83,10 +82,10 @@
                 <tbody>
                 <th:block th:each="review : ${listReviews}">
                 <tr>
-                    <td>[[${review.reviewID}]]</td>
-                    <td>[[${review.movie.title}]]</td>
+                    <td><a th:href="@{/review/{id}(id=${review.reviewID})}">[[${review.reviewID}]]</a></td>
+                    <td><a th:href="@{/movie/{id}(id=${review.movie.movieID})}">[[${review.movie.title}]]</a></td>
                     <td>[[${review.content}]]</td>
-                    <td>[[${review.user.userName}]]</td>
+                    <td><a th:href="@{/user/{id}(id=${review.user.userID})}">[[${review.user.userName}]]</a></td>
                     <td>[[${review.rating}]]</td>
                     <td>[[${review.created}]]</td>
                     <td sec:authorize="hasAnyAuthority('ADMIN')">

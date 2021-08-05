@@ -91,4 +91,12 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
 }

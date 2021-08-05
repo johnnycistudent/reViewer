@@ -77,7 +77,12 @@
                     <li>Username: <span> [[${user.userName}]]</span></li>
                     <li>Email: <span> [[${user.emailAddress}]]</span></li>
                     <li>Avatar: </li>
-                    <li>Role: </li>
+                    <li>Movies Reviewed:
+                        <div th:each="review: ${reviewList}">
+                            <span th:href="@{/new_review/{id}(id=${review.movie.movieID})}"> [[${review.movie.title}]]</span>
+                        </div>
+                    </li>
+
                 </ul>
             </div>
         </div>

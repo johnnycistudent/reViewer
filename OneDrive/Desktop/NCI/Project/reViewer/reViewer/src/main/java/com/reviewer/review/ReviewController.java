@@ -31,6 +31,16 @@ public class ReviewController {
         return "reviews";
     }
 
+    @GetMapping("/review/{id}")
+    public String showReview(@PathVariable(name = "id") Long id, Model model){
+        Review review = reviewRepo.findById(id).get();
+
+        model.addAttribute("review", review);
+        //model.addAttribute("reviewList", review.getReviews());
+
+        return "review";
+    }
+
     @GetMapping("/new_review/{id}")
     public String showNewReviewForm(@PathVariable(name = "id") Long id, Model model){
 

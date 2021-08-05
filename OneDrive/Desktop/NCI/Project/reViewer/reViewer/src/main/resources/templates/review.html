@@ -14,7 +14,7 @@
     <link th:rel="stylesheet" th:href="@{/css/custom.css}">
     <!-- font awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.css" rel="stylesheet" type="text/css" />
-    <title>Movies</title>
+    <title>Review Full</title>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -27,19 +27,15 @@
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Home
-
+                        <a class="nav-link active" href="#">Home
+                            <span class="visually-hidden">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Movies</a>
-                        <span class="visually-hidden">(current)</span>
+                        <a class="nav-link" th:href="@{/movies}">Movies</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
+                        <a class="nav-link" th:href="@{/reviews}">Reviews</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">All Links</a>
@@ -53,8 +49,11 @@
                             <a class="dropdown-item" href="#">Separated link</a>
                         </div>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" sec:authorize="isAnonymous()">
                         <a class="nav-link" th:href="@{/login}">Sign In</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a class="nav-link" th:href="@{/user_profile}" sec:authentication="principal.sessionName"></a>
                     </li>
                 </ul>
                 <form class="d-flex">
@@ -66,60 +65,15 @@
     </nav>
     <div class="container">
         <div align="center">
-            <h1>Movie Manager</h1>
-            <a href="new_movie">Create new Movie entry</a>
-            <br>
-            <table class="table table-hover" border="1" cellpadding="10">
-                <thead>
-                    <tr>
-                        <th>Movie ID</th>
-                        <th>Title</th>
-                        <th>Year</th>
-                        <th>Genre</th>
-                        <th>Director</th>
-                        <th>Synopsis</th>
-                        <th>Poster</th>
-                        <th>Reviews</th>
-                        <th sec:authorize="hasAnyAuthority('ADMIN')">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <th:block th:each="movie : ${listMovies}">
-                <tr >
-                        <td>[[${movie.movieID}]]</td>
-                        <td><a th:href="@{/movie/{id}(id=${movie.movieID})}">[[${movie.title}]]</a></td>
-                        <td>[[${movie.year}]]</td>
-                        <td>[[${movie.genre}]]</td>
-                        <td>[[${movie.director}]]</td>
-                        <td>[[${movie.synopsis}]]</td>
-                        <td><img th:src="@{${movie.posterImagePath}}" height="50" width="50" alt=""></td>
-                        <td>[[${#lists.size(movie.reviews)}]]</td>
-                        <td sec:authorize="hasAnyAuthority('ADMIN')">
-                            <a th:href="@{/edit_movie/{id}(id=${movie.movieID})}"
-                               href="">Edit</a>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <a th:href="@{'/delete_movie/' + ${movie.movieID}}" href="">Delete</a>
-                        </td>
 
-
-                    </tr>
-                </th:block>
-                </tbody>
-            </table>
-            <div>
-                <a th:href="@{new_review}">Create new Review entry</a>
+            <div th:object="${review}">
+                <h5>[[${review.user.userName}]]'s  review of [[${review.movie.title}]]</h5>
             </div>
 
-            <th:block th:each="movie : ${listMovies}">
+            <p>[[${review.content}]]</p>
+            <p>Rating: [[${review.rating}]] out of 5</p>
+            <p>created: [[${review.created}]]</p>
 
-                <div class="movie-card"><img th:src="@{images/popcorn.jpg}" class="img img-responsive">
-                    <div class="movie-name">[[${movie.title}]] <span>[[${movie.year}]]</span></div>
-                    <div class="movie-director">[[${movie.director}]]</div>
-                    <div class="profile-icons"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-linkedin"></i></a></div>
-                    <a th:href="@{/movie/{id}(id=${movie.movieID})}" class="stretched-link"></a>
-                </div>
-
-            </th:block>
         </div>
     </div>
 

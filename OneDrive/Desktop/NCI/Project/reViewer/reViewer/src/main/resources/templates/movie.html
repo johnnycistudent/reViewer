@@ -118,6 +118,7 @@
                     <li>[[${review.content}]]</li>
                     <li>[[${review.rating}]]</li>
                     <li>[[${review.user.userName}]]</li>
+                    <li><a th:href="@{/review/{id}(id=${review.reviewID})}">View this review here</a></li>
                 </ul>
             </div>
 
