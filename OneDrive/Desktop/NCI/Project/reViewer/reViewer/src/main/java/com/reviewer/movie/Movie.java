@@ -1,6 +1,10 @@
 package com.reviewer.movie;
 
+import com.reviewer.review.Review;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "movie")
@@ -15,6 +19,9 @@ public class Movie {
     private String synopsis;
     @Column(nullable = true)
     private String poster;
+    @OneToMany
+    @JoinColumn(name = "movieID")
+    private List<Review> reviews = new ArrayList<>();
 
     // Constructors
     public Movie(Long movieID, String title, int year, String genre, String director, String synopsis, String poster) {
@@ -95,4 +102,14 @@ public class Movie {
 
         return "/movie-posters/" + movieID + "/" + poster;
     }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+
 }

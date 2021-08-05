@@ -1,5 +1,6 @@
 package com.reviewer.user;
 
+import com.reviewer.movie.Movie;
 import org.apache.catalina.security.SecurityClassLoad;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -10,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
@@ -54,6 +56,14 @@ public class UserController {
         model.addAttribute("listUsers", listUsers);
 
         return "users";
+    }
+
+    @GetMapping("/user/{id}")
+    public String showUser(@PathVariable(name = "id") Long id, Model model){
+        User user = repo.findById(id).get();
+        model.addAttribute("user", user);
+
+        return "user";
     }
 
     @GetMapping("/user_profile")

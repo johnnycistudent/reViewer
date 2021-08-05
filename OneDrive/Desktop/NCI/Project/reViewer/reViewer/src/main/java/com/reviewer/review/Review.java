@@ -4,6 +4,7 @@ import com.reviewer.movie.Movie;
 import com.reviewer.user.User;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "review")
@@ -21,6 +22,14 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "userID")
     private User user;
+
+    @Column(name = "created", nullable = true)
+    private Date created;
+
+    @PrePersist
+    protected void onCreate() {
+        created = new Date();
+    }
 
     public Long getReviewID() {
         return reviewID;
@@ -60,5 +69,25 @@ public class Review {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    @Override
+    public String toString() {
+        return "Review{" +
+                "reviewID=" + reviewID +
+                ", content='" + content + '\'' +
+                ", rating=" + rating +
+                ", movie=" + movie +
+                ", user=" + user +
+                ", created=" + created +
+                '}';
     }
 }

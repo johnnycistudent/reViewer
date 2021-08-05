@@ -76,6 +76,7 @@
                         <th>Review</th>
                         <th>User</th>
                         <th>Rating</th>
+                        <th>Date Created</th>
                         <th sec:authorize="hasAnyAuthority('ADMIN')">Actions</th>
                     </tr>
                 </thead>
@@ -87,13 +88,12 @@
                     <td>[[${review.content}]]</td>
                     <td>[[${review.user.userName}]]</td>
                     <td>[[${review.rating}]]</td>
+                    <td>[[${review.created}]]</td>
                     <td sec:authorize="hasAnyAuthority('ADMIN')">
                             <a th:href="@{'/edit_review/' + ${review.reviewID}}">Edit</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <a th:href="@{'/delete_review/' + ${review.reviewID}}">Delete</a>
                     </td>
-
-
                 </tr>
                 </th:block>
                 </tbody>

@@ -1,7 +1,11 @@
 package com.reviewer.user;
 
+import com.reviewer.review.Review;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -26,6 +30,10 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
+
+    @OneToMany
+    @JoinColumn(name = "userID")
+    private List<Review> reviews = new ArrayList<>();
 
 
     public Long getUserID() {

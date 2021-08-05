@@ -2,7 +2,6 @@ package com.reviewer.user;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -61,5 +60,9 @@ public class CustomUserDetails implements org.springframework.security.core.user
 
     public String getSessionName(){
         return user.getUserName();
+    }
+
+    public Long getSessionUserID(){
+        return user.getUserID();
     }
 }

@@ -41,7 +41,9 @@ public class MovieController {
     @GetMapping("/movie/{id}")
     public String showMovie(@PathVariable(name = "id") Long id, Model model){
         Movie movie = movieRepo.findById(id).get();
+
         model.addAttribute("movie", movie);
+        model.addAttribute("reviewList", movie.getReviews());
 
         return "movie";
     }

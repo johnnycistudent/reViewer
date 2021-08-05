@@ -79,6 +79,7 @@
                         <th>Director</th>
                         <th>Synopsis</th>
                         <th>Poster</th>
+                        <th>Reviews</th>
                         <th sec:authorize="hasAnyAuthority('ADMIN')">Actions</th>
                     </tr>
                 </thead>
@@ -92,6 +93,7 @@
                         <td>[[${movie.director}]]</td>
                         <td>[[${movie.synopsis}]]</td>
                         <td><img th:src="@{${movie.posterImagePath}}" height="50" width="50" alt=""></td>
+                        <td>[[${#lists.size(movie.reviews)}]]</td>
                         <td sec:authorize="hasAnyAuthority('ADMIN')">
                             <a th:href="@{/edit_movie/{id}(id=${movie.movieID})}"
                                href="">Edit</a>

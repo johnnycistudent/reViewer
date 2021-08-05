@@ -2,9 +2,11 @@ package com.reviewer.review;
 
 import com.reviewer.movie.Movie;
 import com.reviewer.movie.MovieRepository;
+import com.reviewer.user.CustomUserDetails;
 import com.reviewer.user.User;
 import com.reviewer.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,21 +31,28 @@ public class ReviewController {
         return "reviews";
     }
 
-    @GetMapping("/new_review")
-    public String showNewReviewForm(Model model){
-        List<Movie> listMovies = movieRepo.findAll();
-        List<User> listUsers = userRepo.findAll();
+    @GetMapping("/new_review/{id}")
+    public String showNewReviewForm(@PathVariable(name = "id") Long id, Model model){
+
+        Movie movie = movieRepo.findById(id).get();
         Review review = new Review();
 
         model.addAttribute("review", review);
-        model.addAttribute("listMovies", listMovies);
-        model.addAttribute("listUsers", listUsers);
+        model.addAttribute("movie", movie);
+        //model.addAttribute("currentUser", currentUser);
 
         return "review_form";
     }
 
-    @PostMapping(value = "/save_review")
-    public String saveReview(Review review){
+    @PostMapping(value = "/save_review/{id}")
+    public String saveReview(@PathVariable(name = "id") Long movieID,
+            Review review, @AuthenticationPrincipal CustomUserDetails currentUser){
+        Long currentUserID = currentUser.getSessionUserID();
+        Movie movie = movieRepo.findById(movieID).get();
+        User user = userRepo.findById(currentUserID).get();
+        review.setUser(user);
+        review.setMovie(movie);
+
         reviewRepo.save(review);
 
         return "redirect:/reviews";

@@ -97,11 +97,11 @@
                     </thead>
                     <tbody>
                         <tr th:each="user: ${listUsers}">
-                            <td th:text="${user.userID}">User ID</td>
-                            <td th:text="${user.emailAddress}">Email Address</td>
-                            <td th:text="${user.userName}">Username</td>
-                            <td th:text="${user.avatar}">Avatar</td>
-                            <td th:text="${user.roles}">Roles</td>
+                            <td><a th:href="@{/user/{id}(id=${user.userID})}">[[${user.userID}]]</a></td>
+                            <td >[[${user.emailAddress}]]</td>
+                            <td >[[${user.userName}]]</td>
+                            <td >[[${user.avatar}]]</td>
+                            <td >[[${user.roles}]]</td>
                         </tr>
                     </tbody>
                 </table>

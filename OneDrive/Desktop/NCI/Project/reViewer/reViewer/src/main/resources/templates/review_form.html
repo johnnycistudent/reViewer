@@ -70,15 +70,12 @@
                 <h1>Edit Review</h1>
             </div>
                 <br>
-            <form action="#" th:action="@{/save_review}" th:object="${review}" method="post">
+            <form action="#" th:action="@{/save_review/{id}(id=${movie.movieID})}" th:object="${review}" method="post">
                 <table border="0" cellpadding="10">
+<!--                    <div th:object="${movie}">-->
+<!--                        <input th:field="${movie.movieID}" th:value="${movie.movieID}" readonly>-->
+<!--                    </div>-->
                     <tr>
-                        <td>Movie </td>
-                        <select name="" id="" th:field="*{movie}" required>
-                            <th:block th:each="movie: ${listMovies}">
-                                <option th:text="${movie.title}" th:value="${movie.movieID}"/>
-                            </th:block>
-                        </select>
                     </tr>
                     <tr>
                         <td>Review: </td>
@@ -89,14 +86,7 @@
                         <td><input type="number" name="quantity" min="1" max="5" th:field="*{rating}"></td>
                     </tr>
                     <tr>
-                        <div class="form-group">
-                            <label for="author">Posted by</label>
-                            <select class="form-select" id="author" th:field="*{user}" required>
-                                <th:block th:each="user: ${listUsers}">
-                                    <option th:text="${user.userName}" th:value="${user.userID}"/>
-                                </th:block>
-                            </select>
-                        </div>
+
                     </tr>
                     <tr>
                         <td colspan="2"><button class="btn btn-success" type="submit">Save</button></td>
