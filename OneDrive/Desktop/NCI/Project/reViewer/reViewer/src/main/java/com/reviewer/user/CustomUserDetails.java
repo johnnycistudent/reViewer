@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-public class CustomUserDetails implements UserDetails {
+public class CustomUserDetails implements org.springframework.security.core.userdetails.UserDetails {
 
     private User user;
 

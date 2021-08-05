@@ -67,15 +67,18 @@
         <div align="center">
 
             <div>
-                <h1>reViewer HomePage</h1>
+                <h1>Welcome to User Profile</h1>
             </div>
 
-            <div>
-                <h3><a th:href="@{/register}">Register</a></h3>
-                <h3><a th:href="@{/login}">Login</a></h3>
-                <h3><a th:href="@{/list_users}">List All Users</a></h3>
-                <h3><a th:href="@{/movies}">List All Movies</a></h3>
-                <h3><a th:href="@{/reviews}">List All Reviews</a></h3>
+            <div >
+                <h5>Current User Object Test</h5>
+                <ul>
+                    <li>UserID: </li>
+                    <li>Username: <span> [[${currentUser.sessionName}]]</span></li>
+                    <li>Email: <span> [[${currentUser.username}]]</span></li>
+                    <li>Avatar: </li>
+                    <li>Role: </li>
+                </ul>
             </div>
         </div>
     </div>

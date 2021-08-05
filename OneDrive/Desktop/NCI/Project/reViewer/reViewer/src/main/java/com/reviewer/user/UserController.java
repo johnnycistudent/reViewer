@@ -4,6 +4,7 @@ import org.apache.catalina.security.SecurityClassLoad;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -53,5 +54,13 @@ public class UserController {
         model.addAttribute("listUsers", listUsers);
 
         return "users";
+    }
+
+    @GetMapping("/user_profile")
+    public String viewUserProfile(@AuthenticationPrincipal CustomUserDetails currentUser,
+                                  Model model){
+        model.addAttribute("currentUser", currentUser);
+
+        return "user_profile";
     }
 }
