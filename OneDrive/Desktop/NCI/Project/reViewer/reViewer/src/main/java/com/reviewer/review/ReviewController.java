@@ -56,7 +56,8 @@ public class ReviewController {
 
     @PostMapping(value = "/save_review/{id}")
     public String saveReview(@PathVariable(name = "id") Long movieID,
-            Review review, @AuthenticationPrincipal CustomUserDetails currentUser){
+                             Review review,
+                             @AuthenticationPrincipal CustomUserDetails currentUser){
         Long currentUserID = currentUser.getSessionUserID();
         Movie movie = movieRepo.findById(movieID).get();
         User user = userRepo.findById(currentUserID).get();
