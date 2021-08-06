@@ -80,21 +80,76 @@ public class UserController {
         return "user_profile";
     }
 
-    // save movie
+    // save movie to favourites
     @PostMapping ( "/save_favourite/{id}")
-    public String saveFavourite(@PathVariable(name = "id") Long movieID,Model model,
+    public String saveFavourite(@PathVariable(name = "id") Long movieID,
                                 @AuthenticationPrincipal CustomUserDetails currentUser)  {
-
+        // Get current userID
         Long currentUserID = currentUser.getSessionUserID();
+        // find current user in user repo by ID
         User user = userRepo.findById(currentUserID).get();
+        // find movie's ID by argument passed in through front end
         Movie movie = movieRepo.findById(movieID).get();
-        model.addAttribute("movie", movie);
-        //user.setFavourites(movie);
-        user.getFavourites().add(movie);
+        //model.addAttribute("movie", movie);
+
+        if(user.getFavourites().contains(movie)) {
+            // add movie to user's set of favourites
+            user.getFavourites().remove(movie);
+        } else {
+            user.getFavourites().add(movie);
+        }
 
         userRepo.save(user);
 
         return "redirect:/movies";
+    }
 
+    // save movie to seen
+    @PostMapping ( "/save_seen/{id}")
+    public String saveSeen(@PathVariable(name = "id") Long movieID,
+                                @AuthenticationPrincipal CustomUserDetails currentUser)  {
+        // Get current userID
+        Long currentUserID = currentUser.getSessionUserID();
+        // find current user in user repo by ID
+        User user = userRepo.findById(currentUserID).get();
+        // find movie's ID by argument passed in through front end
+        Movie movie = movieRepo.findById(movieID).get();
+        //model.addAttribute("movie", movie);
+
+        if(user.getSeen().contains(movie)) {
+            // if the movie is on the user's set list, remove it
+            user.getSeen().remove(movie);
+        } else {
+            // else add movie to user's set of seen
+            user.getSeen().add(movie);
+        }
+
+        userRepo.save(user);
+
+        return "redirect:/movies";
+    }
+
+    // save movie to want-to-watch
+    @PostMapping ( "/save_want/{id}")
+    public String saveWant(@PathVariable(name = "id") Long movieID,
+                           @AuthenticationPrincipal CustomUserDetails currentUser)  {
+        // Get current userID
+        Long currentUserID = currentUser.getSessionUserID();
+        // find current user in user repo by ID
+        User user = userRepo.findById(currentUserID).get();
+        // find movie's ID by argument passed in through front end
+        Movie movie = movieRepo.findById(movieID).get();
+        //model.addAttribute("movie", movie);
+
+        if(user.getWant().contains(movie)) {
+            // add movie to user's set of favourites
+            user.getWant().remove(movie);
+        } else {
+            user.getWant().add(movie);
+        }
+
+        userRepo.save(user);
+
+        return "redirect:/movies";
     }
 }

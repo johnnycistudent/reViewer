@@ -113,6 +113,30 @@
                         </div>
                     </li>
                     <li class="list-group-item">
+                        Added to Watchlist by:
+                        <span th:each="w: ${movie.want}">
+                            [[${w.userName}]]
+                        </span>
+                        <br>
+                        <div th:object="${movie}">
+                            <form  th:action="@{/save_want/{id}(id=${movie.movieID})}" method="post">
+                                <button type="submit" class="btn btn-success">Log as Want-to-Watch</button>
+                            </form>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        Seen by:
+                        <span th:each="w: ${movie.seen}">
+                            [[${w.userName}]]
+                        </span>
+                        <br>
+                        <div th:object="${movie}">
+                            <form  th:action="@{/save_seen/{id}(id=${movie.movieID})}" method="post">
+                                <button type="submit" class="btn btn-success">Log as Seen</button>
+                            </form>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
                         <span th:each="w: ${movie.want}">
                             [[${w.userName}]]
                         </span>
