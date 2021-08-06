@@ -92,9 +92,30 @@
                     <p class="card-text">[[${movie.synopsis}]]</p>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="">Log as Seen</a></li>
-                    <li class="list-group-item"><a href="">Log as Favourtie</a></li>
-                    <li class="list-group-item"><a href="">Log as Want-to-Watch</a></li>
+                    <li class="list-group-item">
+                        <span th:each="s: ${movie.seen}">
+                            [[${s.userName}]]
+                        </span>
+                        added this movie to their seen list!
+                        <br>
+                        <a href="">Log as Seen</a>
+                    </li>
+                    <li class="list-group-item">
+                        Liked by:
+                        <span th:each="fave: ${movie.favourites}">
+                            [[${fave.userName}]]
+                        </span>
+                        <br>
+                        <a href="">Log as Favourite</a>
+                    </li>
+                    <li class="list-group-item">
+                        <span th:each="w: ${movie.want}">
+                            [[${w.userName}]]
+                        </span>
+                         added this movie to their watchlist!
+                        <br>
+                        <a href="">Log as Want-to-Watch</a>
+                    </li>
 
                 </ul>
                 <div class="card-body">

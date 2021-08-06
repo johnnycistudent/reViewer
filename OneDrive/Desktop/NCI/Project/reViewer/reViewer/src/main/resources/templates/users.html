@@ -92,6 +92,7 @@
                             <th>Username</th>
                             <th>Avatar</th>
                             <th>Roles</th>
+                            <th>Favourites</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -101,7 +102,16 @@
                             <td >[[${user.emailAddress}]]</td>
                             <td >[[${user.userName}]]</td>
                             <td >[[${user.avatar}]]</td>
-                            <td >[[${user.roles}]]</td>
+                            <td>
+                                <span th:each="role: ${user.roles}">
+                                    [[${role.name}]]
+                                </span>
+                            </td>
+                            <td>
+                                <span th:each="fave: ${user.favourites}">
+                                    [[${fave.title}]]
+                                </span>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

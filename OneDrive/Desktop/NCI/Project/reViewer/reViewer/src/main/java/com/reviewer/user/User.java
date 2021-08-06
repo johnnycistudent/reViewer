@@ -1,5 +1,6 @@
 package com.reviewer.user;
 
+import com.reviewer.movie.Movie;
 import com.reviewer.review.Review;
 
 import javax.persistence.*;
@@ -22,7 +23,7 @@ public class User {
     private String password;
     private String avatar;
     private boolean enabled;
-
+    // user's roles
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
@@ -31,9 +32,37 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
 
+    // user's reviews
     @OneToMany
     @JoinColumn(name = "userID")
     private List<Review> reviews = new ArrayList<>();
+
+    // user's favourites
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "favourites",
+            joinColumns = @JoinColumn(name = "userID"),
+            inverseJoinColumns = @JoinColumn(name = "movieID")
+    )
+    private Set<Movie> favourites = new HashSet<>();
+
+    // user's seen list
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "seen",
+            joinColumns = @JoinColumn(name = "userID"),
+            inverseJoinColumns = @JoinColumn(name = "movieID")
+    )
+    private Set<Movie> seen = new HashSet<>();
+
+    // user's want-to-watch list
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "want",
+            joinColumns = @JoinColumn(name = "userID"),
+            inverseJoinColumns = @JoinColumn(name = "movieID")
+    )
+    private Set<Movie> want = new HashSet<>();
 
 
     public Long getUserID() {
@@ -98,5 +127,29 @@ public class User {
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public Set<Movie> getFavourites() {
+        return favourites;
+    }
+
+    public void setFavourites(Set<Movie> favourites) {
+        this.favourites = favourites;
+    }
+
+    public Set<Movie> getSeen() {
+        return seen;
+    }
+
+    public void setSeen(Set<Movie> seen) {
+        this.seen = seen;
+    }
+
+    public Set<Movie> getWant() {
+        return want;
+    }
+
+    public void setWant(Set<Movie> want) {
+        this.want = want;
     }
 }

@@ -1,10 +1,12 @@
 package com.reviewer.movie;
 
 import com.reviewer.review.Review;
+import com.reviewer.user.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "movie")
@@ -19,9 +21,19 @@ public class Movie {
     private String synopsis;
     @Column(nullable = true)
     private String poster;
+
     @OneToMany
     @JoinColumn(name = "movieID")
     private List<Review> reviews = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "favourites")
+    private Set<User> favourites;
+
+    @ManyToMany(mappedBy = "seen")
+    private Set<User> seen;
+
+    @ManyToMany(mappedBy = "want")
+    private Set<User> want;
 
     // Constructors
     public Movie(Long movieID, String title, int year, String genre, String director, String synopsis, String poster) {
@@ -111,5 +123,27 @@ public class Movie {
         this.reviews = reviews;
     }
 
+    public Set<User> getFavourites() {
+        return favourites;
+    }
 
+    public void setFavourites(Set<User> favourites) {
+        this.favourites = favourites;
+    }
+
+    public Set<User> getSeen() {
+        return seen;
+    }
+
+    public void setSeen(Set<User> seen) {
+        this.seen = seen;
+    }
+
+    public Set<User> getWant() {
+        return want;
+    }
+
+    public void setWant(Set<User> want) {
+        this.want = want;
+    }
 }
