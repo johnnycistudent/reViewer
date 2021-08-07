@@ -87,7 +87,7 @@
                     <td>[[${review.content}]]</td>
                     <td><a th:href="@{/user/{id}(id=${review.user.userID})}">[[${review.user.userName}]]</a></td>
                     <td>[[${review.rating}]]</td>
-                    <td>[[${review.created}]]</td>
+                    <td>[[${review.createdAt}]]</td>
                     <td sec:authorize="hasAnyAuthority('ADMIN')">
                             <a th:href="@{'/edit_review/' + ${review.reviewID}}">Edit</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;

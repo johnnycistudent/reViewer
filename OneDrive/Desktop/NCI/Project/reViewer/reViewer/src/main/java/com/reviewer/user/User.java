@@ -1,5 +1,6 @@
 package com.reviewer.user;
 
+import com.reviewer.comment.Comment;
 import com.reviewer.movie.Movie;
 import com.reviewer.review.Review;
 
@@ -15,14 +16,19 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userID;
+
     @Column(nullable = false, unique = true, length = 14)
     private String userName;
+
     @Column(nullable = false, unique = true, length = 45)
     private String emailAddress;
+
     @Column(nullable = false, length = 64)
     private String password;
+
     private String avatar;
     private boolean enabled;
+
     // user's roles
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
@@ -63,6 +69,11 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "movieID")
     )
     private Set<Movie> want = new HashSet<>();
+
+    // user's comments
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "userID")
+    private Set<Comment> comments = new HashSet<>();
 
 
     public Long getUserID() {
@@ -151,5 +162,13 @@ public class User {
 
     public void setWant(Set<Movie> want) {
         this.want = want;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 }

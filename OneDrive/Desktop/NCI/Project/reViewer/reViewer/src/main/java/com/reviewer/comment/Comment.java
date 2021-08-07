@@ -1,5 +1,6 @@
 package com.reviewer.comment;
 
+import com.reviewer.AuditModel;
 import com.reviewer.review.Review;
 import com.reviewer.user.User;
 import com.sun.istack.NotNull;
@@ -10,10 +11,10 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "comment")
-public class Comment {
+public class Comment extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long commentID;
 
     @NotNull
     @Lob
@@ -29,4 +30,35 @@ public class Comment {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
+    public Long getCommentID() {
+        return commentID;
+    }
+
+    public void setCommentID(Long commentID) {
+        this.commentID = commentID;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public Review getReview() {
+        return review;
+    }
+
+    public void setReview(Review review) {
+        this.review = review;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

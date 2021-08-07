@@ -72,9 +72,25 @@
 
             <p>[[${review.content}]]</p>
             <p>Rating: [[${review.rating}]] out of 5</p>
-            <p>created: [[${review.created}]]</p>
+            <p>created: [[${review.createdAt}]]</p>
+            <div>
+                <p>There are [[${#lists.size(review.comments)}]] comments on this review</p>
+                <ul th:each="c : ${commentList}">
+                    <li>[[${c.user.userName}]]</li>
+                    <li>[[${c.text}]]</li>
+                    <li>[[${c.createdAt}]]</li>
+                </ul>
+            </div>
 
         </div>
+        <form th:action="@{/save_comment/{id}(id=${review.reviewID})}" th:object="${newComment}" method="post">
+            <div class="form-group" >
+                <p>HERE IS A TEMPLATE LITERAL for comment.commentID: [[${commentID}]]</p>
+                <label for="exampleTextarea" class="form-label mt-4" >Example textarea</label>
+                <textarea class="form-control" id="exampleTextarea" rows="3" th:field="*{text}" required></textarea>
+                <button type="submit" class="btn btn-success">Submit</button>
+            </div>
+        </form>
     </div>
 
     <script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>

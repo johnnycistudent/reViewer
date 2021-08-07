@@ -1,14 +1,16 @@
 package com.reviewer.review;
 
+import com.reviewer.AuditModel;
+import com.reviewer.comment.Comment;
 import com.reviewer.movie.Movie;
 import com.reviewer.user.User;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.util.*;
 
 @Entity
 @Table(name = "review")
-public class Review {
+public class Review extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewID;
@@ -23,13 +25,12 @@ public class Review {
     @JoinColumn(name = "userID")
     private User user;
 
-    @Column(name = "created", nullable = true)
-    private Date created;
+    // review's comments
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "reviewID")
+    private Set<Comment> comments = new HashSet<>();
 
-    @PrePersist
-    protected void onCreate() {
-        created = new Date();
-    }
+    // getters and setters
 
     public Long getReviewID() {
         return reviewID;
@@ -71,23 +72,13 @@ public class Review {
         this.user = user;
     }
 
-    public Date getCreated() {
-        return created;
+    public Set<Comment> getComments() {
+        return comments;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 
-    @Override
-    public String toString() {
-        return "Review{" +
-                "reviewID=" + reviewID +
-                ", content='" + content + '\'' +
-                ", rating=" + rating +
-                ", movie=" + movie +
-                ", user=" + user +
-                ", created=" + created +
-                '}';
-    }
+
 }

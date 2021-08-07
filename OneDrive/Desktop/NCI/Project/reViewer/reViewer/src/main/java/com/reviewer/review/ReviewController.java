@@ -1,5 +1,6 @@
 package com.reviewer.review;
 
+import com.reviewer.comment.Comment;
 import com.reviewer.movie.Movie;
 import com.reviewer.movie.MovieRepository;
 import com.reviewer.user.CustomUserDetails;
@@ -11,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class ReviewController {
@@ -35,8 +38,15 @@ public class ReviewController {
     public String showReview(@PathVariable(name = "id") Long id, Model model){
         Review review = reviewRepo.findById(id).get();
 
+        Comment newComment = new Comment();
+
+        System.out.println(review.getComments());
+
+        Set commentList = review.getComments();
+
         model.addAttribute("review", review);
-        //model.addAttribute("reviewList", review.getReviews());
+        model.addAttribute("commentList", commentList);
+        model.addAttribute("newComment", newComment);
 
         return "review";
     }
