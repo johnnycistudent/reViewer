@@ -12,9 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 public class ReviewController {
@@ -43,6 +41,12 @@ public class ReviewController {
         System.out.println(review.getComments());
 
         Set commentList = review.getComments();
+
+        // for sorting comments by date, don't think i need them:
+        // ArrayList<Comment> list = new ArrayList<>(commentList);
+        //Collections.sort(list);
+        //HashSet<Comment> sortedComments = new HashSet<>(list);
+
 
         model.addAttribute("review", review);
         model.addAttribute("commentList", commentList);

@@ -75,10 +75,13 @@
             <p>created: [[${review.createdAt}]]</p>
             <div>
                 <p>There are [[${#lists.size(review.comments)}]] comments on this review</p>
-                <ul th:each="c : ${commentList}">
+                <ul th:each="c : ${#lists.sort(commentList)}">
+                    <hr>
+                    <li>[[${c.commentID}]]</li>
                     <li>[[${c.user.userName}]]</li>
                     <li>[[${c.text}]]</li>
                     <li>[[${c.createdAt}]]</li>
+                    <hr>
                 </ul>
             </div>
 

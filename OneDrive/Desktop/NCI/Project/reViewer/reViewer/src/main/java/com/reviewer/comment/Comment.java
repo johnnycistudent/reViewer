@@ -8,10 +8,11 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.Comparator;
 
 @Entity
 @Table(name = "comment")
-public class Comment extends AuditModel {
+public class Comment extends AuditModel implements Comparable<Comment> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentID;
@@ -60,5 +61,13 @@ public class Comment extends AuditModel {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public int compareTo(Comment comment) {
+        if (getCreatedAt() == null || comment.getCreatedAt() == null) {
+            return 0;
+        }
+        return getCreatedAt().compareTo(comment.getCreatedAt());
     }
 }

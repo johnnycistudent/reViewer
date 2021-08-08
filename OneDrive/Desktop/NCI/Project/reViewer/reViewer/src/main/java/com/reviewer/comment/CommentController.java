@@ -40,6 +40,10 @@ public class CommentController {
         Review review = reviewRepo.findById(reviewID).get();
 
         model.addAttribute("text", newComment.getText());
+        model.addAttribute("reviewID", reviewID);
+        // test purposes - delete later
+        System.out.println(reviewID);
+        // test purposes - delete later
         System.out.println(newComment.getText());
 
         // save the comment
@@ -52,6 +56,6 @@ public class CommentController {
         // save comment
         commentRepo.save(newComment);
 
-        return "redirect:/reviews";
+        return "redirect:/review/" + reviewID;
     }
 }
