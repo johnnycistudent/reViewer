@@ -26,4 +26,8 @@ public class MovieService {
     public void delete(Long id){
         repo.deleteById(id);
     }
+
+    public List<Movie> search(String keyword){
+        return repo.search(keyword);
+    }
 }

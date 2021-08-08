@@ -65,7 +65,9 @@
     </nav>
     <div class="container">
         <div align="center">
-            <div class="alert alert-success" role="alert" th:text="${success}" th:if="${success}"></div>
+            <div class="alert alert-dismissible alert-success" role="alert" th:text="${success}" th:if="${success}">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
             <h1>Single Movie View</h1>
             <a th:href="@{/movies}">View All Movies</a>
             <br>
@@ -94,17 +96,9 @@
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                        <span th:each="s: ${movie.seen}">
-                            [[${s.userName}]]
-                        </span>
-                        added this movie to their seen list!
-                        <br>
-                        <a href="">Log as Seen</a>
-                    </li>
-                    <li class="list-group-item">
                         Liked by:
                         <span th:each="fave: ${movie.favourites}">
-                            [[${fave.userName}]]
+                            <a th:href="@{/user/{id}(id=${fave.userID})}">[[${fave.userName}]]</a>
                         </span>
                         <br>
                         <div th:object="${movie}">
@@ -116,7 +110,7 @@
                     <li class="list-group-item">
                         Added to Watchlist by:
                         <span th:each="w: ${movie.want}">
-                            [[${w.userName}]]
+                            <a th:href="@{/user/{id}(id=${w.userID})}">[[${w.userName}]]</a>
                         </span>
                         <br>
                         <div th:object="${movie}">
@@ -128,7 +122,7 @@
                     <li class="list-group-item">
                         Seen by:
                         <span th:each="w: ${movie.seen}">
-                            [[${w.userName}]]
+                            <a th:href="@{/user/{id}(id=${w.userID})}">[[${w.userName}]]</a>
                         </span>
                         <br>
                         <div th:object="${movie}">
@@ -137,15 +131,6 @@
                             </form>
                         </div>
                     </li>
-                    <li class="list-group-item">
-                        <span th:each="w: ${movie.want}">
-                            [[${w.userName}]]
-                        </span>
-                         added this movie to their watchlist!
-                        <br>
-                        <a href="">Log as Want-to-Watch</a>
-                    </li>
-
                 </ul>
                 <div class="card-body">
                     <div sec:authorize="isAuthenticated">

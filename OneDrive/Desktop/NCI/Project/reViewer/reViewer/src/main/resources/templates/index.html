@@ -56,8 +56,8 @@
                         <a class="nav-link" th:href="@{/user_profile}" sec:authentication="principal.sessionName"></a>
                     </li>
                 </ul>
-                <form class="d-flex">
-                    <input class="form-control me-sm-2" type="text" placeholder="Search">
+                <form class="d-flex" th:action="@{/search}" method="get">
+                    <input class="form-control me-sm-2" type="search" name="keyword" placeholder="Search">
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
                 </form>
             </div>
