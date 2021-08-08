@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.List;
@@ -83,7 +84,8 @@ public class UserController {
     // save movie to favourites
     @PostMapping ( "/save_favourite/{id}")
     public String saveFavourite(@PathVariable(name = "id") Long movieID,
-                                @AuthenticationPrincipal CustomUserDetails currentUser)  {
+                                @AuthenticationPrincipal CustomUserDetails currentUser,
+                                RedirectAttributes userAlert)  {
         // Get current userID
         Long currentUserID = currentUser.getSessionUserID();
         // find current user in user repo by ID
@@ -95,19 +97,22 @@ public class UserController {
         if(user.getFavourites().contains(movie)) {
             // add movie to user's set of favourites
             user.getFavourites().remove(movie);
+            userAlert.addFlashAttribute("success", movie.getTitle() + " was removed from your favourites!");
         } else {
             user.getFavourites().add(movie);
+            userAlert.addFlashAttribute("success", movie.getTitle() + " was added to your favourites!");
         }
 
         userRepo.save(user);
 
-        return "redirect:/movies";
+        return "redirect:/movie/" + movieID;
     }
 
     // save movie to seen
     @PostMapping ( "/save_seen/{id}")
     public String saveSeen(@PathVariable(name = "id") Long movieID,
-                                @AuthenticationPrincipal CustomUserDetails currentUser)  {
+                           @AuthenticationPrincipal CustomUserDetails currentUser,
+                           RedirectAttributes userAlert)  {
         // Get current userID
         Long currentUserID = currentUser.getSessionUserID();
         // find current user in user repo by ID
@@ -119,20 +124,23 @@ public class UserController {
         if(user.getSeen().contains(movie)) {
             // if the movie is on the user's set list, remove it
             user.getSeen().remove(movie);
+            userAlert.addFlashAttribute("success", movie.getTitle() + " was removed from your Seen List!");
         } else {
             // else add movie to user's set of seen
             user.getSeen().add(movie);
+            userAlert.addFlashAttribute("success", movie.getTitle() + " was added to your Seen List!");
         }
 
         userRepo.save(user);
 
-        return "redirect:/movies";
+        return "redirect:/movie/" + movieID;
     }
 
     // save movie to want-to-watch
     @PostMapping ( "/save_want/{id}")
     public String saveWant(@PathVariable(name = "id") Long movieID,
-                           @AuthenticationPrincipal CustomUserDetails currentUser)  {
+                           @AuthenticationPrincipal CustomUserDetails currentUser,
+                           RedirectAttributes userAlert)  {
         // Get current userID
         Long currentUserID = currentUser.getSessionUserID();
         // find current user in user repo by ID
@@ -144,12 +152,14 @@ public class UserController {
         if(user.getWant().contains(movie)) {
             // add movie to user's set of favourites
             user.getWant().remove(movie);
+            userAlert.addFlashAttribute("success", movie.getTitle() + " was removed from your Watchlist!");
         } else {
             user.getWant().add(movie);
+            userAlert.addFlashAttribute("success", movie.getTitle() + " was added to your Watchlist!");
         }
 
         userRepo.save(user);
 
-        return "redirect:/movies";
+        return "redirect:/movie/" + movieID;
     }
 }

@@ -80,7 +80,8 @@ public class ReviewController {
 
         reviewRepo.save(review);
 
-        return "redirect:/reviews";
+        //return "redirect:/reviews";
+        return "redirect:/review/" + review.getReviewID();
     }
 
     @GetMapping("/edit_review/{id}")

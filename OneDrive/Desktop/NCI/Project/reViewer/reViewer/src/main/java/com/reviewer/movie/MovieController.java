@@ -70,7 +70,7 @@ public class MovieController {
         String uploadDir = "movie-posters/" + savedMovie.getMovieID();
         FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 
-        return "redirect:/movies";
+        return "redirect:/movie/" + savedMovie.getMovieID();
 
     }
 

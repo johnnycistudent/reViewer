@@ -112,7 +112,15 @@
 
             <th:block th:each="movie : ${listMovies}">
 
-                <div class="movie-card"><img th:src="@{images/popcorn.jpg}" class="img img-responsive">
+                <div class="movie-card">
+                    <div th:unless="${movie.posterImagePath == null || movie.posterImagePath.isBlank()}">
+                        <img th:src="@{${movie.posterImagePath}}" class="img img-responsive">
+                    </div>
+                    <div th:if="${movie.posterImagePath == null || movie.posterImagePath.isBlank()}">
+                        <img th:src="@{images/popcorn.jpg}" class="img img-responsive">
+                    </div>
+
+
                     <div class="movie-name">[[${movie.title}]] <span>[[${movie.year}]]</span></div>
                     <div class="movie-director">[[${movie.director}]]</div>
                     <div class="profile-icons"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-linkedin"></i></a></div>

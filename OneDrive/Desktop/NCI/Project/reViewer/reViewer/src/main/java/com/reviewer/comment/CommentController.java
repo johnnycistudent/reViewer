@@ -41,9 +41,9 @@ public class CommentController {
 
         model.addAttribute("text", newComment.getText());
         model.addAttribute("reviewID", reviewID);
-        // test purposes - delete later
+        // test purposes - DELETE later
         System.out.println(reviewID);
-        // test purposes - delete later
+        // test purposes - DELETE later
         System.out.println(newComment.getText());
 
         // save the comment

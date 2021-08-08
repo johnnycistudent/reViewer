@@ -3,7 +3,7 @@ package com.reviewer.comment;
 import com.reviewer.AuditModel;
 import com.reviewer.review.Review;
 import com.reviewer.user.User;
-import com.sun.istack.NotNull;
+
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -17,7 +17,6 @@ public class Comment extends AuditModel implements Comparable<Comment> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentID;
 
-    @NotNull
     @Lob
     private String text;
 

@@ -65,6 +65,7 @@
     </nav>
     <div class="container">
         <div align="center">
+            <div class="alert alert-success" role="alert" th:text="${success}" th:if="${success}"></div>
             <h1>Single Movie View</h1>
             <a th:href="@{/movies}">View All Movies</a>
             <br>
