@@ -20,6 +20,8 @@ public class ReviewController {
     @Autowired
     private ReviewRepository reviewRepo;
     @Autowired
+    private ReviewService reviewService;
+    @Autowired
     private MovieRepository movieRepo;
     @Autowired
     private UserRepository userRepo;
@@ -79,6 +81,8 @@ public class ReviewController {
         review.setMovie(movie);
 
         reviewRepo.save(review);
+        reviewService.calculateAverageRating(review);
+
 
         //return "redirect:/reviews";
         return "redirect:/review/" + review.getReviewID();

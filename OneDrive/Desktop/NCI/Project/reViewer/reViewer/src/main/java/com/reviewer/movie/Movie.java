@@ -35,6 +35,9 @@ public class Movie {
     @ManyToMany(mappedBy = "want")
     private Set<User> want;
 
+    @Column(name="avgRating", columnDefinition = "int default 0")
+    private int avgRating;
+
     // Constructors
     public Movie(Long movieID, String title, int year, String genre, String director, String synopsis, String poster) {
         this.movieID = movieID;
@@ -145,5 +148,13 @@ public class Movie {
 
     public void setWant(Set<User> want) {
         this.want = want;
+    }
+
+    public int getAvgRating() {
+        return avgRating;
+    }
+
+    public void setAvgRating(int avgRating) {
+        this.avgRating = avgRating;
     }
 }

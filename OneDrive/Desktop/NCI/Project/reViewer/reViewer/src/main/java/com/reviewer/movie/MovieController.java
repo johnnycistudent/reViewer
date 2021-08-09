@@ -25,7 +25,7 @@ public class MovieController {
     // display all movies
     @GetMapping("/movies")
     public String listMovies(Model model){
-        List<Movie> listMovies = movieService.listAll();
+        List<Movie> listMovies = movieRepo.findAll();
         model.addAttribute("listMovies", listMovies);
 
         return "movies";
@@ -34,6 +34,8 @@ public class MovieController {
     @GetMapping("/movie/{id}")
     public String showMovie(@PathVariable(name = "id") Long id, Model model){
         Movie movie = movieRepo.findById(id).get();
+
+
 
         model.addAttribute("movie", movie);
         model.addAttribute("reviewList", movie.getReviews());
@@ -87,13 +89,12 @@ public class MovieController {
         return "redirect:/movies";
     }
 
-    @GetMapping("/search")
+    @GetMapping("/searchMovies")
     public String search(@Param("keyword") String keyword, Model model){
 
-        List<Movie> searchResult = movieService.search(keyword);
-
+        List<Movie> listMovies = movieRepo.searchMovies(keyword);
+        model.addAttribute("listMovies", listMovies);
         model.addAttribute("keyword", keyword);
-        model.addAttribute("searchResult", searchResult);
 
         return "search_results";
     }

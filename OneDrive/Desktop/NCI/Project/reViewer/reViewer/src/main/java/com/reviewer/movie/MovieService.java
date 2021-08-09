@@ -1,5 +1,7 @@
 package com.reviewer.movie;
 
+import com.reviewer.review.Review;
+import com.reviewer.review.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,25 +11,28 @@ import java.util.List;
 public class MovieService {
 
     @Autowired
-    private MovieRepository repo;
+    private MovieRepository movieRepo;
+
+    @Autowired
+    private ReviewRepository reviewRepo;
 
     public List<Movie> listAll() {
-        return repo.findAll();
+        return movieRepo.findAll();
     }
 
     public void save(Movie movie){
-        repo.save(movie);
+        movieRepo.save(movie);
     }
 
     public Movie get(Long id){
-        return repo.findById(id).get();
+        return movieRepo.findById(id).get();
     }
 
     public void delete(Long id){
-        repo.deleteById(id);
+        movieRepo.deleteById(id);
     }
 
     public List<Movie> search(String keyword){
-        return repo.search(keyword);
+        return movieRepo.searchMovies(keyword);
     }
 }
