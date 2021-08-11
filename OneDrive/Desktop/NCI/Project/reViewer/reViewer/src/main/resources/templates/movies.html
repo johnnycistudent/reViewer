@@ -107,6 +107,25 @@
                 </tbody>
             </table>
             <div>
+                Total Items: [[${totalItems}]] - Page [[${currentPage}]] of [[${totalPages}]]
+                <br>
+
+                <a th:if="${currentPage > 1}" th:href="@{'/movies/1'}" >First</a>
+                <span th:unless="${currentPage > 1}" th:href="@{movies}">First</span>
+                <a th:if="${currentPage > 1}" th:href="@{${currentPage - 1}}" href="">Previous</a>
+                <span th:each="i:${#numbers.sequence(1, totalPages)}">
+                    <a th:if="${i != currentPage}" th:href="@{'/movies/{pageNo}'(pageNo=${i})}">[[${i}]]</a>
+                    <span th:unless="${i != currentPage}">[[${i}]]</span>
+                </span>
+
+                <a th:if="${currentPage < totalPages}" th:href="@{'/movies/' + ${currentPage + 1}}">Next</a>
+                <span th:unless="${currentPage < totalPages}">Next</span>
+                <a th:if="${currentPage < totalPages}" th:href="@{'/movies/' + ${totalPages}}">Last</a>
+                <span th:unless="${currentPage < totalPages}">Last</span>
+
+            </div>
+
+            <div>
                 <a th:href="@{new_review}">Create new Review entry</a>
             </div>
 

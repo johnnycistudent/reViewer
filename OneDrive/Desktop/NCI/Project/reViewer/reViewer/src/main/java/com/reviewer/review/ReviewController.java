@@ -3,6 +3,7 @@ package com.reviewer.review;
 import com.reviewer.comment.Comment;
 import com.reviewer.movie.Movie;
 import com.reviewer.movie.MovieRepository;
+import com.reviewer.movie.MovieService;
 import com.reviewer.user.CustomUserDetails;
 import com.reviewer.user.User;
 import com.reviewer.user.UserRepository;
@@ -23,6 +24,8 @@ public class ReviewController {
     private ReviewService reviewService;
     @Autowired
     private MovieRepository movieRepo;
+    @Autowired
+    private MovieService movieService;
     @Autowired
     private UserRepository userRepo;
 

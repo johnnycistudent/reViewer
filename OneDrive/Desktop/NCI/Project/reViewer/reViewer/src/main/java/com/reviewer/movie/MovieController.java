@@ -1,6 +1,7 @@
 package com.reviewer.movie;
 
 import com.reviewer.FileUploadUtil;
+import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,30 @@ public class MovieController {
     // display all movies
     @GetMapping("/movies")
     public String listMovies(Model model){
-        List<Movie> listMovies = movieRepo.findAll();
+
+
+        //List<Movie> listMovies = movieRepo.findAll();
+        //model.addAttribute("listMovies", listMovies);
+
+        return listMoviesByPage(model, 1);
+    }
+
+    @GetMapping("/movies/{pageNumber}")
+    public String listMoviesByPage(Model model, @PathVariable("pageNumber") int currentPage){
+        Page<Movie> page = movieService.listPages(currentPage);
+        long totalItems = page.getTotalElements();
+        int totalPages = page.getTotalPages();
+
+        List<Movie> listMovies = page.getContent();
+
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("totalItems", totalItems);
+        model.addAttribute("totalPages", totalPages);
         model.addAttribute("listMovies", listMovies);
+
+
+        //List<Movie> listMovies = movieRepo.findAll();
+        //model.addAttribute("listMovies", listMovies);
 
         return "movies";
     }

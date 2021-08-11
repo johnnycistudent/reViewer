@@ -6,17 +6,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
 
-public interface MovieRepository extends JpaRepository<Movie, Long>, PagingAndSortingRepository<Movie, Long> {
+public interface MovieRepository extends PagingAndSortingRepository<Movie, Long>, JpaRepository<Movie, Long> {
 
     @Query("SELECT m FROM Movie m WHERE m.title LIKE %?1%")
     public List<Movie> searchMovies(String keyword);
-
-
-
-//    @Query(value = "SELECT * FROM movie where "
-//            + "MATCH(title) "
-//            + "AGAINST (?1)",
-//            nativeQuery = true)
-//    public List<Movie> search(String keyword);
-
 }

@@ -3,6 +3,9 @@ package com.reviewer.movie;
 import com.reviewer.review.Review;
 import com.reviewer.review.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,8 +19,9 @@ public class MovieService {
     @Autowired
     private ReviewRepository reviewRepo;
 
-    public List<Movie> listAll() {
-        return movieRepo.findAll();
+    public Page<Movie> listPages(int pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber - 1, 5);
+        return movieRepo.findAll(pageable);
     }
 
     public void save(Movie movie){
