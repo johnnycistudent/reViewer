@@ -21,6 +21,7 @@
                         <th>User</th>
                         <th>Rating</th>
                         <th>Date Created</th>
+                        <th>Comments</th>
                         <th sec:authorize="hasAnyAuthority('ADMIN')">Actions</th>
                     </tr>
                 </thead>
@@ -33,6 +34,7 @@
                     <td><a th:href="@{/user/{id}(id=${review.user.userID})}">[[${review.user.userName}]]</a></td>
                     <td>[[${review.rating}]]</td>
                     <td>[[${review.createdAt}]]</td>
+                    <td>[[${#lists.size(review.comments)}]]</td>
                     <td sec:authorize="hasAnyAuthority('ADMIN')">
                             <a th:href="@{'/edit_review/' + ${review.reviewID}}">Edit</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;

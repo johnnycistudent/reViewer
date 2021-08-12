@@ -31,6 +31,8 @@ public class UserController {
     // user endpoints
     @GetMapping("/register")
     public String showSignUpForm(Model model){
+        // add model for page title + user to form for data capture
+        model.addAttribute("pageTitle", "Register New User");
         model.addAttribute("user", new User());
 
         return "signup_form";
@@ -56,19 +58,32 @@ public class UserController {
         return "redirect:/";
     }
 
+    // list all users
     @GetMapping("/list_users")
     public String viewUsersList(Model model){
+        // find all users
         List<User> listUsers = userRepo.findAll();
+
+        // add model for page title, user list
+        model.addAttribute("pageTitle", "Users List");
         model.addAttribute("listUsers", listUsers);
 
         return "users";
     }
 
+    // single user view
     @GetMapping("/user/{id}")
     public String showUser(@PathVariable(name = "id") Long id, Model model){
+        // find user by id passed through parameter
         User user = userRepo.findById(id).get();
+
+        // add model for page title, user object, list reviews, favourites, seen, watchlist
+        model.addAttribute("pageTitle", user.getUserName() + "'s Profile");
         model.addAttribute("user", user);
         model.addAttribute("reviewList", user.getReviews());
+        model.addAttribute("favouriteList", user.getFavourites());
+        model.addAttribute("seenList", user.getSeen());
+        model.addAttribute("watchList", user.getWant());
 
         return "user";
     }

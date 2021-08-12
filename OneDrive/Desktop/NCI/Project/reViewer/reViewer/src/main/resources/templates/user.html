@@ -31,6 +31,44 @@
                 </ul>
             </div>
         </div>
+        <div th:object="${user}">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#userReviews">Reviews</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#userFavourites">Favourites</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#userSeen">Seen</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#userWatchlist">Watchlist</a>
+                </li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade active show" id="userReviews" >
+                    <div th:each="review: ${reviewList}">
+                        <a th:href="@{/review/{id}(id=${review.movie.movieID})}"> [[${review.movie.title}]]</a>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="userFavourites">
+                    <div th:each="fave: ${favouriteList}">
+                        <a th:href="@{/movie/{id}(id=${fave.movieID})}"> [[${fave.title}]]</a>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="userSeen">
+                    <div th:each="seen: ${seenList}">
+                        <a th:href="@{/movie/{id}(id=${seen.movieID})}"> [[${seen.title}]]</a>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="userWatchlist">
+                    <div th:each="watch: ${watchList}">
+                        <a th:href="@{/movie/{id}(id=${watch.movieID})}"> [[${watch.title}]]</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div th:replace="fragments :: footer">Static Footer</div>

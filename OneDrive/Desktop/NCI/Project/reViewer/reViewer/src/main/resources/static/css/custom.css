@@ -1,5 +1,62 @@
-body {
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,700&family=Roboto+Condensed:wght@400;700&display=swap');
 
+/* General rules */
+
+body {
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+.logo {
+    font-family: 'Merriweather', sans-serif;
+    font-style: italic;
+}
+
+
+/* Navbar */
+
+.navbar-brand {
+    font-family: 'Merriweather', sans-serif;
+    border-right: none;
+}
+
+
+/* overwrite bootswatch inherit styles for navbar */
+.navbar .nav-link {
+    border-left: none;
+    border-right: none;
+}
+
+.navbar .nav-link:focus, .navbar .nav-link:hover {
+    background-image: none;
+    border-left: none;
+}
+
+.nav-item{
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* Footer */
+
+.social-link:hover {
+    color: #fff;
+    transform: scale(1.5);
+    -webkit-transform: scale(1.5);
+    -moz-transform: scale(1.5);
+    -o-transform: scale(1.5);
+}
+
+.social-link {
+    text-decoration: none;
+    color: #7a8288;
+    -webkit-transform: scale(0.8);
+    -moz-transform: scale(0.8);
+    -o-transform: scale(0.8);
+    transform: scale(0.8);
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -o-transition-duration: 0.5s;
 }
 
 /* Movie Card */

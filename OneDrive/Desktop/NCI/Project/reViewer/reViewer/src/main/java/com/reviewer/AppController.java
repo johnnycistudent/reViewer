@@ -19,6 +19,7 @@ public class AppController {
     // home
     @GetMapping("/")
     public String viewHomePage(Model model){
+        // add model for page title
         model.addAttribute("pageTitle", "re:Viewer Homepage");
         return "index";
     }

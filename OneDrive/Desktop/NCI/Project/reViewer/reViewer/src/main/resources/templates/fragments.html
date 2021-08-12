@@ -14,6 +14,10 @@
     <link th:rel="stylesheet" th:href="@{/css/custom.css}">
     <!-- font awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.css" rel="stylesheet" type="text/css" />
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
     <title>[[${pageTitle}]]</title>
 </head>
     <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -26,15 +30,26 @@
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Home
+                        <a class="nav-link"
+                           th:classappend="${#httpServletRequest.getRequestURI() == '/' ? 'active':''}"
+                           th:href="@{/}">
+                            Home
                             <span class="visually-hidden">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/movies}">Movies</a>
+                        <a class="nav-link "
+                           th:classappend="${#httpServletRequest.getRequestURI() == '/movies' ? 'active':''}"
+                           th:href="@{/movies}">
+                            Movies
+                            <span class="visually-hidden">(current)</span>
+                        </a>
+
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/reviews}">Reviews</a>
+                        <a class="nav-link ${classActiveSettings}"
+                           th:classappend="${#httpServletRequest.getRequestURI() == '/reviews' ? 'active':''}"
+                           th:href="@{/reviews}">Reviews</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">All Links</a>
@@ -48,24 +63,144 @@
                             <a class="dropdown-item" href="#">Separated link</a>
                         </div>
                     </li>
-                    <li class="nav-item" sec:authorize="isAnonymous()">
+                    <li class="nav-item ${classActiveSettings}" sec:authorize="isAnonymous()">
                         <a class="nav-link" th:href="@{/login}">Sign In</a>
                     </li>
-                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <li class="nav-item ${classActiveSettings}" sec:authorize="isAuthenticated()">
                         <a class="nav-link" th:href="@{/user_profile}" sec:authentication="principal.sessionName"></a>
                     </li>
                 </ul>
                 <form class="d-flex" th:action="@{/searchMovies}" method="get">
                     <input class="form-control me-sm-2" type="search" name="keyword" placeholder="Search Movies" required>
-                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                    <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
             </div>
         </div>
     </nav>
 
     <div th:fragment="footer" class="footer text-center">
-        <hr>
-        re:Viewer <i class="fa fa-film"></i> - Copyright &copy;
+        <!-- Footer -->
+        <footer class="text-center text-lg-start bg-primary text-muted">
+            <!-- Section: Social media -->
+            <section class="d-flex justify-content-center justify-content-lg-between p-4">
+                <!-- Left -->
+                <div class="me-5 d-none d-lg-block">
+                    <span>Get connected with us on social networks:</span>
+                </div>
+                <!-- Left -->
+
+                <!-- Right -->
+                <div>
+                    <a href="" class="me-4 social-link">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="" class="me-4 social-link">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="" class="me-4 social-link">
+                        <i class="fab fa-google"></i>
+                    </a>
+                    <a href="" class="me-4 social-link">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="" class="me-4 social-link">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/johnnycistudent/reViewer" class="me-4 social-link">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+                <!-- Right -->
+            </section>
+            <!-- Section: Social media -->
+            <hr>
+            <!-- Section: Links  -->
+            <section class="">
+                <div class="container text-center text-md-start mt-5">
+                    <!-- Grid row -->
+                    <div class="row mt-3">
+                        <!-- Grid column -->
+                        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                            <!-- Content -->
+                            <h6 class="fw-bold mb-4">
+                                <i class="fas fa-gem me-3"></i><span class="logo">re:Viewer <i class="fa fa-film"></i></span>
+                            </h6>
+                            <p>
+                                Here you can use rows and columns to organize your footer content. Lorem ipsum
+                                dolor sit amet, consectetur adipisicing elit.
+                            </p>
+                        </div>
+                        <!-- Grid column -->
+
+                        <!-- Grid column -->
+                        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                            <!-- Links -->
+                            <h6 class="text-uppercase fw-bold mb-4">
+                                Products
+                            </h6>
+                            <p>
+                                <a href="#!" class="text-reset">Angular</a>
+                            </p>
+                            <p>
+                                <a href="#!" class="text-reset">React</a>
+                            </p>
+                            <p>
+                                <a href="#!" class="text-reset">Vue</a>
+                            </p>
+                            <p>
+                                <a href="#!" class="text-reset">Laravel</a>
+                            </p>
+                        </div>
+                        <!-- Grid column -->
+
+                        <!-- Grid column -->
+                        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                            <!-- Links -->
+                            <h6 class="text-uppercase fw-bold mb-4">
+                                Useful links
+                            </h6>
+                            <p>
+                                <a href="#!" class="text-reset">Pricing</a>
+                            </p>
+                            <p>
+                                <a href="#!" class="text-reset">Settings</a>
+                            </p>
+                            <p>
+                                <a href="#!" class="text-reset">Orders</a>
+                            </p>
+                            <p>
+                                <a href="#!" class="text-reset">Help</a>
+                            </p>
+                        </div>
+                        <!-- Grid column -->
+
+                        <!-- Grid column -->
+                        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                            <!-- Links -->
+                            <h6 class="text-uppercase fw-bold mb-4">
+                                Contact
+                            </h6>
+                            <p><i class="fas fa-home me-3"></i> Dublin, D02 X5W6, Ireland</p>
+                            <p>
+                                <i class="fas fa-envelope me-3"></i>
+                                info@reviewer.com
+                            </p>
+                            <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
+                            <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+                        </div>
+                        <!-- Grid column -->
+                    </div>
+                    <!-- Grid row -->
+                </div>
+            </section>
+            <!-- Section: Links  -->
+            <hr>
+            <!-- Copyright -->
+            <div class="text-center p-4 bg-primary">
+                 &copy; Copyright 2021 - <span class="logo">re:Viewer <i class="fa fa-film"></i></span>
+            </div>
+            <!-- Copyright -->
+        </footer>
     </div>
 
     <th:block th:fragment="scripts">
