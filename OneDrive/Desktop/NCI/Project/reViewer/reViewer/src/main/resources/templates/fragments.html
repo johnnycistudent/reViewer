@@ -70,10 +70,22 @@
                         <a class="nav-link" th:href="@{/user_profile}" sec:authentication="principal.sessionName"></a>
                     </li>
                 </ul>
-                <form class="d-flex" th:action="@{/searchMovies}" method="get">
-                    <input class="form-control me-sm-2" type="search" name="keyword" placeholder="Search Movies" required>
-                    <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
+<!--                <form class="d-flex" th:action="@{/searchMovies}" method="get">-->
+<!--                    <input class="form-control me-sm-2" type="search" name="keyword" placeholder="Search Movies" required>-->
+<!--                    <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>-->
+<!--                </form>-->
+
+
+                <div class='search-box'>
+                    <form class='search-form' th:action="@{/searchMovies}" method="get"  >
+                        <input class='form-control' placeholder='search movies' type='search' name="keyword" required>
+                        <button class='btn btn-link search-btn'>
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+
+
             </div>
         </div>
     </nav>
