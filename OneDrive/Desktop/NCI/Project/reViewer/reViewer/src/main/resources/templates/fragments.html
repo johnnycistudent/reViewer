@@ -20,6 +20,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
     <title>[[${pageTitle}]]</title>
 </head>
+    <!-- Navbar -->
     <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
             <a class="navbar-brand" th:href="@{/}">re:Viewer <i class="fa fa-film"></i></a>
@@ -29,6 +30,8 @@
 
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <ul class="navbar-nav me-auto">
+
+                    <!-- Navbar Links -->
                     <li class="nav-item">
                         <a class="nav-link"
                            th:classappend="${#httpServletRequest.getRequestURI() == '/' ? 'active':''}"
@@ -70,15 +73,11 @@
                         <a class="nav-link" th:href="@{/user_profile}" sec:authentication="principal.sessionName"></a>
                     </li>
                 </ul>
-<!--                <form class="d-flex" th:action="@{/searchMovies}" method="get">-->
-<!--                    <input class="form-control me-sm-2" type="search" name="keyword" placeholder="Search Movies" required>-->
-<!--                    <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>-->
-<!--                </form>-->
 
-
+                <!-- Search Box -->
                 <div class='search-box'>
                     <form class='search-form' th:action="@{/searchMovies}" method="get"  >
-                        <input class='form-control' placeholder='search movies' type='search' name="keyword" required>
+                        <input class='form-control search-input' placeholder='search movies' type='search' name="keyword" required>
                         <button class='btn btn-link search-btn'>
                             <i class="fas fa-search"></i>
                         </button>
@@ -90,8 +89,9 @@
         </div>
     </nav>
 
+    <!-- Footer -->
     <div th:fragment="footer" class="footer text-center">
-        <!-- Footer -->
+
         <footer class="text-center text-lg-start bg-primary text-muted">
             <!-- Section: Social media -->
             <section class="d-flex justify-content-center justify-content-lg-between p-4">
@@ -103,22 +103,19 @@
 
                 <!-- Right -->
                 <div>
-                    <a href="" class="me-4 social-link">
+                    <a href="https://www.facebook.com/" target="_blank" class="me-4 social-link">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a href="" class="me-4 social-link">
+                    <a href="https://twitter.com/" target="_blank" class="me-4 social-link">
                         <i class="fab fa-twitter"></i>
                     </a>
-                    <a href="" class="me-4 social-link">
-                        <i class="fab fa-google"></i>
-                    </a>
-                    <a href="" class="me-4 social-link">
+                    <a href="https://www.instagram.com/" target="_blank" class="me-4 social-link">
                         <i class="fab fa-instagram"></i>
                     </a>
-                    <a href="" class="me-4 social-link">
+                    <a href="https://ie.linkedin.com/" target="_blank" class="me-4 social-link">
                         <i class="fab fa-linkedin"></i>
                     </a>
-                    <a href="https://github.com/johnnycistudent/reViewer" class="me-4 social-link">
+                    <a href="https://github.com/johnnycistudent/reViewer" target="_blank" class="me-4 social-link">
                         <i class="fab fa-github"></i>
                     </a>
                 </div>
@@ -138,31 +135,12 @@
                                 <i class="fas fa-gem me-3"></i><span class="logo">re:Viewer <i class="fa fa-film"></i></span>
                             </h6>
                             <p>
-                                Here you can use rows and columns to organize your footer content. Lorem ipsum
-                                dolor sit amet, consectetur adipisicing elit.
+                                Here you can use rows and columns to organize your footer content. re:Viewer
                             </p>
                         </div>
                         <!-- Grid column -->
 
-                        <!-- Grid column -->
-                        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                            <!-- Links -->
-                            <h6 class="text-uppercase fw-bold mb-4">
-                                Products
-                            </h6>
-                            <p>
-                                <a href="#!" class="text-reset">Angular</a>
-                            </p>
-                            <p>
-                                <a href="#!" class="text-reset">React</a>
-                            </p>
-                            <p>
-                                <a href="#!" class="text-reset">Vue</a>
-                            </p>
-                            <p>
-                                <a href="#!" class="text-reset">Laravel</a>
-                            </p>
-                        </div>
+
                         <!-- Grid column -->
 
                         <!-- Grid column -->
@@ -172,16 +150,16 @@
                                 Useful links
                             </h6>
                             <p>
-                                <a href="#!" class="text-reset">Pricing</a>
+                                <a th:href="@{/movies}" class="text-reset">Movies</a>
                             </p>
                             <p>
-                                <a href="#!" class="text-reset">Settings</a>
+                                <a th:href="@{/reviews}" class="text-reset">Reviews</a>
                             </p>
                             <p>
-                                <a href="#!" class="text-reset">Orders</a>
+                                <a th:href="@{/login}" class="text-reset">Sign in</a>
                             </p>
                             <p>
-                                <a href="#!" class="text-reset">Help</a>
+                                <a th:href="@{/register}" class="text-reset">Register</a>
                             </p>
                         </div>
                         <!-- Grid column -->

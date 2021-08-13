@@ -52,44 +52,101 @@
             <div>
                 Total Items: [[${totalItems}]] - Page [[${currentPage}]] of [[${totalPages}]]
                 <br>
-
+                <!-- First -->
                 <a th:if="${currentPage > 1}" th:href="@{'/movies/1'}" >First</a>
                 <span th:unless="${currentPage > 1}" th:href="@{movies}">First</span>
-                <a th:if="${currentPage > 1}" th:href="@{${currentPage - 1}}" href="">Previous</a>
+                <!-- Previous -->
+                <a th:if="${currentPage > 1}" th:href="@{${currentPage - 1}}">Previous</a>
+                <span th:unless="${currentPage > 1}" >Previous</span>
+                <!-- Pages -->
                 <span th:each="i:${#numbers.sequence(1, totalPages)}">
                     <a th:if="${i != currentPage}" th:href="@{'/movies/{pageNo}'(pageNo=${i})}">[[${i}]]</a>
                     <span th:unless="${i != currentPage}">[[${i}]]</span>
                 </span>
 
+                <!-- Next -->
                 <a th:if="${currentPage < totalPages}" th:href="@{'/movies/' + ${currentPage + 1}}">Next</a>
                 <span th:unless="${currentPage < totalPages}">Next</span>
+                <!-- Last -->
                 <a th:if="${currentPage < totalPages}" th:href="@{'/movies/' + ${totalPages}}">Last</a>
                 <span th:unless="${currentPage < totalPages}">Last</span>
 
             </div>
 
-            <div>
-                <a th:href="@{new_review}">Create new Review entry</a>
+            <div class="row">
+                <th:block th:each="movie : ${listMovies}">
+
+                        <div class="col-sm-12 col-md-4 col-lg-3">
+
+                        <div class="movie-card">
+                            <div class="movie-card-img-container"
+                                    th:unless="${movie.posterImagePath == null || movie.posterImagePath.isBlank()}">
+                                <img th:src="@{${movie.posterImagePath}}" class="img img-responsive">
+                            </div>
+                            <div th:if="${movie.posterImagePath == null || movie.posterImagePath.isBlank()}">
+                                <img th:src="@{images/popcorn.jpg}" class="img img-responsive">
+                            </div>
+
+
+        <!--                    <div class="movie-name">[[${movie.title}]] <span>[[${movie.year}]]</span></div>-->
+        <!--                    <div class="movie-director">[[${movie.director}]]</div>-->
+                            <a th:href="@{/movie/{id}(id=${movie.movieID})}" class="stretched-link"></a>
+                        </div>
+
+                    </div>
+                </th:block>
             </div>
+            <!-- pagination controls -->
+            <div class="row">
 
-            <th:block th:each="movie : ${listMovies}">
+                <div class="d-flex justify-content-center">
+                    <ul class="pagination">
+                        <!-- first -->
+                        <li th:if="${currentPage > 1}" class="page-item">
+                            <a class="page-link" th:href="@{'/movies/1'}">First</a>
+                        </li>
+                        <li th:unless="${currentPage > 1}" class="page-item disabled">
+                            <a class="page-link" th:href="@{'/movies/1'}">First</a>
+                        </li>
+                        <!-- previous -->
+                        <li th:if="${currentPage > 1}" class="page-item">
+                            <a class="page-link" th:href="@{${currentPage - 1}}">Previous</a>
+                        </li>
+                        <li th:unless="${currentPage > 1}" class="page-item disabled">
+                            <a class="page-link" href="#">Previous</a>
+                        </li>
 
-                <div class="movie-card">
-                    <div th:unless="${movie.posterImagePath == null || movie.posterImagePath.isBlank()}">
-                        <img th:src="@{${movie.posterImagePath}}" class="img img-responsive">
-                    </div>
-                    <div th:if="${movie.posterImagePath == null || movie.posterImagePath.isBlank()}">
-                        <img th:src="@{images/popcorn.jpg}" class="img img-responsive">
-                    </div>
+                        <!-- page numbers -->
+                        <th:block th:each="i:${#numbers.sequence(1, totalPages)}">
+                            <li th:if="${i != currentPage}" class="page-item active">
+                                <a class="page-link" th:href="@{'/movies/{pageNo}'(pageNo=${i})}">[[${i}]]</a>
+                            </li>
+                            <li th:unless="${i != currentPage}" class="page-item disabled">
+                                <a class="page-link" >[[${i}]]</a>
+                            </li>
+                        </th:block>
 
+                        <!-- next -->
+                        <li th:if="${currentPage < totalPages}" class="page-item ">
+                            <a class="page-link" th:href="@{'/movies/' + ${currentPage + 1}}">Next</a>
+                        </li>
+                        <li th:unless="${currentPage < totalPages}" class="page-item disabled">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
 
-                    <div class="movie-name">[[${movie.title}]] <span>[[${movie.year}]]</span></div>
-                    <div class="movie-director">[[${movie.director}]]</div>
-                    <div class="profile-icons"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-linkedin"></i></a></div>
-                    <a th:href="@{/movie/{id}(id=${movie.movieID})}" class="stretched-link"></a>
+                        <!-- last -->
+                        <li th:if="${currentPage < totalPages}" class="page-item">
+                            <a class="page-link" th:href="@{'/movies/' + ${totalPages}}">Last</a>
+                        </li>
+                        <li th:unless="${currentPage < totalPages}" class="page-item disabled">
+                            <a class="page-link">Last</a>
+                        </li>
+                    </ul>
                 </div>
-
-            </th:block>
+                <div class="movies-info text-center">
+                    Total Items: [[${totalItems}]] - Page [[${currentPage}]] of [[${totalPages}]]
+                </div>
+            </div>
         </div>
     </div>
 

@@ -4,6 +4,7 @@
 
 body {
     font-family: 'Roboto Condensed', sans-serif;
+    background-color: rgb(39 43 48);
 }
 
 .logo {
@@ -12,16 +13,30 @@ body {
 }
 
 
+
+.btn.btn-success {
+    font-family: 'Roboto Condensed', sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-shadow: 0.075em 0.08em 0.1em rgb(0 0 0);
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+    border-color: transparent;
+}
+
+
 /* Navbar */
 
 .navbar-brand {
     font-family: 'Merriweather', sans-serif;
+    font-style: italic;
     border-right: none;
+    text-shadow: 0.075em 0.08em 0.1em rgb(0 0 0);
 }
 
 
 /* overwrite bootswatch inherit styles for navbar */
 .navbar .nav-link {
+    text-shadow: 0.075em 0.08em 0.1em rgb(0 0 0);
     border-left: none;
     border-right: none;
 }
@@ -44,6 +59,10 @@ body {
     border-radius: 3px;
     position: relative;
     background: #fff;
+}
+
+.search-input {
+    height: 40px;
 }
 /*.search-box.hovered, .search-box:hover, .search-box:active {*/
 /*    border: 1px solid #aaa;*/
@@ -101,10 +120,41 @@ input[type="search"]::-webkit-search-cancel-button{
     -o-transition-duration: 0.5s;
 }
 
+/* Index page */
+
+.jumbotron {
+    background-image: url("/images/collage_alt_3.jpg");
+    background-position: center;
+    background-size: cover;
+    box-shadow: inset 0px 0px 20px 19px rgb(39 43 48);
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.jumbotron-logo {
+    font-family: 'Merriweather', sans-serif;
+    text-shadow: 0.075em 0.08em 0.1em rgb(0 0 0);
+    text-align: center;
+    color: #fff;
+    font-size: 3rem;
+}
+
+.jumbotron-tagline {
+    text-shadow: 0.075em 0.08em 0.1em rgb(0 0 0);
+
+    text-align: center;
+    color: #fff;
+    font-size: 2rem;
+}
+
 /* Movie Card */
 
 .movie-card {
-    max-width: 300px;
+    max-width: 200px;
+    height: 250px;
     background-color: #FFF;
     box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);
     background-position: center;
@@ -115,7 +165,14 @@ input[type="search"]::-webkit-search-cancel-button{
     border-radius: 10px;
 }
 
+.movie-card-img-container {
+    width: 100%;
+    height: 100%;
+}
+
 .movie-card img {
+    width: 100%;
+    height: 100%;
     transition: all linear 0.25s;
 }
 
