@@ -248,6 +248,11 @@ input[type="search"]::-webkit-search-cancel-button{
     border-radius: 10px;
 }
 
+.review-content {
+    font-size: 1.5rem;
+    color: #e9ecef;
+}
+
 .comment-avatar{
 
 }

@@ -21,7 +21,11 @@
                         <div class="review-img-container ">
                             <img th:src="@{${review.movie.posterImagePath}}" class="img review-img">
                         </div>
-                        <p>Overall rating: [[${review.movie.avgRating}]]</p>
+                        <p>Year: [[${review.movie.year}]]</p>
+                        <p>Genre: [[${review.movie.genre}]]</p>
+                        <p>Director: [[${review.movie.director}]]</p>
+                        <p>re:Viewer rating: [[${review.movie.avgRating}]]</p>
+
                     </div>
                 </div>
 
@@ -33,13 +37,25 @@
                             [[${review.user.userName}]]
                         </a>
                     </p>
-                    <p>[[${review.content}]]</p>
+                    <hr>
+                    <p class="review-content">[[${review.content}]]</p>
                     <p>Rating: [[${review.rating}]] out of 5</p>
+                    <hr>
                     <p>created: [[${#dates.format(review.createdAt, 'HH:mm dd-MM-yyyy')}]]</p>
                     <p>No of likes: [[${#lists.size(review.reviewLikes)}]]</p>
-                    <form th:action="@{/like_review/{id}(id=${review.reviewID})}" method="post">
-                        <button type="submit" class="btn btn-success btn-sm">Like Review</button>
-                    </form>
+                    <div>
+                        <form th:action="@{/like_review/{id}(id=${review.reviewID})}" method="post">
+                            <div sec:authorize="isAnonymous()">
+                                <button type="submit" class="btn btn-success btn-sm disabled" >Like Review</button>
+                                <p class="text-muted">
+                                    <a th:href="@{/login}">Sign In</a> or <a th:href="@{/register}">Register</a> to like a review!
+                                </p>
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-success btn-sm" sec:authorize="isAuthenticated()">Like Review</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
