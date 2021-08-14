@@ -8,37 +8,80 @@
     <nav th:replace="fragments :: navbar">
         Static Navbar
     </nav>
-    <div class="container">
-        <div align="center">
+    <div class="container page-container">
+        <!-- review -->
+        <div class="review-container">
+            <div class="row">
+                <div class=" col-5 col-lg-3 offset-lg-2">
+                    <div class="review-movie-info">
+                        <!-- review image -->
+                        <div class="review-img-container ">
+                            <img th:src="@{${review.movie.posterImagePath}}" class="img review-img">
+                        </div>
+                        <p>Overall rating: [[${review.movie.avgRating}]]</p>
+                    </div>
+                </div>
 
-            <div th:object="${review}">
-                <h5>[[${review.user.userName}]]'s  review of [[${review.movie.title}]]</h5>
+                <div class=" col-7 col-lg-5">
+                    <!-- review content -->
+                    <h3>Review of [[${review.movie.title}]]</h3>
+                    <p>by
+                        <a class="username-link" th:href="@{/user/{id}(id=${review.user.userID})}">
+                            [[${review.user.userName}]]
+                        </a>
+                    </p>
+                    <p>[[${review.content}]]</p>
+                    <p>Rating: [[${review.rating}]] out of 5</p>
+                    <p>created: [[${#dates.format(review.createdAt, 'HH:mm dd-MM-yyyy')}]]</p>
+                </div>
             </div>
-
-            <p>[[${review.content}]]</p>
-            <p>Rating: [[${review.rating}]] out of 5</p>
-            <p>created: [[${review.createdAt}]]</p>
-            <div>
-                <p>There are [[${#lists.size(review.comments)}]] comments on this review</p>
-                <ul th:each="c : ${#lists.sort(commentList)}">
-                    <hr>
-                    <li>[[${c.commentID}]]</li>
-                    <li>[[${c.user.userName}]]</li>
-                    <li>[[${c.text}]]</li>
-                    <li>[[${c.createdAt}]]</li>
-                    <hr>
-                </ul>
-            </div>
-
         </div>
-        <form th:action="@{/save_comment/{id}(id=${review.reviewID})}" th:object="${newComment}" method="post">
-            <div class="form-group" >
-                <p>HERE IS A TEMPLATE LITERAL for comment.commentID: [[${commentID}]]</p>
-                <label for="exampleTextarea" class="form-label mt-4" >Example textarea</label>
-                <textarea class="form-control" id="exampleTextarea" rows="3" th:field="*{text}" required></textarea>
-                <button type="submit" class="btn btn-success">Submit</button>
+
+        <!-- review comments -->
+        <div class="comment-container">
+            <div class="row">
+
+                <!-- comments -->
+                <div class="col-12 col-lg-6 offset-lg-3">
+                    <p class="text-center">
+                        There are [[${#lists.size(review.comments)}]] comments on this review
+                    </p>
+                    <hr>
+                    <div th:each="c : ${#lists.sort(commentList)}">
+
+
+                        <span>
+                            <a class="username-link" th:href="@{/user/{id}(id=${c.user.userID})}">
+                                [[${c.user.userName}]]
+                            </a>
+                            <em>commented:</em>
+                        </span>
+
+                        <div class="comment-body bg-light">
+                            <span>[[${c.text}]]</span>
+                        </div>
+                        <div class="comment-time">[[${#dates.format(c.createdAt, 'HH:mm dd-MM-yyyy')}]]</div>
+                        <hr>
+                    </div>
+                </div>
+
+                <!-- comment form -->
+                <div class="col-12 col-lg-6 offset-lg-3">
+                    <div class="comment-form">
+                        <form th:action="@{/save_comment/{id}(id=${review.reviewID})}" th:object="${newComment}" method="post">
+                            <div class="form-group" >
+                                <label for="exampleTextarea" class="form-label mt-4" >Example textarea</label>
+                                <textarea class="form-control new-comment" id="exampleTextarea" rows="3" th:field="*{text}" required></textarea>
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-        </form>
+        </div>
+
+
+
     </div>
 
     <div th:replace="fragments :: footer">Static Footer</div>

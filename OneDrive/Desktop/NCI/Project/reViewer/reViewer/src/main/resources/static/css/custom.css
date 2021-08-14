@@ -12,7 +12,25 @@ body {
     font-style: italic;
 }
 
+.page-container {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
 
+h1,h2,h3,h4,h5{
+    color: #fff;
+    text-shadow: 0.075em 0.08em 0.1em rgb(0 0 0);
+    font-weight: 700;
+}
+
+.username-link {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.2rem;
+    font-style: italic;
+    font-weight: 700;
+    text-shadow: 0.075em 0.08em 0.1em rgb(0 0 0);
+}
 
 .btn.btn-success {
     font-family: 'Roboto Condensed', sans-serif;
@@ -64,19 +82,6 @@ body {
 .search-input {
     height: 40px;
 }
-/*.search-box.hovered, .search-box:hover, .search-box:active {*/
-/*    border: 1px solid #aaa;*/
-/*}*/
-/*.search-box input[type=text] {*/
-/*    border: none;*/
-/*    box-shadow: none;*/
-/*    display: inline-block;*/
-/*    padding: 0;*/
-/*    background: transparent;*/
-/*}*/
-/*.search-box input[type=text]:hover, .search-box input[type=text]:focus, .search-box input[type=text]:active {*/
-/*    box-shadow: none;*/
-/*}*/
 
 /* clears the 'X' from Chrome */
 input[type="search"]::-webkit-search-cancel-button{
@@ -222,4 +227,45 @@ input[type="search"]::-webkit-search-cancel-button{
 
 .movie-card:hover .profile-icons {
     right: 40px;
+}
+
+/* review */
+
+.review-movie-info {
+    margin: auto;
+    text-align: center;
+}
+
+.review-img-container {
+    max-width: 150px;
+    height: 200px;
+    margin: auto;
+}
+
+.review-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.comment-avatar{
+
+}
+
+.comment-body {
+    color: #3a3f44;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+    text-shadow: 1px 1px 1px rgb(0 0 0 / 10%);
+}
+
+.comment-time {
+    text-align: end;
+}
+
+.new-comment {
+    margin-bottom: 5px;
 }

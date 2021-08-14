@@ -8,7 +8,7 @@
     <nav th:replace="fragments :: navbar">
         Static Navbar
     </nav>
-    <div class="container">
+    <div class="container page-container">
         <div align="center">
             <div th:if="${review.reviewID == null}">
                 <h1>Create New Review</h1>
@@ -23,7 +23,9 @@
                     </tr>
                     <tr>
                         <td>Review: </td>
-                        <td><input type="text" th:field="*{content}"></td>
+<!--                        <td><input type="text" th:field="*{content}"></td>-->
+                        <td><label for="reviewContent">Review:</label></td>
+                        <td><textarea id="reviewContent" type="text" th:field="*{content}"></textarea></td>
                     </tr>
                     <tr>
                         <td>Rating: </td>
