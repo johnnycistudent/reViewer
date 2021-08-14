@@ -35,6 +35,8 @@ public class Movie {
     @ManyToMany(mappedBy = "want")
     private Set<User> want;
 
+
+
     @Column(name="avgRating", columnDefinition = "int default 0")
     private int avgRating;
 

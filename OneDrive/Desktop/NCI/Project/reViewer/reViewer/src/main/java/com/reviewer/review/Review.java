@@ -25,6 +25,9 @@ public class Review extends AuditModel {
     @JoinColumn(name = "userID")
     private User user;
 
+    @ManyToMany(mappedBy = "reviewLikes")
+    private Set<User> reviewLikes;
+
     // review's comments
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "reviewID")
@@ -80,5 +83,12 @@ public class Review extends AuditModel {
         this.comments = comments;
     }
 
+    public Set<User> getReviewLikes() {
+        return reviewLikes;
+    }
+
+    public void setReviewLikes(Set<User> reviewLikes) {
+        this.reviewLikes = reviewLikes;
+    }
 
 }

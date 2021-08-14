@@ -70,6 +70,15 @@ public class User {
     )
     private Set<Movie> want = new HashSet<>();
 
+    // user's liked reviews list
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "review_like",
+            joinColumns = @JoinColumn(name = "userID"),
+            inverseJoinColumns = @JoinColumn(name = "reviewID")
+    )
+    private Set<Review> reviewLikes = new HashSet<>();
+
     // user's comments
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "userID")
@@ -170,5 +179,13 @@ public class User {
 
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
+    }
+
+    public Set<Review> getReviewLikes() {
+        return reviewLikes;
+    }
+
+    public void setReviewLikes(Set<Review> reviewLikes) {
+        this.reviewLikes = reviewLikes;
     }
 }

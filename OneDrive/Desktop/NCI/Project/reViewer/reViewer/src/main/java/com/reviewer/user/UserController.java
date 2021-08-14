@@ -3,6 +3,8 @@ package com.reviewer.user;
 import com.reviewer.FileUploadUtil;
 import com.reviewer.movie.Movie;
 import com.reviewer.movie.MovieRepository;
+import com.reviewer.review.Review;
+import com.reviewer.review.ReviewRepository;
 import org.apache.catalina.security.SecurityClassLoad;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -27,6 +29,8 @@ public class UserController {
     private UserRepository userRepo;
     @Autowired
     private MovieRepository movieRepo;
+    @Autowired
+    private ReviewRepository reviewRepo;
 
     // user endpoints
     @GetMapping("/register")
@@ -176,5 +180,36 @@ public class UserController {
         userRepo.save(user);
 
         return "redirect:/movie/" + movieID;
+    }
+
+    // like a review
+    @PostMapping ( "/like_review/{id}")
+    public String likeReview(@PathVariable(name = "id") Long reviewID,
+                           @AuthenticationPrincipal CustomUserDetails currentUser,
+                           RedirectAttributes userAlert)  {
+        // Get current userID
+        Long currentUserID = currentUser.getSessionUserID();
+        // find current user in user repo by ID
+        User user = userRepo.findById(currentUserID).get();
+        // find review ID by argument passed in through front end
+        Review review = reviewRepo.findById(reviewID).get();
+
+        // if the user has already liked this review,
+        if(user.getReviewLikes().contains(review)) {
+            // remove it from the user's liked review list
+            user.getReviewLikes().remove(review);
+            // notify user
+            userAlert.addFlashAttribute("success", review.getUser().getUserName() + "'s review was removed from your liked reviews!");
+        } else {
+            // if review isn't on the user's liked review list,
+            // add it to their list
+            user.getReviewLikes().add(review);
+            // notify user
+            userAlert.addFlashAttribute("success", review.getUser().getUserName() + "'s review was added to your liked reviews!");
+        }
+
+        userRepo.save(user);
+
+        return "redirect:/review/" + reviewID;
     }
 }

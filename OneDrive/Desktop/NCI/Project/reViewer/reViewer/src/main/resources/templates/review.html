@@ -9,6 +9,9 @@
         Static Navbar
     </nav>
     <div class="container page-container">
+        <div class="alert alert-dismissible alert-success" role="alert" th:text="${success}" th:if="${success}">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
         <!-- review -->
         <div class="review-container">
             <div class="row">
@@ -33,6 +36,10 @@
                     <p>[[${review.content}]]</p>
                     <p>Rating: [[${review.rating}]] out of 5</p>
                     <p>created: [[${#dates.format(review.createdAt, 'HH:mm dd-MM-yyyy')}]]</p>
+                    <p>No of likes: [[${#lists.size(review.reviewLikes)}]]</p>
+                    <form th:action="@{/like_review/{id}(id=${review.reviewID})}" method="post">
+                        <button type="submit" class="btn btn-success btn-sm">Like Review</button>
+                    </form>
                 </div>
             </div>
         </div>
