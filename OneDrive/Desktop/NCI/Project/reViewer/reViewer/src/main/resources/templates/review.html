@@ -32,9 +32,9 @@
                         <!-- if user isn't authenticated, disable buttons -->
                         <div sec:authorize="isAnonymous()">
                             <div class="btn-group" role="group" aria-label="Basic example" >
-                                <button type="button" class="btn btn-sm btn-success disabled">Seen <i class="fas fa-eye"></i></button>
-                                <button type="button" class="btn btn-sm btn-info disabled">Fave <i class="fas fa-heart"></i></button>
-                                <button type="button" class="btn btn-sm btn-warning disabled">Watch <i class="fas fa-clipboard-list"></i></button>
+                                <button type="button" class="btn btn-sm btn-success disabled"><span class="d-none">Seen</span> <i class="fas fa-eye"></i></button>
+                                <button type="button" class="btn btn-sm btn-info disabled"><span class="d-none">Fave</span> <i class="fas fa-heart"></i></button>
+                                <button type="button" class="btn btn-sm btn-warning disabled"><span class="d-none">Watch</span> <i class="fas fa-clipboard-list"></i></button>
                             </div>
                             <p class="text-muted sign-up-invite">
                                 <a th:href="@{/login}">Sign In</a> or <a th:href="@{/register}">Register</a> to use these features!
@@ -42,9 +42,9 @@
                         </div>
 
                         <div class="btn-group" role="group" aria-label="Basic example" sec:authorize="isAuthenticated()">
-                            <button type="button" class="btn btn-sm btn-success">Seen <i class="fas fa-eye"></i></button>
-                            <button type="button" class="btn btn-sm btn-info">Fave <i class="fas fa-heart"></i></button>
-                            <button type="button" class="btn btn-sm btn-warning">Watch <i class="fas fa-clipboard-list"></i></button>
+                            <button type="button" class="btn btn-sm btn-success"><span class="d-none">Seen</span> <i class="fas fa-eye"></i></button>
+                            <button type="button" class="btn btn-sm btn-info"><span class="d-none">Fave</span> <i class="fas fa-heart"></i></button>
+                            <button type="button" class="btn btn-sm btn-warning"><span class="d-none">Watch</span> <i class="fas fa-clipboard-list"></i></button>
                         </div>
 
                     </div>
