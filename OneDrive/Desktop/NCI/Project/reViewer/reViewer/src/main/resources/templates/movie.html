@@ -9,96 +9,126 @@
         Static Navbar
     </nav>
     <div class="container page-container">
-        <div align="center">
-            <div class="alert alert-dismissible alert-success" role="alert" th:text="${success}" th:if="${success}">
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-            <h1>Single Movie View</h1>
-            <a th:href="@{/movies}">View All Movies</a>
-            <br>
+        <!-- alert container -->
+        <div class="alert alert-dismissible alert-success" role="alert" th:text="${success}" th:if="${success}">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
 
-            <div th:object="${movie}">
-                <p>[[${movie.title}]]</p>
-                <p>[[${movie.year}]]</p>
-                <p>[[${movie.director}]]</p>
+        <!-- MOVIE -->
+        <div class="review-container">
+            <div class="row">
+                <div class=" col-5 col-lg-3 offset-lg-2">
+                    <div class="review-movie-info">
+                        <!-- review image -->
+                        <div class="review-img-container ">
+                            <img th:src="@{${movie.posterImagePath}}" class="img review-img">
+                        </div>
+                        <div class="review-movie-attribute-container">
+                            <p class="review-movie-attribute">Year: [[${movie.year}]]</p>
+                            <p class="review-movie-attribute">Genre: [[${movie.genre}]]</p>
+                            <p class="review-movie-attribute">Director: [[${movie.director}]]</p>
+                            <p class="review-movie-attribute">re:Viewer rating: [[${movie.avgRating}]]</p>
+                        </div>
+                        <!-- if user isn't authenticated, disable buttons -->
+                        <div sec:authorize="isAnonymous()">
+                            <div class="btn-group" role="group" aria-label="Basic example" >
+                                <button type="button" class="btn btn-sm btn-success disabled">Seen <i class="fas fa-eye"></i></button>
+                                <button type="button" class="btn btn-sm btn-info disabled">Fave <i class="fas fa-heart"></i></button>
+                                <button type="button" class="btn btn-sm btn-warning disabled">Watch <i class="fas fa-clipboard-list"></i></button>
+                            </div>
+                            <p class="text-muted sign-up-invite">
+                                <a th:href="@{/login}">Sign In</a> or <a th:href="@{/register}">Register</a> to use these features!
+                            </p>
+                        </div>
 
-            </div>
-            <div th:object="${movie}" class="card mb-3">
-                <h3 class="card-header">[[${movie.title}]]</h3>
-                <div class="card-body">
-                    <h5 class="card-title">[[${movie.director}]]</h5>
-                    <h6 class="card-subtitle text-muted">[[${movie.year}]]</h6>
+                        <div class="btn-group" role="group" aria-label="Basic example" sec:authorize="isAuthenticated()">
+                            <form th:action="@{/save_seen/{id}(id=${movie.movieID})}" method="post">
+                                <button type="submit" class="btn btn-sm btn-success">Seen <i class="fas fa-eye"></i></button>
+                            </form>
+                            <form th:action="@{/save_favourite/{id}(id=${movie.movieID})}" method="post">
+                                <button type="submit" class="btn btn-sm btn-info">Fave <i class="fas fa-heart"></i></button>
+                            </form>
+                            <form th:action="@{/save_want/{id}(id=${movie.movieID})}" method="post">
+                                <button type="submit" class="btn btn-sm btn-warning">Watch <i class="fas fa-clipboard-list"></i></button>
+                            </form>
+                        </div>
+
+                    </div>
                 </div>
 
-                <div class="card-body">
-                    <img th:src="@{${movie.posterImagePath}}" alt="Movie Poster">
-                </div>
-                <div class="card-body">
-                    <p class="card-text">[[${movie.synopsis}]]</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        Liked by:
-                        <span th:each="fave: ${movie.favourites}">
-                            <a th:href="@{/user/{id}(id=${fave.userID})}">[[${fave.userName}]]</a>
-                        </span>
-                        <br>
-                        <div th:object="${movie}">
-                        <form  th:action="@{/save_favourite/{id}(id=${movie.movieID})}" method="post">
-                            <button type="submit" class="btn btn-success">Log as Favourite</button>
+                <div class=" col-7 col-lg-5">
+                    <!-- review content -->
+                    <h3>[[${movie.title}]]</h3>
+                    <hr>
+                    <p class="review-content">[[${movie.synopsis}]]</p>
+                    <p class="review-rating">Rating: [[${movie.avgRating}]] out of 5</p>
+                    <hr>
+                    <p class="review-likes"><small>No of Faves could go here</small> <i class="fas fa-thumbs-up"></i></p>
+                    <div>
+                        <form th:action="@{/save_favourite/{id}(id=${movie.movieID})}" method="post">
+                            <div sec:authorize="isAnonymous()">
+                                <button type="submit" class="btn btn-success btn-sm disabled" >Like Review <i class="far fa-thumbs-up"></i></button>
+                                <p class="text-muted sign-up-invite">
+                                    <a th:href="@{/login}">Sign In</a> or <a th:href="@{/register}">Register</a> to add movies as favourite!
+                                </p>
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-success btn-sm" sec:authorize="isAuthenticated()">Fave</button>
+                            </div>
                         </form>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        Added to Watchlist by:
-                        <span th:each="w: ${movie.want}">
-                            <a th:href="@{/user/{id}(id=${w.userID})}">[[${w.userName}]]</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- review comments -->
+        <div class="comment-container">
+            <div class="row">
+
+                <!-- comments -->
+                <div class="col-12 col-lg-6 offset-lg-3">
+                    <p class="text-center">
+                        There are [[${#lists.size(movie.reviews)}]] reviews on this movie
+                    </p>
+                    <hr>
+                    <div th:each="review : ${reviewList}">
+
+
+                        <span>
+                            <a class="username-link" th:href="@{/user/{id}(id=${review.user.userID})}">
+                                [[${review.user.userName}]]
+
+                            </a>
+                            <em>'s review: </em>
                         </span>
-                        <br>
-                        <div th:object="${movie}">
-                            <form  th:action="@{/save_want/{id}(id=${movie.movieID})}" method="post">
-                                <button type="submit" class="btn btn-success">Log as Want-to-Watch</button>
-                            </form>
+
+                        <div class="comment-body bg-light">
+                            <span>[[${review.content}]]</span>
                         </div>
-                    </li>
-                    <li class="list-group-item">
-                        Seen by:
-                        <span th:each="w: ${movie.seen}">
-                            <a th:href="@{/user/{id}(id=${w.userID})}">[[${w.userName}]]</a>
-                        </span>
-                        <br>
-                        <div th:object="${movie}">
-                            <form  th:action="@{/save_seen/{id}(id=${movie.movieID})}" method="post">
-                                <button type="submit" class="btn btn-success">Log as Seen</button>
-                            </form>
-                        </div>
-                    </li>
-                </ul>
-                <div class="card-body">
-                    <div sec:authorize="isAuthenticated">
+                        <p>rating: [[${review.rating}]] out of 5</p>
+                        <p>
+                            <span>[[${#lists.size(review.comments)}]] <i class="fas fa-comment-alt"></i></span>
+                            &nbsp;&nbsp;&nbsp;
+                            <span>[[${#lists.size(review.reviewLikes)}]] <i class="fas fa-thumbs-up"></i></span>
+                        </p>
+                        <a th:href="@{/review/{id}(id=${review.reviewID})}">View and comment on this review here</a>
+                        <div class="comment-time">[[${#dates.format(review.createdAt, 'HH:mm dd-MM-yyyy')}]]</div>
+                        <hr>
+                    </div>
+                </div>
+
+                <!-- comment form -->
+                <div class="col-12 col-lg-6 offset-lg-3">
+                    <!-- if user is logged in, show form -->
+                    <div class="comment-form" sec:authorize="isAuthenticated()">
                         <a th:href="@{/new_review/{id}(id=${movie.movieID})}" class="card-link">Review This Movie!</a>
                     </div>
-                    <div sec:authorize="isAnonymous()">
-                        <a th:href="@{/login}">Sign In</a>
-                        or <a th:href="@{/register}">Register</a> to Review this movie!
+                    <!-- if user is not logged in or registered, show the following form -->
+                    <div class="comment-form" sec:authorize="isAnonymous()">
+                        <p>Want to review this movie? Simply <a th:href="@{/login}">Sign In</a> or <a th:href="@{/register}">Register</a> to have your say!</p>
                     </div>
                 </div>
-
-                <div class="card-footer text-muted">
-                    2 days ago
-                </div>
             </div>
-
-            <div th:each="review: ${reviewList}">
-                <ul>
-                    <li>[[${review.reviewID}]]</li>
-                    <li>[[${review.content}]]</li>
-                    <li>[[${review.rating}]]</li>
-                    <li>[[${review.user.userName}]]</li>
-                    <li><a th:href="@{/review/{id}(id=${review.reviewID})}">View this review here</a></li>
-                </ul>
-            </div>
-
         </div>
     </div>
 
