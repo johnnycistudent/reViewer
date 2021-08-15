@@ -15,13 +15,14 @@
         </div>
 
         <!-- MOVIE -->
-        <div class="review-container">
+        <div class="entity-container">
             <div class="row">
                 <div class=" col-5 col-lg-3 offset-lg-2">
-                    <div class="review-movie-info">
-                        <!-- review image -->
+                    <div class="movie-info">
+                        <!-- movie image -->
                         <div class="review-img-container ">
                             <img th:src="@{${movie.posterImagePath}}" class="img review-img">
+
                         </div>
                         <div class="review-movie-attribute-container">
                             <p class="review-movie-attribute">Year: [[${movie.year}]]</p>
@@ -57,10 +58,11 @@
                 </div>
 
                 <div class=" col-7 col-lg-5">
-                    <!-- review content -->
-                    <h3>[[${movie.title}]]</h3>
+                    <!-- movie content -->
+                    <h2>[[${movie.title}]]</h2>
+                    <span class="movie-year">[[${movie.year}]]</span>
                     <hr>
-                    <p class="review-content">[[${movie.synopsis}]]</p>
+                    <p class="entity-content">[[${movie.synopsis}]]</p>
                     <p class="review-rating">Rating: [[${movie.avgRating}]] out of 5</p>
                     <hr>
                     <p class="review-likes"><small>No of Faves could go here</small> <i class="fas fa-thumbs-up"></i></p>
@@ -81,11 +83,11 @@
             </div>
         </div>
 
-        <!-- review comments -->
+        <!-- review container -->
         <div class="comment-container">
             <div class="row">
 
-                <!-- comments -->
+                <!-- reviews -->
                 <div class="col-12 col-lg-6 offset-lg-3">
                     <p class="text-center">
                         There are [[${#lists.size(movie.reviews)}]] reviews on this movie
@@ -102,8 +104,12 @@
                             <em>'s review: </em>
                         </span>
 
-                        <div class="comment-body bg-light">
-                            <span>[[${review.content}]]</span>
+                        <div class="movie-review-body">
+                            <span>
+                                <i class="fas fa-quote-left"></i>
+                                [[${review.content}]]
+                                <i class="fas fa-quote-right"></i>
+                            </span>
                         </div>
                         <p>rating: [[${review.rating}]] out of 5</p>
                         <p>

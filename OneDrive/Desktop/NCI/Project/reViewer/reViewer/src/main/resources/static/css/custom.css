@@ -257,9 +257,29 @@ input[type="search"]::-webkit-search-cancel-button{
     right: 40px;
 }
 
-/* review */
 
-.review-movie-info {
+/* single movie */
+
+.movie-year {
+    font-size: 1.5rem;
+}
+
+.movie-review-body {
+    padding: 20px;
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: rgb(132 139 145);
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+    text-shadow: 1px 1px 1px rgb(0 0 0 / 10%);
+}
+
+/* single review */
+
+.movie-info {
     margin: auto;
     text-align: center;
 }
@@ -286,9 +306,10 @@ input[type="search"]::-webkit-search-cancel-button{
 .review-heading-title {
     font-size: 1.75rem;
     font-style: italic;
+    text-decoration: none;
 }
 
-.review-content {
+.entity-content {
     font-size: 1.2rem;
     color: #e9ecef;
 }
@@ -314,19 +335,12 @@ input[type="search"]::-webkit-search-cancel-button{
     margin-bottom: 5px;
 }
 
-.review-movie-stat {
-
-}
-
 .comment-container {
     margin-top: 20px;
 }
 
-.comment-avatar{
-
-}
-
 .comment-body {
+    padding: 10px;
     color: #3a3f44;
     padding: 10px;
     border-radius: 5px;

@@ -16,10 +16,12 @@
         <div class="review-container">
             <div class="row">
                 <div class=" col-5 col-lg-3 offset-lg-2">
-                    <div class="review-movie-info">
+                    <div class="movie-info">
                         <!-- review image -->
                         <div class="review-img-container ">
+                            <a th:href="@{/movie/{id}(id=${review.movie.movieID})}" >
                             <img th:src="@{${review.movie.posterImagePath}}" class="img review-img">
+                            </a>
                         </div>
                         <div class="review-movie-attribute-container">
                             <p class="review-movie-attribute">Year: [[${review.movie.year}]]</p>
@@ -52,7 +54,11 @@
                     <!-- review content -->
 <!--                    <h3>Review of <em>[[${review.movie.title}]]</em></h3>-->
                     <span class="review-heading">Review of
-                        <span class="review-heading-title">[[${review.movie.title}]]</span>
+                        <span >
+                            <a class="review-heading-title" th:href="@{/movie/{id}(id=${review.movie.movieID})}" >
+                                [[${review.movie.title}]]
+                            </a>
+                        </span>
                     </span>
                     <p>by
                         <a class="username-link" th:href="@{/user/{id}(id=${review.user.userID})}">
@@ -60,7 +66,7 @@
                         </a>
                     </p>
                     <hr>
-                    <p class="review-content">[[${review.content}]]</p>
+                    <p class="entity-content">[[${review.content}]]</p>
                     <p class="review-rating">Rating: [[${review.rating}]] out of 5</p>
                     <hr>
                     <p class="text-muted">
