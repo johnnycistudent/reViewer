@@ -76,7 +76,7 @@
             <div class="row">
                 <th:block th:each="movie : ${listMovies}">
 
-                        <div class="col-sm-12 col-md-4 col-lg-3">
+                    <div class="col-sm-12 col-md-4 col-lg-3">
 
                         <div class="movie-card">
                             <div class="movie-card-img-container"
@@ -86,10 +86,6 @@
                             <div th:if="${movie.posterImagePath == null || movie.posterImagePath.isBlank()}">
                                 <img th:src="@{images/popcorn.jpg}" class="img img-responsive">
                             </div>
-
-
-        <!--                    <div class="movie-name">[[${movie.title}]] <span>[[${movie.year}]]</span></div>-->
-        <!--                    <div class="movie-director">[[${movie.director}]]</div>-->
                             <a th:href="@{/movie/{id}(id=${movie.movieID})}" class="stretched-link"></a>
                         </div>
 

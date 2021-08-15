@@ -5,6 +5,9 @@ import com.reviewer.movie.MovieRepository;
 import com.reviewer.movie.MovieService;
 import com.reviewer.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +25,27 @@ public class ReviewService {
 
     @Autowired
     private MovieService movieService;
+
+    public Page<Review> listReviewPages(int pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber - 1, 5);
+        return reviewRepo.findAll(pageable);
+    }
+
+    public void save(Review review){
+        reviewRepo.save(review);
+    }
+
+    public Review get(Long id){
+        return reviewRepo.findById(id).get();
+    }
+
+    public void delete(Long id){
+        reviewRepo.deleteById(id);
+    }
+
+    // public List<Review> search(String keyword){
+     //   return reviewRepo.searchReviews(keyword);
+    //}
 
     public void calculateAverageRating(Review review){
         int userRating = review.getRating();

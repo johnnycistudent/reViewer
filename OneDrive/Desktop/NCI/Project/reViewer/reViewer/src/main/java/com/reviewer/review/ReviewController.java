@@ -8,6 +8,7 @@ import com.reviewer.user.CustomUserDetails;
 import com.reviewer.user.User;
 import com.reviewer.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +35,29 @@ public class ReviewController {
         List<Review> listReviews = reviewRepo.findAll();
         model.addAttribute("listReviews", listReviews);
 
+        return listReviewsByPage(model, 1);
+    }
+
+    // display reviews with pagination
+    @GetMapping("/reviews/{pageNumber}")
+    public String listReviewsByPage(Model model, @PathVariable("pageNumber") int currentPage){
+        // list all reviews with pagination using Page object
+        Page<Review> page = reviewService.listReviewPages(currentPage);
+        // initiate total pages + no. of elements
+        long totalItems = page.getTotalElements();
+        int totalPages = page.getTotalPages();
+
+        // list the movies in the database
+        List<Review> listReviews = page.getContent();
+
+        // model attributes for page title, movies list etc
+        model.addAttribute("pageTitle", "Reviews");
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("totalItems", totalItems);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("listReviews", listReviews);
+
+        // return movies page
         return "reviews";
     }
 

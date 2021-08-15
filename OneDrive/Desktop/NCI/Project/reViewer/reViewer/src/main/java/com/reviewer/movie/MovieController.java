@@ -53,10 +53,6 @@ public class MovieController {
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("listMovies", listMovies);
 
-        // DELETE LATER
-        //List<Movie> listMovies = movieRepo.findAll();
-        //model.addAttribute("listMovies", listMovies);
-
         // return movies page
         return "movies";
     }

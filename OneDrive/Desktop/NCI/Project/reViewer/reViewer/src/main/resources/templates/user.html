@@ -31,40 +31,120 @@
                 </ul>
             </div>
         </div>
-        <div th:object="${user}">
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="tab" href="#userReviews">Reviews</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#userFavourites">Favourites</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#userSeen">Seen</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#userWatchlist">Watchlist</a>
-                </li>
-            </ul>
-            <div id="myTabContent" class="tab-content">
-                <div class="tab-pane fade active show" id="userReviews" >
-                    <div th:each="review: ${reviewList}">
-                        <a th:href="@{/review/{id}(id=${review.movie.movieID})}"> [[${review.movie.title}]]</a>
+
+        <div th:object="${user}" class="row">
+            <div class="col-sm-12 col-lg-8 offset-lg-2">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#userReviews">Reviews</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#userFavourites">Favourites</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#userSeen">Seen</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#userWatchlist">Watchlist</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-lg-8 offset-lg-2">
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade active show" id="userReviews" >
+                        <!-- user's reviews -->
+                        <div class="review-list-container" th:each="review : ${reviewList}">
+
+                            <div class="row">
+                                <div class="col-5 col-lg-3 offset-lg-2">
+
+                                    <div class="review-img-container ">
+                                        <a th:href="@{/movie/{id}(id=${review.movie.movieID})}" >
+                                            <img th:src="@{${review.movie.posterImagePath}}" class="img review-img">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-7 col-lg-5">
+                                    <h4>
+                                        <a class="review-heading-link" th:href="@{/movie/{id}(id=${review.movie.movieID})}" >
+                                            [[${review.movie.title}]]
+                                        </a>
+                                    </h4>
+                                    <p>
+                                        By:
+                                        <a class="username-link" th:href="@{/user/{id}(id=${review.user.userID})}">
+                                            [[${review.user.userName}]]
+                                        </a>
+                                    </p>
+
+                                    <p class="entity-content">[[${review.content}]]</p>
+                                    <p class="review-rating">[[${review.rating}]] out of 5</p>
+                                    <p>
+                                        <span>[[${#lists.size(review.comments)}]] <i class="fas fa-comment-alt"></i></span>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <span>[[${#lists.size(review.reviewLikes)}]] <i class="fas fa-thumbs-up"></i></span>
+                                    </p>
+                                    <a th:href="@{/review/{id}(id=${review.reviewID})}">View and comment on this review here</a>
+                                </div>
+                                <div class="col-12 ">
+                                    <hr>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
-                <div class="tab-pane fade" id="userFavourites">
-                    <div th:each="fave: ${favouriteList}">
-                        <a th:href="@{/movie/{id}(id=${fave.movieID})}"> [[${fave.title}]]</a>
+                    <div class="tab-pane fade" id="userFavourites">
+                        <div class="row">
+                            <div th:each="fave: ${favouriteList}"
+                                 class="col-xs-6 col-sm-4 col-md-4 col-lg-3">
+                                <div class="movie-card">
+                                    <div class="movie-card-img-container"
+                                         th:unless="${fave.posterImagePath == null || fave.posterImagePath.isBlank()}">
+                                        <img th:src="@{${fave.posterImagePath}}" class="img img-responsive">
+                                    </div>
+                                    <div th:if="${fave.posterImagePath == null || fave.posterImagePath.isBlank()}">
+                                        <img th:src="@{images/popcorn.jpg}" class="img img-responsive">
+                                    </div>
+                                    <a th:href="@{/movie/{id}(id=${fave.movieID})}" class="stretched-link"></a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="tab-pane fade" id="userSeen">
-                    <div th:each="seen: ${seenList}">
-                        <a th:href="@{/movie/{id}(id=${seen.movieID})}"> [[${seen.title}]]</a>
+                    <div class="tab-pane fade" id="userSeen">
+                        <div class="row">
+                            <div th:each="seen: ${seenList}"
+                                 class="col-xs-6 col-sm-4 col-md-4 col-lg-3">
+                                <div class="movie-card">
+                                    <div class="movie-card-img-container"
+                                         th:unless="${seen.posterImagePath == null || seen.posterImagePath.isBlank()}">
+                                        <img th:src="@{${seen.posterImagePath}}" class="img img-responsive">
+                                    </div>
+                                    <div th:if="${seen.posterImagePath == null || seen.posterImagePath.isBlank()}">
+                                        <img th:src="@{images/popcorn.jpg}" class="img img-responsive">
+                                    </div>
+                                    <a th:href="@{/movie/{id}(id=${seen.movieID})}" class="stretched-link"></a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="tab-pane fade" id="userWatchlist">
-                    <div th:each="watch: ${watchList}">
-                        <a th:href="@{/movie/{id}(id=${watch.movieID})}"> [[${watch.title}]]</a>
+                    <div class="tab-pane fade" id="userWatchlist">
+                        <div class="row">
+                            <div th:each="watch: ${watchList}"
+                                 class="col-xs-6 col-sm-4 col-md-4 col-lg-3">
+                                <div class="movie-card">
+                                    <div class="movie-card-img-container"
+                                         th:unless="${watch.posterImagePath == null || watch.posterImagePath.isBlank()}">
+                                        <img th:src="@{${watch.posterImagePath}}" class="img img-responsive">
+                                    </div>
+                                    <div th:if="${watch.posterImagePath == null || watch.posterImagePath.isBlank()}">
+                                        <img th:src="@{images/popcorn.jpg}" class="img img-responsive">
+                                    </div>
+                                    <a th:href="@{/movie/{id}(id=${watch.movieID})}" class="stretched-link"></a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
