@@ -21,17 +21,39 @@
                         <div class="review-img-container ">
                             <img th:src="@{${review.movie.posterImagePath}}" class="img review-img">
                         </div>
-                        <p>Year: [[${review.movie.year}]]</p>
-                        <p>Genre: [[${review.movie.genre}]]</p>
-                        <p>Director: [[${review.movie.director}]]</p>
-                        <p>re:Viewer rating: [[${review.movie.avgRating}]]</p>
+                        <div class="review-movie-attribute-container">
+                            <p class="review-movie-attribute">Year: [[${review.movie.year}]]</p>
+                            <p class="review-movie-attribute">Genre: [[${review.movie.genre}]]</p>
+                            <p class="review-movie-attribute">Director: [[${review.movie.director}]]</p>
+                            <p class="review-movie-attribute">re:Viewer rating: [[${review.movie.avgRating}]]</p>
+                        </div>
+                        <!-- if user isn't authenticated, disable buttons -->
+                        <div sec:authorize="isAnonymous()">
+                            <div class="btn-group" role="group" aria-label="Basic example" >
+                                <button type="button" class="btn btn-sm btn-success disabled">Seen <i class="fas fa-eye"></i></button>
+                                <button type="button" class="btn btn-sm btn-info disabled">Fave <i class="fas fa-heart"></i></button>
+                                <button type="button" class="btn btn-sm btn-warning disabled">Watch <i class="fas fa-clipboard-list"></i></button>
+                            </div>
+                            <p class="text-muted sign-up-invite">
+                                <a th:href="@{/login}">Sign In</a> or <a th:href="@{/register}">Register</a> to use these features!
+                            </p>
+                        </div>
+
+                        <div class="btn-group" role="group" aria-label="Basic example" sec:authorize="isAuthenticated()">
+                            <button type="button" class="btn btn-sm btn-success">Seen <i class="fas fa-eye"></i></button>
+                            <button type="button" class="btn btn-sm btn-info">Fave <i class="fas fa-heart"></i></button>
+                            <button type="button" class="btn btn-sm btn-warning">Watch <i class="fas fa-clipboard-list"></i></button>
+                        </div>
 
                     </div>
                 </div>
 
                 <div class=" col-7 col-lg-5">
                     <!-- review content -->
-                    <h3>Review of [[${review.movie.title}]]</h3>
+<!--                    <h3>Review of <em>[[${review.movie.title}]]</em></h3>-->
+                    <span class="review-heading">Review of
+                        <span class="review-heading-title">[[${review.movie.title}]]</span>
+                    </span>
                     <p>by
                         <a class="username-link" th:href="@{/user/{id}(id=${review.user.userID})}">
                             [[${review.user.userName}]]
@@ -39,15 +61,17 @@
                     </p>
                     <hr>
                     <p class="review-content">[[${review.content}]]</p>
-                    <p>Rating: [[${review.rating}]] out of 5</p>
+                    <p class="review-rating">Rating: [[${review.rating}]] out of 5</p>
                     <hr>
-                    <p>created: [[${#dates.format(review.createdAt, 'HH:mm dd-MM-yyyy')}]]</p>
-                    <p>No of likes: [[${#lists.size(review.reviewLikes)}]]</p>
+                    <p class="text-muted">
+                        <small>posted: [[${#dates.format(review.createdAt, 'HH:mm dd-MM-yyyy')}]]</small>
+                    </p>
+                    <p class="review-likes"><small>[[${#lists.size(review.reviewLikes)}]]</small> <i class="fas fa-thumbs-up"></i></p>
                     <div>
                         <form th:action="@{/like_review/{id}(id=${review.reviewID})}" method="post">
                             <div sec:authorize="isAnonymous()">
-                                <button type="submit" class="btn btn-success btn-sm disabled" >Like Review</button>
-                                <p class="text-muted">
+                                <button type="submit" class="btn btn-success btn-sm disabled" >Like Review <i class="far fa-thumbs-up"></i></button>
+                                <p class="text-muted sign-up-invite">
                                     <a th:href="@{/login}">Sign In</a> or <a th:href="@{/register}">Register</a> to like a review!
                                 </p>
                             </div>
@@ -90,14 +114,19 @@
 
                 <!-- comment form -->
                 <div class="col-12 col-lg-6 offset-lg-3">
-                    <div class="comment-form">
+                    <!-- if user is logged in, show form -->
+                    <div class="comment-form" sec:authorize="isAuthenticated()">
                         <form th:action="@{/save_comment/{id}(id=${review.reviewID})}" th:object="${newComment}" method="post">
                             <div class="form-group" >
-                                <label for="exampleTextarea" class="form-label mt-4" >Example textarea</label>
+                                <label for="exampleTextarea" class="form-label mt-4" >Leave a comment: </label>
                                 <textarea class="form-control new-comment" id="exampleTextarea" rows="3" th:field="*{text}" required></textarea>
                                 <button type="submit" class="btn btn-success">Submit</button>
                             </div>
                         </form>
+                    </div>
+                    <!-- if user is not logged in or registered, show the following form -->
+                    <div class="comment-form" sec:authorize="isAnonymous()">
+                        <p>Want to add your opinion? Simply <a th:href="@{/login}">Sign In</a> or <a th:href="@{/register}">Register</a> to have your say!</p>
                     </div>
                 </div>
             </div>

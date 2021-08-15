@@ -7,21 +7,29 @@ body {
     background-color: rgb(39 43 48);
 }
 
+/* logo/brand */
+
 .logo {
     font-family: 'Merriweather', sans-serif;
     font-style: italic;
 }
+
+/* page margins */
 
 .page-container {
     margin-top: 30px;
     margin-bottom: 30px;
 }
 
+/* headings */
+
 h1,h2,h3,h4,h5{
     color: #fff;
     text-shadow: 0.075em 0.08em 0.1em rgb(0 0 0);
     font-weight: 700;
 }
+
+/* links */
 
 .username-link {
     text-decoration: none;
@@ -32,13 +40,24 @@ h1,h2,h3,h4,h5{
     text-shadow: 0.075em 0.08em 0.1em rgb(0 0 0);
 }
 
-.btn.btn-success {
+.sign-up-invite {
+    margin-top: 10px;
+    font-size: smaller;
+}
+
+/* buttons */
+
+.btn {
     font-family: 'Roboto Condensed', sans-serif;
     text-transform: uppercase;
     font-weight: 700;
     text-shadow: 0.075em 0.08em 0.1em rgb(0 0 0);
     box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%);
     border-color: transparent;
+}
+
+.btn-sm {
+    font-size: 0.8rem;
 }
 
 
@@ -248,9 +267,50 @@ input[type="search"]::-webkit-search-cancel-button{
     border-radius: 10px;
 }
 
-.review-content {
+.review-heading {
+    color: #fff;
+    text-shadow: 0.075em 0.08em 0.1em rgb(0 0 0);
+    font-weight: 700;
     font-size: 1.5rem;
+}
+
+.review-heading-title {
+    font-size: 1.75rem;
+    font-style: italic;
+}
+
+.review-content {
+    font-size: 1.2rem;
     color: #e9ecef;
+}
+
+.review-rating {
+    font-style: italic;
+    text-shadow: 1px 1px 1px rgb(0 0 0 / 10%);
+}
+
+.review-likes {
+    color: white;
+    font-size: 1.2rem;
+    text-shadow: 1px 1px 1px rgb(0 0 0 / 10%);
+}
+
+.review-movie-attribute-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 1px rgb(0 0 0 / 10%);
+}
+
+.review-movie-attribute {
+    margin-bottom: 5px;
+}
+
+.review-movie-stat {
+
+}
+
+.comment-container {
+    margin-top: 20px;
 }
 
 .comment-avatar{
