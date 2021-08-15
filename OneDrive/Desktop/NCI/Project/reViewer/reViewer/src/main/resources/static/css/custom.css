@@ -114,12 +114,21 @@ input[type="search"]::-webkit-search-cancel-button{
     bottom: -2px;
     color: #aaa;
     border-radius: 3px;
-    /*font-size: 21px;*/
     padding: 5px 10px 1px;
+    /* override button stylings */
+    text-shadow: none;
+    box-shadow: none;
 }
-.search-box .search-btn:hover {
-    /*color: #fff;*/
-    /*background-color: #8FBE00;*/
+
+/* override general button stylings for search bar */
+.search-box .search-btn:active .search-btn:focus .search-btn:focus-visible {
+    outline: none;
+}
+
+.btn:focus, .btn:hover, .btn:not([disabled]):not(.disabled).active:hover,
+.btn:not([disabled]):not(.disabled):active,
+.btn:not([disabled]):not(.disabled):active:hover {
+    border-color: transparent;
 }
 
 /* Footer */

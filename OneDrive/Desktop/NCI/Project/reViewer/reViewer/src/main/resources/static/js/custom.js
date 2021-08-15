@@ -1,9 +1,15 @@
 $(document).ready(function (){
+
+    // test script is working
     $('#fileImage').change(function () {
         showImageThumbnail(this);
     })
 
-
+    // logs user out of session using link instead of button
+    $('#logoutLink').on("click", function (e) {
+        e.preventDefault();
+        document.logoutForm.submit();
+    });
 
 });
 
