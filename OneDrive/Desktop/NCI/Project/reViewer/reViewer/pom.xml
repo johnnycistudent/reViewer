@@ -108,7 +108,11 @@
 			<artifactId>font-awesome</artifactId>
 			<version>5.2.0</version>
 		</dependency>
-
+		<!-- spring mail -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
 
 	</dependencies>
 

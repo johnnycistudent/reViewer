@@ -12,29 +12,17 @@
         <div align="center">
 
             <div th:object="${user}">
-                <h1>Welcome to [[${user.userName}]]'s Profile</h1>
+                <h3>[[${user.userName}]]'s Profile</h3>
+                <p>No of reviews: [[${#lists.size(user.reviews)}]]</p>
+
+                <p>No of comments: [[${#lists.size(user.comments)}]]</p>
             </div>
 
-            <div th:object="${user}">
-                <h5>Current User Object Test</h5>
-                <ul>
-                    <li>UserID: </li>
-                    <li>Username: <span> [[${user.userName}]]</span></li>
-                    <li>Email: <span> [[${user.emailAddress}]]</span></li>
-                    <li>Avatar: </li>
-                    <li>Movies Reviewed:
-                        <div th:each="review: ${reviewList}">
-                            <span th:href="@{/new_review/{id}(id=${review.movie.movieID})}"> [[${review.movie.title}]]</span>
-                        </div>
-                    </li>
-
-                </ul>
-            </div>
         </div>
 
         <div th:object="${user}" class="row">
             <div class="col-sm-12 col-lg-8 offset-lg-2">
-                <ul class="nav nav-tabs">
+                <ul class="nav nav-tabs small">
                     <li class="nav-item">
                         <a class="nav-link active" data-bs-toggle="tab" href="#userReviews">Reviews</a>
                     </li>

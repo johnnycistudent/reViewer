@@ -21,6 +21,7 @@ public class AppController {
     public String viewHomePage(Model model){
         // add model for page title
         model.addAttribute("pageTitle", "re:Viewer Homepage");
+        model.addAttribute("message", "message");
         return "index";
     }
 
@@ -28,6 +29,12 @@ public class AppController {
     public String error403(Model model) {
         model.addAttribute("pageTitle", "403 error");
         return "403";
+    }
+
+    @GetMapping("/404")
+    public String error404(Model model) {
+        model.addAttribute("pageTitle", "404 error");
+        return "404";
     }
 
 }

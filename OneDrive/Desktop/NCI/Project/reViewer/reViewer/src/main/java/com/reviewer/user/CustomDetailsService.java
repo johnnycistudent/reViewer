@@ -2,7 +2,13 @@ package com.reviewer.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
+@Service
+@Transactional
 public class CustomDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
 
     @Autowired
@@ -15,5 +21,30 @@ public class CustomDetailsService implements org.springframework.security.core.u
             throw new UsernameNotFoundException("User not found");
         }
         return new CustomUserDetails(user);
+    }
+
+    public void updateResetPasswordToken(String token, String emailAddress) throws UserNotFoundException {
+        User user = repo.findByEmailAddress(emailAddress);
+
+        if (user != null) {
+            user.setResetPasswordToken(token);
+            repo.save(user);
+        } else {
+            throw new UserNotFoundException("Could not find user with email " + emailAddress);
+        }
+    }
+
+    public User getByResetPasswordToken(String resetPasswordToken) {
+        return repo.findByResetPasswordToken(resetPasswordToken);
+    }
+
+    public void updatePassword(User user, String newPassword) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(newPassword);
+
+        user.setPassword(encodedPassword);
+        user.setResetPasswordToken(null);
+
+        repo.save(user);
     }
 }

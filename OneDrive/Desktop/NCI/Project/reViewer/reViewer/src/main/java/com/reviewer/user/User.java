@@ -84,6 +84,9 @@ public class User {
     @JoinColumn(name = "userID")
     private Set<Comment> comments = new HashSet<>();
 
+    // reset password token
+    @Column(name = "reset_password_token")
+    private String resetPasswordToken;
 
     public Long getUserID() {
         return userID;
@@ -187,5 +190,13 @@ public class User {
 
     public void setReviewLikes(Set<Review> reviewLikes) {
         this.reviewLikes = reviewLikes;
+    }
+
+    public String getResetPasswordToken() {
+        return resetPasswordToken;
+    }
+
+    public void setResetPasswordToken(String resetPasswordToken) {
+        this.resetPasswordToken = resetPasswordToken;
     }
 }
