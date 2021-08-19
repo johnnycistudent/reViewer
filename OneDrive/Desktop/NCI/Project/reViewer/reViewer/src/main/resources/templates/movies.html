@@ -114,10 +114,10 @@
 
                         <!-- page numbers -->
                         <th:block th:each="i:${#numbers.sequence(1, totalPages)}">
-                            <li th:if="${i != currentPage}" class="page-item active">
+                            <li th:if="${i != currentPage}" class="page-item">
                                 <a class="page-link" th:href="@{'/movies/{pageNo}'(pageNo=${i})}">[[${i}]]</a>
                             </li>
-                            <li th:unless="${i != currentPage}" class="page-item disabled">
+                            <li th:unless="${i != currentPage}" class="page-item active disabled">
                                 <a class="page-link" >[[${i}]]</a>
                             </li>
                         </th:block>

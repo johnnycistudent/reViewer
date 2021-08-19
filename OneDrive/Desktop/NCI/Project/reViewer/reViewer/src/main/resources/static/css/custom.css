@@ -183,10 +183,10 @@ input[type="search"]::-webkit-search-cancel-button{
 
 .jumbotron-tagline {
     text-shadow: 0.075em 0.08em 0.1em rgb(0 0 0);
-
     text-align: center;
     color: #fff;
-    font-size: 2rem;
+    font-size: 3rem;
+    font-weight: 700;
 }
 
 /* Movie Card */
@@ -263,6 +263,12 @@ input[type="search"]::-webkit-search-cancel-button{
     right: 40px;
 }
 
+/* new movie */
+
+#fileImage {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 
 /* single movie */
 

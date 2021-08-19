@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,11 +45,23 @@ public class UserController {
     }
 
     @PostMapping("/process_registration")
-    public String processRegistration(User user){
+    public String processRegistration(User user, Model model) throws Exception {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String encodedPassword = encoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
-        userRepo.save(user);
+
+        if(userRepo.findByUserName(user.getUserName()) != null){
+            String message = "Username " + user.getUserName() + " already exists. Please choose another username";
+            model.addAttribute("message", message);
+            return "signup_form";
+        } else if(userRepo.findByEmailAddress(user.getEmailAddress()) != null) {
+            String message = "The email address - " + user.getUserName()
+                    + " - already exists. Please choose another email or login";
+            model.addAttribute("message", message);
+            return "signup_form";
+        } else  {
+            user.setPassword(encodedPassword);
+            userRepo.save(user);
+        }
 
         return "registration_success";
     }
