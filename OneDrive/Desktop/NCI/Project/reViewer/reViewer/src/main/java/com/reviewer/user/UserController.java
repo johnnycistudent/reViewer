@@ -54,7 +54,7 @@ public class UserController {
             model.addAttribute("message", message);
             return "signup_form";
         } else if(userRepo.findByEmailAddress(user.getEmailAddress()) != null) {
-            String message = "The email address - " + user.getUserName()
+            String message = "The email address - " + user.getEmailAddress()
                     + " - already exists. Please choose another email or login";
             model.addAttribute("message", message);
             return "signup_form";

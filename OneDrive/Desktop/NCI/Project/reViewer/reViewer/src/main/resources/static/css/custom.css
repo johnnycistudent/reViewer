@@ -60,6 +60,11 @@ h1,h2,h3,h4,h5{
     font-size: 0.8rem;
 }
 
+.form-button-container {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 /* pagination */
 
 .pagination {
@@ -95,6 +100,8 @@ h1,h2,h3,h4,h5{
     text-transform: uppercase;
 }
 
+/* search bar */
+
 /* search bar in nav */
 
 .search-box {
@@ -106,6 +113,17 @@ h1,h2,h3,h4,h5{
 
 .search-input {
     height: 40px;
+}
+
+/* search bar on page content */
+
+.search-box-page {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.search-box-input {
+    border: none;
 }
 
 /* clears the 'X' from Chrome */
