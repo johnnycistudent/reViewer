@@ -30,27 +30,39 @@
                             <p class="review-movie-attribute">Director: [[${movie.director}]]</p>
                             <p class="review-movie-attribute">re:Viewer rating: [[${movie.avgRating}]]</p>
                         </div>
-                        <!-- if user isn't authenticated, disable buttons -->
+                        <!-- if user is NOT authenticated, disable buttons -->
                         <div sec:authorize="isAnonymous()">
-                            <div class="btn-group" role="group" aria-label="Basic example" >
-                                <button type="button" class="btn btn-sm btn-success disabled"><span class="d-none">Seen</span> <i class="fas fa-eye"></i></button>
-                                <button type="button" class="btn btn-sm btn-info disabled"><span class="d-none">Fave</span> <i class="fas fa-heart"></i></button>
-                                <button type="button" class="btn btn-sm btn-warning disabled"><span class="d-none">Watch</span> <i class="fas fa-clipboard-list"></i></button>
+                            <div class="btn-group" role="group" aria-label="Movie List Buttons Disabled" >
+                                <button type="button" class="btn btn-sm btn-success disabled">
+                                    <span class="d-none d-sm-inline">Seen</span> <i class="fas fa-eye"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-info disabled">
+                                    <span class="d-none d-sm-inline">Fave</span> <i class="fas fa-heart"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-warning disabled">
+                                    <span class="d-none d-sm-inline">Watch</span> <i class="fas fa-clipboard-list"></i>
+                                </button>
                             </div>
                             <p class="text-muted sign-up-invite">
                                 <a th:href="@{/login}">Sign In</a> or <a th:href="@{/register}">Register</a> to use these features!
                             </p>
                         </div>
-
-                        <div class="btn-group" role="group" aria-label="Basic example" sec:authorize="isAuthenticated()">
+                        <!-- if user IS authenticated, buttons are available for interaction -->
+                        <div class="btn-group" role="group" aria-label="Movie List Buttons" sec:authorize="isAuthenticated()">
                             <form th:action="@{/save_seen/{id}(id=${movie.movieID})}" method="post">
-                                <button type="submit" class="btn btn-sm btn-success">Seen <i class="fas fa-eye"></i></button>
+                                <button type="submit" class="btn btn-sm btn-success">
+                                    <span class="d-none d-sm-inline">Seen</span> <i class="fas fa-eye"></i>
+                                </button>
                             </form>
                             <form th:action="@{/save_favourite/{id}(id=${movie.movieID})}" method="post">
-                                <button type="submit" class="btn btn-sm btn-info">Fave <i class="fas fa-heart"></i></button>
+                                <button type="submit" class="btn btn-sm btn-info">
+                                    <span class="d-none d-sm-inline">Fave</span> <i class="fas fa-heart"></i>
+                                </button>
                             </form>
                             <form th:action="@{/save_want/{id}(id=${movie.movieID})}" method="post">
-                                <button type="submit" class="btn btn-sm btn-warning">Watch <i class="fas fa-clipboard-list"></i></button>
+                                <button type="submit" class="btn btn-sm btn-warning">
+                                    <span class="d-none d-sm-inline">Watch</span> <i class="fas fa-clipboard-list"></i>
+                                </button>
                             </form>
                         </div>
 

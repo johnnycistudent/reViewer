@@ -55,7 +55,7 @@
                 <div class="col-5 col-lg-3 offset-lg-2">
 
                     <div class="review-img-container ">
-                        <a th:href="@{/movie/{id}(id=${review.movie.movieID})}" >
+                        <a th:href="@{/movie/{id}(id=${review.reviewID})}" >
                             <img th:src="@{${review.movie.posterImagePath}}" class="img review-img">
                         </a>
                     </div>
@@ -63,7 +63,7 @@
                 <div class="col-7 col-lg-5">
                     <h4>
                         <a class="review-heading-link" th:href="@{/movie/{id}(id=${review.movie.movieID})}" >
-                        [[${review.movie.title}]]
+                            <em>[[${review.movie.title}]] Review</em>
                         </a>
                     </h4>
                     <p>

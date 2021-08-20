@@ -13,32 +13,54 @@
             <div th:if="${review.reviewID == null}">
                 <h1>Create New Review</h1>
             </div>
+
             <div th:unless="${review.reviewID == null}">
                 <h1>Edit Review</h1>
             </div>
                 <br>
-            <form action="#" th:action="@{/save_review/{id}(id=${movie.movieID})}" th:object="${review}" method="post">
-                <table border="0" cellpadding="10">
-                    <tr>
-                    </tr>
-                    <tr>
-                        <td>Review: </td>
-<!--                        <td><input type="text" th:field="*{content}"></td>-->
-                        <td><label for="reviewContent">Review:</label></td>
-                        <td><textarea id="reviewContent" type="text" th:field="*{content}"></textarea></td>
-                    </tr>
-                    <tr>
-                        <td>Rating: </td>
-                        <td><input type="number" name="quantity" min="1" max="5" th:field="*{rating}"></td>
-                    </tr>
-                    <tr>
+            <div class="row">
+                <div class="col-10 offset-1 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 col-xl-6 offset-xl-3">
+                    <form action="#" th:action="@{/save_review/{id}(id=${movie.movieID})}" th:object="${review}" method="post">
+                        <div class="form-group">
+                            <label for="reviewRating" class="form-label mt-4">Rating: </label>
+                            <input th:field="*{rating}" type="number" name="reviewRating" id="reviewRating"
+                                   min="1" max="5"
+                                   class="form-control" aria-describedby="reviewRating" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reviewContent" class="form-label mt-4">Review: </label>
+                            <textarea th:field="*{content}" type="text" name="reviewContent" id="reviewContent"
+                                      class="form-control" aria-describedby="synopsis" required></textarea>
+                        </div>
+                        <div class="form-button-container">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                            <a class="btn btn-warning" th:href="@{/movie/{id}(id=${movie.movieID})}">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
-                    </tr>
-                    <tr>
-                        <td colspan="2"><button class="btn btn-success" type="submit">Save</button></td>
-                    </tr>
-                </table>
-            </form>
+<!--            <form action="#" th:action="@{/save_review/{id}(id=${movie.movieID})}" th:object="${review}" method="post">-->
+<!--                <table border="0" cellpadding="10">-->
+<!--                    <tr>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>Review: </td>-->
+<!--                        <td><label for="reviewContent">Review:</label></td>-->
+<!--                        <td><textarea id="reviewContent" type="text" th:field="*{content}" required></textarea></td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>Rating: </td>-->
+<!--                        <td><input type="number" name="quantity" min="1" max="5" th:field="*{rating}" required></td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td colspan="2"><button class="btn btn-success" type="submit">Save</button></td>-->
+<!--                    </tr>-->
+<!--                </table>-->
+<!--            </form>-->
         </div>
     </div>
 

@@ -9,6 +9,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Comparator;
+import java.util.Set;
 
 @Entity
 @Table(name = "comment")
@@ -29,6 +30,9 @@ public class Comment extends AuditModel implements Comparable<Comment> {
     @JoinColumn(name = "userID", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
+
+    @ManyToMany(mappedBy = "commentLikes")
+    private Set<User> commentLikes;
 
     public Long getCommentID() {
         return commentID;
@@ -60,6 +64,14 @@ public class Comment extends AuditModel implements Comparable<Comment> {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Set<User> getCommentLikes() {
+        return commentLikes;
+    }
+
+    public void setCommentLikes(Set<User> commentLikes) {
+        this.commentLikes = commentLikes;
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.reviewer.user;
 
 import com.reviewer.FileUploadUtil;
+import com.reviewer.comment.Comment;
+import com.reviewer.comment.CommentRepository;
 import com.reviewer.movie.Movie;
 import com.reviewer.movie.MovieRepository;
 import com.reviewer.review.Review;
@@ -33,6 +35,8 @@ public class UserController {
     private MovieRepository movieRepo;
     @Autowired
     private ReviewRepository reviewRepo;
+    @Autowired
+    private CommentRepository commentRepo;
 
     // user endpoints
     @GetMapping("/register")
@@ -223,6 +227,38 @@ public class UserController {
         }
 
         userRepo.save(user);
+
+        return "redirect:/review/" + reviewID;
+    }
+
+    // like a comment
+    @PostMapping ( "/like_comment/{id}")
+    public String likeComment(@PathVariable(name = "id") Long commentID,
+                             @AuthenticationPrincipal CustomUserDetails currentUser,
+                             RedirectAttributes userAlert)  {
+        // Get current userID
+        Long currentUserID = currentUser.getSessionUserID();
+        // find current user in user repo by ID
+        User user = userRepo.findById(currentUserID).get();
+        // find comment ID by argument passed in through front end
+        Comment comment = commentRepo.findById(commentID).get();
+
+        // if the user has already liked this comment,
+        if(user.getCommentLikes().contains(comment)) {
+            // remove it from the user's liked comment list
+            user.getCommentLikes().remove(comment);
+            // notify user
+            userAlert.addFlashAttribute("success", comment.getUser().getUserName() + "'s comment was removed from your liked comments!");
+        } else {
+            // if comment isn't on the user's liked comment list,
+            // add it to their list
+            user.getCommentLikes().add(comment);
+            // notify user
+            userAlert.addFlashAttribute("success", comment.getUser().getUserName() + "'s comment was added to your liked comments!");
+        }
+
+        userRepo.save(user);
+        Long reviewID = comment.getReview().getReviewID();
 
         return "redirect:/review/" + reviewID;
     }

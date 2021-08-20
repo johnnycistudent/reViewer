@@ -17,7 +17,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userID;
 
-    @Column(nullable = false, unique = true, length = 14)
+    @Column(nullable = false, unique = true, length = 20)
     private String userName;
 
     @Column(nullable = false, unique = true, length = 45)
@@ -78,6 +78,15 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "reviewID")
     )
     private Set<Review> reviewLikes = new HashSet<>();
+
+    // user's liked comments list
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "comment_like",
+            joinColumns = @JoinColumn(name = "userID"),
+            inverseJoinColumns = @JoinColumn(name = "commentID")
+    )
+    private Set<Comment> commentLikes = new HashSet<>();
 
     // user's comments
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
@@ -190,6 +199,14 @@ public class User {
 
     public void setReviewLikes(Set<Review> reviewLikes) {
         this.reviewLikes = reviewLikes;
+    }
+
+    public Set<Comment> getCommentLikes() {
+        return commentLikes;
+    }
+
+    public void setCommentLikes(Set<Comment> commentLikes) {
+        this.commentLikes = commentLikes;
     }
 
     public String getResetPasswordToken() {

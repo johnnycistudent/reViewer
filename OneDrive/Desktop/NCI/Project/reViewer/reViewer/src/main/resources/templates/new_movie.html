@@ -12,38 +12,48 @@
         <div align="center">
             <h1>Create New Movie</h1>
             <br>
-            <form th:action="@{/save_movie}" th:object="${movie}" method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="title" class="form-label mt-4">Movie Title: </label>
-                    <input th:field="*{title}" type="text" name="title" class="form-control" aria-describedby="title"  required>
-                </div>
-                <div class="form-group">
-                    <label for="year" class="form-label mt-4">Year: </label>
-                    <input th:field="*{year}" type="number" name="year" class="form-control" aria-describedby="year"  required>
-                </div>
-                <div class="form-group">
-                    <label for="genre" class="form-label mt-4">Genre: </label>
-                    <input th:field="*{genre}" type="text" name="genre" class="form-control" aria-describedby="genre"  required>
-                </div>
-                <div class="form-group">
-                    <label for="director" class="form-label mt-4">Director: </label>
-                    <input th:field="*{director}" type="text" name="director" class="form-control" aria-describedby="director"  required>
-                </div>
-                <div class="form-group">
-                    <label for="synopsis" class="form-label mt-4">Synopsis: </label>
-                    <input th:field="*{synopsis}" type="text" name="synopsis" class="form-control" aria-describedby="synopsis"  required>
-                </div>
-                <div class="form-group">
-                    <label for="fileImage" class="form-label mt-4">Poster: </label>
-                    <input type="file" name="fileImage" id="fileImage"  accept="image/png, image/jpeg"
-                           class="form-control" aria-describedby="fileImage">
-                    <img src="" height="200" id="thumbnail" alt="Poster Preview">
-                </div>
-                <div>
-                    <button type="submit" class="btn btn-success">Submit</button>
-                </div>
+            <div class="row">
+                <div class="col-10 offset-1 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 col-xl-6 offset-xl-3">
+                    <form th:action="@{/save_movie}" th:object="${movie}" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="title" class="form-label mt-4">Movie Title: </label>
+                            <input th:field="*{title}" type="text" name="title" id="title"
+                                   class="form-control" aria-describedby="title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="year" class="form-label mt-4">Year: </label>
+                            <input th:field="*{year}" type="number" name="year" id="year"
+                                   class="form-control" aria-describedby="year" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="genre" class="form-label mt-4">Genre: </label>
+                            <input th:field="*{genre}" type="text" name="genre" id="genre"
+                                   class="form-control" aria-describedby="genre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="director" class="form-label mt-4">Director: </label>
+                            <input th:field="*{director}" type="text" name="director" id="director"
+                                   class="form-control" aria-describedby="director" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="synopsis" class="form-label mt-4">Synopsis: </label>
+                            <textarea th:field="*{synopsis}" type="text" name="synopsis" id="synopsis"
+                                      class="form-control" aria-describedby="synopsis" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="fileImage" class="form-label mt-4">Poster: </label>
+                            <input type="file" name="fileImage" id="fileImage"  accept="image/png, image/jpeg"
+                                   class="form-control" aria-describedby="fileImage">
+                            <img class="movie-img-preview" src="" height="200" id="thumbnail" alt="Poster Preview">
+                        </div>
+                        <div class="form-button-container">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                            <a class="btn btn-warning" th:href="@{/movies}">Cancel</a>
+                        </div>
 
-            </form>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
