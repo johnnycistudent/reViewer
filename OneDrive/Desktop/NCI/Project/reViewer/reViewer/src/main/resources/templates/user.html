@@ -14,26 +14,39 @@
             <div th:object="${user}">
                 <h3>[[${user.userName}]]'s Profile</h3>
                 <p>No of reviews: [[${#lists.size(user.reviews)}]]</p>
-
+                <p>No of favourites: [[${#lists.size(user.favourites)}]]</p>
+                <p>No of seen: [[${#lists.size(user.seen)}]]</p>
+                <p>No of want-to-watch: [[${#lists.size(user.want)}]]</p>
                 <p>No of comments: [[${#lists.size(user.comments)}]]</p>
+                <p>No of liked reviews: [[${#lists.size(user.reviewLikes)}]]</p>
+                <p>No of liked comments: [[${#lists.size(user.commentLikes)}]]</p>
             </div>
 
         </div>
 
         <div th:object="${user}" class="row">
             <div class="col-sm-12 col-lg-8 offset-lg-2">
-                <ul class="nav nav-tabs small">
+                <ul class="nav nav-tabs nav-fill">
                     <li class="nav-item">
-                        <a class="nav-link active" data-bs-toggle="tab" href="#userReviews">Reviews</a>
+                        <a class="nav-link profile-nav-link active" data-bs-toggle="tab" href="#userReviews">Reviews</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link profile-nav-link" data-bs-toggle="tab" href="#userFavourites">Favourites</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link profile-nav-link" data-bs-toggle="tab" href="#userSeen">Seen</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#userFavourites">Favourites</a>
+                        <a class="nav-link profile-nav-link" data-bs-toggle="tab" href="#userWatchlist">Watchlist</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link profile-nav-link" data-bs-toggle="tab" href="#userCommentList">Comments</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#userSeen">Seen</a>
+                        <a class="nav-link profile-nav-link" data-bs-toggle="tab" href="#userlikedReviewList">Review Likes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#userWatchlist">Watchlist</a>
+                        <a class="nav-link profile-nav-link" data-bs-toggle="tab" href="#userlikedCommentList">Comment Likes</a>
                     </li>
                 </ul>
             </div>
@@ -41,8 +54,13 @@
         <div class="row">
             <div class="col-sm-12 col-lg-8 offset-lg-2">
                 <div id="myTabContent" class="tab-content">
+
+                    <!-- user's reviews -->
                     <div class="tab-pane fade active show" id="userReviews" >
-                        <!-- user's reviews -->
+                        <p class="text-center">
+                            [[${user.userName}]] has reviewed [[${#lists.size(user.reviews)}]] movies
+                        </p>
+                        <hr>
                         <div class="review-list-container" th:each="review : ${reviewList}">
 
                             <div class="row">
@@ -56,8 +74,8 @@
                                 </div>
                                 <div class="col-7 col-lg-5">
                                     <h4>
-                                        <a class="review-heading-link" th:href="@{/movie/{id}(id=${review.movie.movieID})}" >
-                                            [[${review.movie.title}]]
+                                        <a class="review-heading-link" th:href="@{/review/{id}(id=${review.reviewID})}" >
+                                            Review of [[${review.movie.title}]]
                                         </a>
                                     </h4>
                                     <p>
@@ -67,12 +85,19 @@
                                         </a>
                                     </p>
 
-                                    <p class="entity-content">[[${review.content}]]</p>
+                                    <p class="movie-review-body">
+                                        <i class="fas fa-quote-left"></i> [[${review.content}]] <i class="fas fa-quote-right"></i>
+                                    </p>
                                     <p class="review-rating">[[${review.rating}]] out of 5</p>
                                     <p>
                                         <span>[[${#lists.size(review.comments)}]] <i class="fas fa-comment-alt"></i></span>
                                         &nbsp;&nbsp;&nbsp;
                                         <span>[[${#lists.size(review.reviewLikes)}]] <i class="fas fa-thumbs-up"></i></span>
+                                    </p>
+                                    <p>
+                                        <span class="text-muted">
+                                            <small>[[${#dates.format(review.createdAt, 'HH:mm dd-MM-yyyy')}]]</small>
+                                        </span>
                                     </p>
                                     <a th:href="@{/review/{id}(id=${review.reviewID})}">View and comment on this review here</a>
                                 </div>
@@ -83,8 +108,14 @@
 
                         </div>
                     </div>
+
+                    <!-- user's favourites -->
                     <div class="tab-pane fade" id="userFavourites">
                         <div class="row">
+                            <p class="text-center">
+                                [[${user.userName}]] has added [[${#lists.size(user.favourites)}]] movies to their favourites
+                            </p>
+                            <hr>
                             <div th:each="fave: ${favouriteList}"
                                  class="col-xs-6 col-sm-4 col-md-4 col-lg-3">
                                 <div class="movie-card">
@@ -100,8 +131,14 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- user's seen list -->
                     <div class="tab-pane fade" id="userSeen">
                         <div class="row">
+                            <p class="text-center">
+                                [[${user.userName}]] has added [[${#lists.size(user.seen)}]] movies to their seen list
+                            </p>
+                            <hr>
                             <div th:each="seen: ${seenList}"
                                  class="col-xs-6 col-sm-4 col-md-4 col-lg-3">
                                 <div class="movie-card">
@@ -117,8 +154,14 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- user's watchlist list -->
                     <div class="tab-pane fade" id="userWatchlist">
                         <div class="row">
+                            <p class="text-center">
+                                [[${user.userName}]] has added [[${#lists.size(user.want)}]] movies to their watchlist
+                            </p>
+                            <hr>
                             <div th:each="watch: ${watchList}"
                                  class="col-xs-6 col-sm-4 col-md-4 col-lg-3">
                                 <div class="movie-card">
@@ -133,6 +176,157 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- user's comments list -->
+                    <div class="tab-pane fade" id="userCommentList">
+                        <p class="text-center">
+                            [[${user.userName}]] has made [[${#lists.size(user.comments)}]] comments
+                        </p>
+                        <hr>
+                        <div class="review-list-container" th:each="com : ${commentList}">
+
+                            <div class="row">
+                                <div class="col-5 col-lg-3 offset-lg-2">
+
+                                    <div class="review-img-container ">
+                                        <a th:href="@{/movie/{id}(id=${com.review.movie.movieID})}" >
+                                            <img th:src="@{${com.review.movie.posterImagePath}}" class="img review-img">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-7 col-lg-5">
+
+                                    <div>
+                                        <a class="user-comment-link" th:href="@{/user/{id}(id=${com.user.userID})}">[[${com.user.userName}]]</a>
+                                         commented on
+                                        <a class="user-comment-link" th:href="@{/review/{id}(id=${com.review.reviewID})}" >
+                                            [[${com.review.user.userName}]]'s review of [[${com.review.movie.title}]]:
+                                        </a>
+                                    </div>
+
+                                    <p class="comment-body bg-light">[[${com.text}]]</p>
+                                    <div class="col">
+                                        <span class="text-muted float-start">
+                                            <small>[[${#dates.format(com.createdAt, 'HH:mm dd-MM-yyyy')}]]</small>
+                                        </span>
+                                        <span class="float-end">
+                                            [[${#lists.size(com.commentLikes)}]] <i class="fas fa-thumbs-up"></i>
+                                        </span>
+                                    </div>
+                                    <div class="col user-review-link">
+                                        <a th:href="@{/review/{id}(id=${com.review.reviewID})}">View and comment on this review here</a>
+                                    </div>
+                                </div>
+                                <div class="col-12 ">
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- user's liked reviews list -->
+                    <div class="tab-pane fade" id="userlikedReviewList">
+                        <p class="text-center">
+                            [[${user.userName}]] has liked [[${#lists.size(user.reviewLikes)}]] reviews
+                        </p>
+                        <hr>
+                        <div class="review-list-container" th:each="likedRev : ${likedReviewList}">
+
+                            <div class="row">
+                                <div class="col-5 col-lg-3 offset-lg-2">
+
+                                    <div class="review-img-container ">
+                                        <a th:href="@{/movie/{id}(id=${likedRev.movie.movieID})}" >
+                                            <img th:src="@{${likedRev.movie.posterImagePath}}" class="img review-img">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-7 col-lg-5">
+                                    <h4>
+                                        <a class="review-heading-link" th:href="@{/review/{id}(id=${likedRev.reviewID})}" >
+                                            Review of [[${likedRev.movie.title}]]
+                                        </a>
+                                    </h4>
+                                    <p>
+                                        By:
+                                        <a class="username-link" th:href="@{/user/{id}(id=${likedRev.user.userID})}">
+                                            [[${likedRev.user.userName}]]
+                                        </a>
+                                    </p>
+
+                                    <p class="movie-review-body">
+                                        <i class="fas fa-quote-left"></i> [[${likedRev.content}]] <i class="fas fa-quote-right"></i>
+                                    </p>
+                                    <p class="review-rating">[[${likedRev.rating}]] out of 5</p>
+                                    <p>
+                                        <span>[[${#lists.size(likedRev.comments)}]] <i class="fas fa-comment-alt"></i></span>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <span>[[${#lists.size(likedRev.reviewLikes)}]] <i class="fas fa-thumbs-up"></i></span>
+                                    </p>
+                                    <p>
+                                        <span class="text-muted">
+                                            <small>[[${#dates.format(likedRev.createdAt, 'HH:mm dd-MM-yyyy')}]]</small>
+                                        </span>
+                                    </p>
+                                    <a th:href="@{/review/{id}(id=${likedRev.reviewID})}">View and comment on this review here</a>
+                                </div>
+                                <div class="col-12 ">
+                                    <hr>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- user's liked comments list -->
+                    <div class="tab-pane fade" id="userlikedCommentList">
+                        <p class="text-center">
+                            [[${user.userName}]] has liked [[${#lists.size(user.commentLikes)}]] comments
+                        </p>
+                        <hr>
+                        <div class="review-list-container" th:each="likedCom : ${likedCommentList}">
+
+                            <div class="row">
+                                <div class="col-5 col-lg-3 offset-lg-2">
+
+                                    <div class="review-img-container ">
+                                        <a th:href="@{/movie/{id}(id=${likedCom.review.movie.movieID})}" >
+                                            <img th:src="@{${likedCom.review.movie.posterImagePath}}" class="img review-img">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-7 col-lg-5">
+
+                                    <div>
+                                        <a class="user-comment-link" th:href="@{/user/{id}(id=${likedCom.user.userID})}">[[${likedCom.user.userName}]]</a>
+                                        commented on
+                                        <a class="user-comment-link" th:href="@{/review/{id}(id=${likedCom.review.reviewID})}" >
+                                            [[${likedCom.review.user.userName}]]'s review of [[${likedCom.review.movie.title}]]:
+                                        </a>
+                                    </div>
+
+                                    <p class="comment-body bg-light">[[${likedCom.text}]]</p>
+                                    <div class="col">
+                                        <span class="text-muted float-start">
+                                            <small>[[${#dates.format(likedCom.createdAt, 'HH:mm dd-MM-yyyy')}]]</small>
+                                        </span>
+                                        <span class="float-end">
+                                            [[${#lists.size(likedCom.commentLikes)}]] <i class="fas fa-thumbs-up"></i>
+                                        </span>
+                                    </div>
+                                    <div class="col user-review-link">
+                                        <a th:href="@{/review/{id}(id=${likedCom.review.reviewID})}">View and comment on this review here</a>
+                                    </div>
+                                </div>
+                                <div class="col-12 ">
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

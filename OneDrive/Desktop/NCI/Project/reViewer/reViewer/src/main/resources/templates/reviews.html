@@ -62,8 +62,8 @@
                 </div>
                 <div class="col-7 col-lg-5">
                     <h4>
-                        <a class="review-heading-link" th:href="@{/movie/{id}(id=${review.movie.movieID})}" >
-                            <em>[[${review.movie.title}]] Review</em>
+                        <a class="review-heading-link" th:href="@{/review/{id}(id=${review.reviewID})}" >
+                            <em>Review of [[${review.movie.title}]]</em>
                         </a>
                     </h4>
                     <p>

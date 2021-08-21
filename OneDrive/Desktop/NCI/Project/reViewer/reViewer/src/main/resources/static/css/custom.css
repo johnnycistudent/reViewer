@@ -404,3 +404,21 @@ input[type="search"]::-webkit-search-cancel-button{
 .tab-pane {
     padding-top: 20px;
 }
+
+.profile-nav-link {
+    font-size: .75rem;
+}
+
+.user-comment-link {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1rem;
+    font-style: italic;
+    font-weight: 700;
+    text-shadow: 0.075em 0.08em 0.1em rgb(0 0 0);
+}
+
+.user-review-link {
+    clear: both;
+    padding-top: 10px;
+}

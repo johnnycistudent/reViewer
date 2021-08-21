@@ -10,7 +10,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "review")
-public class Review extends AuditModel {
+public class Review extends AuditModel implements Comparable<Review> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewID;
@@ -91,4 +91,12 @@ public class Review extends AuditModel {
         this.reviewLikes = reviewLikes;
     }
 
+
+    @Override
+    public int compareTo(Review review) {
+        if (getCreatedAt() == null || review.getCreatedAt() == null) {
+            return 0;
+        }
+        return getCreatedAt().compareTo(review.getCreatedAt());
+    }
 }

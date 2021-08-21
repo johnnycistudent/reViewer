@@ -24,7 +24,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class UserController {
@@ -102,10 +105,17 @@ public class UserController {
         // add model for page title, user object, list reviews, favourites, seen, watchlist
         model.addAttribute("pageTitle", user.getUserName() + "'s Profile");
         model.addAttribute("user", user);
-        model.addAttribute("reviewList", user.getReviews());
+        model.addAttribute("reviewList", user.getReviews().stream()
+                .sorted(Comparator.reverseOrder()).collect(Collectors.toList()));
         model.addAttribute("favouriteList", user.getFavourites());
         model.addAttribute("seenList", user.getSeen());
         model.addAttribute("watchList", user.getWant());
+        model.addAttribute("commentList", user.getComments().stream()
+                .sorted(Comparator.reverseOrder()).collect(Collectors.toList()));
+        model.addAttribute("likedReviewList", user.getReviewLikes().stream()
+                .sorted(Comparator.reverseOrder()).collect(Collectors.toList()));
+        model.addAttribute("likedCommentList", user.getCommentLikes().stream()
+                .sorted(Comparator.reverseOrder()).collect(Collectors.toList()));
 
         return "user";
     }

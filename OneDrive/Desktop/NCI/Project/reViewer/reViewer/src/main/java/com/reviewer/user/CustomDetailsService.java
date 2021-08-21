@@ -1,11 +1,15 @@
 package com.reviewer.user;
 
+import com.reviewer.comment.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -46,5 +50,14 @@ public class CustomDetailsService implements org.springframework.security.core.u
         user.setResetPasswordToken(null);
 
         repo.save(user);
+    }
+    public List<Comment> sortedByNewest(User user){
+        Long id = user.getUserID();
+        user = repo.findById(id).get();
+        List<Comment> sortedCommentList;
+        sortedCommentList = user.getCommentLikes().stream().sorted(Comparator.reverseOrder())
+                .collect(Collectors.toList());
+
+        return sortedCommentList;
     }
 }

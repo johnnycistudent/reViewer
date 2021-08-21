@@ -52,7 +52,6 @@
 
                 <div class=" col-7 col-lg-5">
                     <!-- review content -->
-<!--                    <h3>Review of <em>[[${review.movie.title}]]</em></h3>-->
                     <span class="review-heading">Review of
                         <span >
                             <a class="review-heading-title" th:href="@{/movie/{id}(id=${review.movie.movieID})}" >
@@ -107,9 +106,8 @@
                         There are [[${#lists.size(review.comments)}]] comments on this review
                     </p>
                     <hr>
+                    <!-- comments list loop -->
                     <div th:each="c : ${#lists.sort(commentList)}">
-
-
                         <span>
                             <a class="username-link" th:href="@{/user/{id}(id=${c.user.userID})}">
                                 [[${c.user.userName}]]
