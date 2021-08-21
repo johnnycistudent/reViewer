@@ -1,7 +1,11 @@
 package com.reviewer.user;
 
 import com.reviewer.comment.Comment;
+import com.reviewer.movie.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -51,13 +55,8 @@ public class CustomDetailsService implements org.springframework.security.core.u
 
         repo.save(user);
     }
-    public List<Comment> sortedByNewest(User user){
-        Long id = user.getUserID();
-        user = repo.findById(id).get();
-        List<Comment> sortedCommentList;
-        sortedCommentList = user.getCommentLikes().stream().sorted(Comparator.reverseOrder())
-                .collect(Collectors.toList());
-
-        return sortedCommentList;
+    public Page<User> listUsersPages(int pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber - 1, 5);
+        return repo.findAll(pageable);
     }
 }

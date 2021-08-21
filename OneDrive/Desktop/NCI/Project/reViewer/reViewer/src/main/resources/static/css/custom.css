@@ -399,6 +399,11 @@ input[type="search"]::-webkit-search-cancel-button{
     text-decoration: none;
 }
 
+.user-card {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 /* User page */
 
 .tab-pane {

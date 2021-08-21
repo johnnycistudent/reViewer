@@ -9,6 +9,7 @@ import com.reviewer.review.Review;
 import com.reviewer.review.ReviewRepository;
 import org.apache.catalina.security.SecurityClassLoad;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -34,6 +35,8 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepo;
+    @Autowired
+    private CustomDetailsService userService;
     @Autowired
     private MovieRepository movieRepo;
     @Autowired
@@ -85,14 +88,37 @@ public class UserController {
 
     // list all users
     @GetMapping("/list_users")
-    public String viewUsersList(Model model){
+    public String listUsers(Model model){
         // find all users
-        List<User> listUsers = userRepo.findAll();
+//        List<User> listUsers = userRepo.findAll();
+//
+//        // add model for page title, user list
+//        model.addAttribute("pageTitle", "Users List");
+//        model.addAttribute("listUsers", listUsers);
 
-        // add model for page title, user list
-        model.addAttribute("pageTitle", "Users List");
+        return listUsersByPage(model, 1);
+    }
+
+    // display users with pagination
+    @GetMapping("/users/{pageNumber}")
+    public String listUsersByPage(Model model, @PathVariable("pageNumber") int currentPage){
+        // list all users with pagination using Page object
+        Page<User> page = userService.listUsersPages(currentPage);
+        // initiate total pages + no. of elements
+        long totalItems = page.getTotalElements();
+        int totalPages = page.getTotalPages();
+
+        // list the users in the database
+        List<User> listUsers = page.getContent();
+
+        // model attributes for page title, movies list etc
+        model.addAttribute("pageTitle", "Users");
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("totalItems", totalItems);
+        model.addAttribute("totalPages", totalPages);
         model.addAttribute("listUsers", listUsers);
 
+        // return users page
         return "users";
     }
 
