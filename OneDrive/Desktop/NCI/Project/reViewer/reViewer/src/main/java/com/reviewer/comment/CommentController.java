@@ -39,6 +39,9 @@ public class CommentController {
         // find current review by id
         Review review = reviewRepo.findById(reviewID).get();
 
+        // find current movie via review by id
+        Movie movie = review.getMovie();
+
         model.addAttribute("text", newComment.getText());
         model.addAttribute("reviewID", reviewID);
         // test purposes - DELETE later
@@ -52,6 +55,9 @@ public class CommentController {
         newComment.setUser(user);
         // save review comment belongs to
         newComment.setReview(review);
+        // save movie comment belongs to
+        newComment.setMovie(movie);
+
 
         // save comment
         commentRepo.save(newComment);

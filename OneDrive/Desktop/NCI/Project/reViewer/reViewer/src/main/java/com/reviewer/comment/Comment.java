@@ -1,6 +1,7 @@
 package com.reviewer.comment;
 
 import com.reviewer.AuditModel;
+import com.reviewer.movie.Movie;
 import com.reviewer.review.Review;
 import com.reviewer.user.User;
 
@@ -27,7 +28,7 @@ public class Comment extends AuditModel implements Comparable<Comment> {
 
     @ManyToOne
     @JoinColumn(name = "movieID")
-    private Review movie;
+    private Movie movie;
 
     @ManyToOne
     @JoinColumn(name = "userID")
@@ -60,11 +61,11 @@ public class Comment extends AuditModel implements Comparable<Comment> {
         this.review = review;
     }
 
-    public Review getMovie() {
+    public Movie getMovie() {
         return movie;
     }
 
-    public void setMovie(Review movie) {
+    public void setMovie(Movie movie) {
         this.movie = movie;
     }
 
@@ -85,11 +86,19 @@ public class Comment extends AuditModel implements Comparable<Comment> {
     }
 
     @PreRemove
-    private void removeCommentsFromReview() {
+    private void removeFromReview() {
         for (Comment comment : getReview().getComments()) {
             comment.getReview().getComments().clear();
         }
     }
+
+//    @PreRemove
+//    private void removeCommentLikeFromUsers() {
+//        for (User user : getCommentLikes()) {
+//            user.getCommentLikes().remove(this);
+//            //user.getComments().clear();
+//        }
+//    }
 
     @Override
     public int compareTo(Comment comment) {

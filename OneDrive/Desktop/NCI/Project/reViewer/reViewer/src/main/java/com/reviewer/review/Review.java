@@ -95,6 +95,7 @@ public class Review extends AuditModel implements Comparable<Review> {
     private void removeReviewFromUsers() {
         for (User user : getReviewLikes()) {
             user.getFavourites().remove(this);
+            user.getReviewLikes().remove(this);
             //user.getComments().clear();
         }
     }
