@@ -86,11 +86,19 @@ public class Comment extends AuditModel implements Comparable<Comment> {
     }
 
     @PreRemove
-    private void removeFromReview() {
-        for (Comment comment : getReview().getComments()) {
-            comment.getReview().getComments().clear();
+    private void removeCommentFromUsers() {
+        for (User user : getCommentLikes()) {
+            user.getCommentLikes().remove(this);
+            //user.getComments().clear();
         }
     }
+
+//    @PreRemove
+//    private void removeFromReview() {
+//        for (Comment comment : getReview().getComments()) {
+//            comment.getReview().getComments().clear();
+//        }
+//    }
 
 //    @PreRemove
 //    private void removeCommentLikeFromUsers() {
