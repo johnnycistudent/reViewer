@@ -48,10 +48,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/review_form").authenticated()
+                    // movie pages secured
                     .antMatchers("/new_movie/**").hasAuthority("ADMIN")
                     .antMatchers("/edit_movie/**").hasAuthority("ADMIN")
                     .antMatchers("/delete_movie/**").hasAuthority("ADMIN")
+                    .antMatchers("/save_movie/**").hasAuthority("ADMIN")
+                    // review pages secured
+                    .antMatchers("/new_review/").authenticated()
+                    .antMatchers("/review_form").authenticated()
+                    .antMatchers("/save_review/**").authenticated()
+                    .antMatchers("/edit_review/**").authenticated()
+                    .antMatchers("/delete_review/**").hasAuthority("ADMIN")
+                    // comment pages secured
+                    .antMatchers("/save_comment/**").authenticated()
+                    .antMatchers("/delete_comment/**").hasAuthority("ADMIN")
+                    // log movies
+                    .antMatchers("/save_favourite/**").authenticated()
+                    .antMatchers("/save_seen/**").authenticated()
+                    .antMatchers("/save_want/**").authenticated()
+                    .antMatchers("/save_favourite/**").authenticated()
+                    // like review/comment
+                    .antMatchers("/like_review/**").authenticated()
+                    .antMatchers("/like_comment/**").authenticated()
+                    // static files
                     .antMatchers("/images/**", "/js/**", "/css/**").permitAll()
                     .anyRequest().permitAll()
                 .and()

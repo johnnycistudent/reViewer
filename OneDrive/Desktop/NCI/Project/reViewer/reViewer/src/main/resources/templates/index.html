@@ -11,13 +11,24 @@
     <div class="jumbotron jumbotron-fluid">
         <div class="container page-container">
             <div class="row">
-                <div class="jumbotron-tagline col-12">
+                <div sec:authorize="isAnonymous()" class="jumbotron-tagline col-12">
                     <div>
                         Movie Obsessed?
                         <br>
                         Join the Club
                         <br>
                         <a type="button" th:href="@{/register}" class="btn btn-success btn-lg text-uppercase">Sign Up!</a>
+                        <br>
+                        or Login
+                        <br>
+                        <a type="button" th:href="@{/login}" class="btn btn-success btn-lg text-uppercase">Login</a>
+                    </div>
+                </div>
+                <div sec:authorize="isAuthenticated()" class="jumbotron-tagline col-12">
+                    <div>
+                        Start Browsing, Logging and Discussing!
+                        <br>
+                        <a type="button" th:href="@{/movies}" class="btn btn-success btn-lg text-uppercase">Let's Go!</a>
                     </div>
                 </div>
                 <div class="jumbotron-logo col-12">

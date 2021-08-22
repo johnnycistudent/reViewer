@@ -13,6 +13,7 @@ $(document).ready(function (){
 
 });
 
+
 console.log("Hello world!");
 
 function showImageThumbnail(fileInput) {
@@ -25,6 +26,8 @@ function showImageThumbnail(fileInput) {
 
     reader.readAsDataURL(file);
 }
+
+
 
 function checkPasswordMatch(fieldConfirmPassword) {
     if (fieldConfirmPassword.value != $("#password").val()) {

@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class ReviewController {
@@ -71,12 +72,7 @@ public class ReviewController {
 
         Set commentList = review.getComments();
 
-        // for sorting comments by date, don't think i need them:
-        // ArrayList<Comment> list = new ArrayList<>(commentList);
-        //Collections.sort(list);
-        //HashSet<Comment> sortedComments = new HashSet<>(list);
-
-
+        model.addAttribute("pageTitle", review.getMovie().getTitle() + "Review");
         model.addAttribute("review", review);
         model.addAttribute("commentList", commentList);
         model.addAttribute("newComment", newComment);
@@ -87,12 +83,15 @@ public class ReviewController {
     @GetMapping("/new_review/{id}")
     public String showNewReviewForm(@PathVariable(name = "id") Long id, Model model){
 
+        // find movie by id passed through the method parameter
         Movie movie = movieRepo.findById(id).get();
+        // initialize new Review object
         Review review = new Review();
 
+        // add pageTitle, review and movie object to page
+        model.addAttribute("pageTitle", "New Review");
         model.addAttribute("review", review);
         model.addAttribute("movie", movie);
-        //model.addAttribute("currentUser", currentUser);
 
         return "review_form";
     }
@@ -100,14 +99,22 @@ public class ReviewController {
     @PostMapping(value = "/save_review/{id}")
     public String saveReview(@PathVariable(name = "id") Long movieID,
                              Review review,
+                             // captures session user info
                              @AuthenticationPrincipal CustomUserDetails currentUser){
+        // current userID
         Long currentUserID = currentUser.getSessionUserID();
+        // current movie
         Movie movie = movieRepo.findById(movieID).get();
+        // get current user in the database
         User user = userRepo.findById(currentUserID).get();
+        // set the user as the author of the review
         review.setUser(user);
+        // set the movie as the movie being reviewed
         review.setMovie(movie);
 
+        // save the review
         reviewRepo.save(review);
+        // calculate the new average rating
         reviewService.calculateAverageRating(review);
 
 

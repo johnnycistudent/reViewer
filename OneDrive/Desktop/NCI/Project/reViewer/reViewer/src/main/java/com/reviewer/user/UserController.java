@@ -8,6 +8,7 @@ import com.reviewer.movie.MovieRepository;
 import com.reviewer.review.Review;
 import com.reviewer.review.ReviewRepository;
 import org.apache.catalina.security.SecurityClassLoad;
+import org.hibernate.validator.internal.constraintvalidators.bv.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
@@ -28,6 +29,8 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Controller
@@ -48,8 +51,11 @@ public class UserController {
     @GetMapping("/register")
     public String showSignUpForm(Model model){
         // add model for page title + user to form for data capture
+        User user = new User();
+
         model.addAttribute("pageTitle", "Register New User");
-        model.addAttribute("user", new User());
+        model.addAttribute("user", user);
+        model.addAttribute("email", user.getEmailAddress());
 
         return "signup_form";
     }
@@ -68,7 +74,13 @@ public class UserController {
                     + " - already exists. Please choose another email or login";
             model.addAttribute("message", message);
             return "signup_form";
-        } else  {
+        } else if(!user.getEmailAddress().contains("@")) {
+            String message = "The email address - " + user.getEmailAddress()
+                    + " - is not valid. Please try again.";
+            model.addAttribute("message", message);
+            return "signup_form";
+        }
+        else  {
             user.setPassword(encodedPassword);
             userRepo.save(user);
         }
@@ -184,16 +196,20 @@ public class UserController {
         //model.addAttribute("movie", movie);
 
         if(user.getFavourites().contains(movie)) {
-            // add movie to user's set of favourites
+            // remove movie from user's set of favourites if it is already on it
             user.getFavourites().remove(movie);
+            // message to the user
             userAlert.addFlashAttribute("success", movie.getTitle() + " was removed from your favourites!");
         } else {
+            // add movie from user's set of favourites if it is not present in its favourites
             user.getFavourites().add(movie);
+            // message to the user
             userAlert.addFlashAttribute("success", movie.getTitle() + " was added to your favourites!");
         }
-
+        // save user's choice
         userRepo.save(user);
 
+        // redirect to the same movie page
         return "redirect:/movie/" + movieID;
     }
 

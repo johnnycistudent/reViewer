@@ -10,8 +10,9 @@
     </nav>
     <div class="container page-container">
         <div align="center">
-            <h1>Review Manager</h1>
+            <h1>Reviews</h1>
             <br>
+            <div sec:authorize="hasAnyAuthority('ADMIN')">
             <table border="1" cellpadding="10">
                 <thead>
                     <tr>
@@ -44,6 +45,7 @@
                 </th:block>
                 </tbody>
             </table>
+        </div>
         </div>
 
         <div class="review-list-container" th:each="review : ${listReviews}">
