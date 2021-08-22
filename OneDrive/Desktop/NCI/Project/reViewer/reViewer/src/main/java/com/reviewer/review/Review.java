@@ -29,7 +29,7 @@ public class Review extends AuditModel implements Comparable<Review> {
     private Set<User> reviewLikes;
 
     // review's comments
-    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "reviewID")
     private Set<Comment> comments = new HashSet<>();
 
@@ -89,6 +89,14 @@ public class Review extends AuditModel implements Comparable<Review> {
 
     public void setReviewLikes(Set<User> reviewLikes) {
         this.reviewLikes = reviewLikes;
+    }
+
+    @PreRemove
+    private void removeReviewFromUsers() {
+        for (User user : getReviewLikes()) {
+            user.getFavourites().remove(this);
+            //user.getComments().clear();
+        }
     }
 
 

@@ -21,14 +21,16 @@ public class Comment extends AuditModel implements Comparable<Comment> {
     @Lob
     private String text;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "reviewID", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne
+    @JoinColumn(name = "reviewID")
     private Review review;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "userID", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne
+    @JoinColumn(name = "movieID")
+    private Review movie;
+
+    @ManyToOne
+    @JoinColumn(name = "userID")
     private User user;
 
     @ManyToMany(mappedBy = "commentLikes")
@@ -58,6 +60,14 @@ public class Comment extends AuditModel implements Comparable<Comment> {
         this.review = review;
     }
 
+    public Review getMovie() {
+        return movie;
+    }
+
+    public void setMovie(Review movie) {
+        this.movie = movie;
+    }
+
     public User getUser() {
         return user;
     }
@@ -72,6 +82,13 @@ public class Comment extends AuditModel implements Comparable<Comment> {
 
     public void setCommentLikes(Set<User> commentLikes) {
         this.commentLikes = commentLikes;
+    }
+
+    @PreRemove
+    private void removeCommentsFromReview() {
+        for (Comment comment : getReview().getComments()) {
+            comment.getReview().getComments().clear();
+        }
     }
 
     @Override

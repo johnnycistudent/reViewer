@@ -2,19 +2,27 @@ package com.reviewer.movie;
 
 import com.reviewer.review.Review;
 import com.reviewer.review.ReviewRepository;
+import com.reviewer.user.Role;
+import com.reviewer.user.User;
+import com.reviewer.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class MovieService {
 
     @Autowired
     private MovieRepository movieRepo;
+
+    @Autowired
+    private UserRepository userRepo;
 
     @Autowired
     private ReviewRepository reviewRepo;
@@ -32,8 +40,20 @@ public class MovieService {
         return movieRepo.findById(id).get();
     }
 
+    public void removeMovieFromLists(Long movieID){
+        Movie movie = movieRepo.findById(movieID).get();
+
+        movie.getFavourites().remove(movie);
+    }
+
     public void delete(Long id){
+
+
         movieRepo.deleteById(id);
+    }
+
+    public void testCommentsDelete(Long id){
+
     }
 
     public List<Movie> search(String keyword){

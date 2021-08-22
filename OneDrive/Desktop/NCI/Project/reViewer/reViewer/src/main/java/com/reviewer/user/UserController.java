@@ -146,6 +146,22 @@ public class UserController {
         return "user";
     }
 
+    // search movies
+    @GetMapping("/searchUsers")
+    public String searchUsers(@Param("keyword") String keyword, Model model){
+
+        // search users table using keyword parameter
+        List<User> listUsers = userRepo.searchUsers(keyword);
+
+        // add page title, user list and keyword to model
+        model.addAttribute("pageTitle", "Search Users");
+        model.addAttribute("listUsers", listUsers);
+        model.addAttribute("keyword", keyword);
+
+        // return search results
+        return "search_results";
+    }
+
     @GetMapping("/user_profile")
     public String viewUserProfile(@AuthenticationPrincipal CustomUserDetails currentUser,
                                   Model model){

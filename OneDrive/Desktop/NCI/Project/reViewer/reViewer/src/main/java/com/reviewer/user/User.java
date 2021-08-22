@@ -39,12 +39,12 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
     // user's reviews
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "userID")
-    private List<Review> reviews = new ArrayList<>();
+    private Set<Review> reviews = new HashSet<>();
 
     // user's favourites
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "favourites",
             joinColumns = @JoinColumn(name = "userID"),
@@ -53,7 +53,7 @@ public class User {
     private Set<Movie> favourites = new HashSet<>();
 
     // user's seen list
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "seen",
             joinColumns = @JoinColumn(name = "userID"),
@@ -62,7 +62,7 @@ public class User {
     private Set<Movie> seen = new HashSet<>();
 
     // user's want-to-watch list
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "want",
             joinColumns = @JoinColumn(name = "userID"),
@@ -89,7 +89,7 @@ public class User {
     private Set<Comment> commentLikes = new HashSet<>();
 
     // user's comments
-    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "userID")
     private Set<Comment> comments = new HashSet<>();
 
@@ -153,11 +153,11 @@ public class User {
         this.roles = roles;
     }
 
-    public List<Review> getReviews() {
+    public Set<Review> getReviews() {
         return reviews;
     }
 
-    public void setReviews(List<Review> reviews) {
+    public void setReviews(Set<Review> reviews) {
         this.reviews = reviews;
     }
 

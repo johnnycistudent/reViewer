@@ -10,4 +10,6 @@ public interface MovieRepository extends PagingAndSortingRepository<Movie, Long>
 
     @Query("SELECT m FROM Movie m WHERE m.title LIKE %?1%")
     public List<Movie> searchMovies(String keyword);
+
+
 }

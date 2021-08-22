@@ -15,7 +15,7 @@
             <div class="row justify-content-center text-center" >
                 <!-- search box -->
                 <div class='search-box search-box-page col-8 col-sm-8 col-md-6 col-lg-4'>
-                    <form class='search-form' href="#" method="get">
+                    <form class='search-form' th:action="@{/searchUsers}" method="get">
                         <input class='form-control search-input search-box-input' placeholder='search users' type='search' name="keyword" required>
                         <button class='btn btn-link search-btn'>
                             <i class="fas fa-search"></i>

@@ -77,19 +77,20 @@
                     <p class="entity-content">[[${movie.synopsis}]]</p>
                     <p class="review-rating">Rating: [[${movie.avgRating}]] out of 5</p>
                     <hr>
-                    <p class="review-likes"><small>No of Faves could go here</small> <i class="fas fa-thumbs-up"></i></p>
-                    <div>
-                        <form th:action="@{/save_favourite/{id}(id=${movie.movieID})}" method="post">
-                            <div sec:authorize="isAnonymous()">
-                                <button type="submit" class="btn btn-success btn-sm disabled" >Like Review <i class="far fa-thumbs-up"></i></button>
-                                <p class="text-muted sign-up-invite">
-                                    <a th:href="@{/login}">Sign In</a> or <a th:href="@{/register}">Register</a> to add movies as favourite!
-                                </p>
-                            </div>
-                            <div>
-                                <button type="submit" class="btn btn-success btn-sm" sec:authorize="isAuthenticated()">Fave</button>
-                            </div>
-                        </form>
+                    <p ><small>No of Faves could go here</small> <i class="fas fa-thumbs-up"></i></p>
+                    <div class="review-likes">
+                        <p>
+                            <span class="d-none d-sm-inline">Seen</span> <i class="fas fa-eye"></i> [[${#lists.size(movie.seen)}]]
+                            <br>
+                            <span class="d-none d-sm-inline">Favourites</span> <i class="fas fa-heart"></i> [[${#lists.size(movie.favourites)}]]
+                            <br>
+                            <span class="d-none d-sm-inline">Watchlist</span> <i class="fas fa-clipboard-list"></i> [[${#lists.size(movie.want)}]]
+                            <br>
+                        </p>
+
+                        <div class="comment-form" sec:authorize="isAuthenticated()">
+                            <a th:href="@{/new_review/{id}(id=${movie.movieID})}" class="card-link">Review This Movie!</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -123,14 +124,17 @@
                                 <i class="fas fa-quote-right"></i>
                             </span>
                         </div>
-                        <p>rating: [[${review.rating}]] out of 5</p>
+                        <p>
+                            Rating: [[${review.rating}]] out of 5
+                            <span class="comment-time">[[${#dates.format(review.createdAt, 'HH:mm dd-MM-yyyy')}]]</span>
+                        </p>
                         <p>
                             <span>[[${#lists.size(review.comments)}]] <i class="fas fa-comment-alt"></i></span>
                             &nbsp;&nbsp;&nbsp;
                             <span>[[${#lists.size(review.reviewLikes)}]] <i class="fas fa-thumbs-up"></i></span>
                         </p>
                         <a th:href="@{/review/{id}(id=${review.reviewID})}">View and comment on this review here</a>
-                        <div class="comment-time">[[${#dates.format(review.createdAt, 'HH:mm dd-MM-yyyy')}]]</div>
+
                         <hr>
                     </div>
                 </div>

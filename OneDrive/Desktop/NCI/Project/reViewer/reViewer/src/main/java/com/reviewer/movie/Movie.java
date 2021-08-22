@@ -1,10 +1,12 @@
 package com.reviewer.movie;
 
+import com.reviewer.comment.Comment;
 import com.reviewer.review.Review;
 import com.reviewer.user.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -22,9 +24,13 @@ public class Movie {
     @Column(nullable = true)
     private String poster;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "movieID")
-    private List<Review> reviews = new ArrayList<>();
+    private Set<Review> reviews = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "movieID")
+    private Set<Comment> comments = new HashSet<>();
 
     @ManyToMany(mappedBy = "favourites")
     private Set<User> favourites;
@@ -34,8 +40,6 @@ public class Movie {
 
     @ManyToMany(mappedBy = "want")
     private Set<User> want;
-
-
 
     @Column(name="avgRating", columnDefinition = "int default 0")
     private int avgRating;
@@ -120,12 +124,20 @@ public class Movie {
         return "/movie-posters/" + movieID + "/" + poster;
     }
 
-    public List<Review> getReviews() {
+    public Set<Review> getReviews() {
         return reviews;
     }
 
-    public void setReviews(List<Review> reviews) {
+    public void setReviews(Set<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 
     public Set<User> getFavourites() {
@@ -134,6 +146,20 @@ public class Movie {
 
     public void setFavourites(Set<User> favourites) {
         this.favourites = favourites;
+    }
+
+    @PreRemove
+    private void removeMovieFromUsers() {
+        for (User user : getFavourites()) {
+            user.getFavourites().remove(this);
+        }
+        for (User user : getSeen()) {
+            user.getSeen().remove(this);
+        }
+        for (User user : getWant()) {
+            user.getWant().remove(this);
+        }
+
     }
 
     public Set<User> getSeen() {

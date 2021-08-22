@@ -10,7 +10,7 @@
     <div class="container page-container">
         <div align="center">
             <h1>Movie Manager</h1>
-            <a href="new_movie">Create new Movie entry</a>
+            <a th:href="@{/new_movie/}">Create new Movie entry</a>
             <br>
             <table class="table table-hover" border="1" cellpadding="10">
                 <thead>
@@ -20,7 +20,6 @@
                         <th>Year</th>
                         <th>Genre</th>
                         <th>Director</th>
-                        <th>Synopsis</th>
                         <th>Poster</th>
                         <th>Reviews</th>
                         <th sec:authorize="hasAnyAuthority('ADMIN')">Actions</th>
@@ -34,14 +33,12 @@
                         <td>[[${movie.year}]]</td>
                         <td>[[${movie.genre}]]</td>
                         <td>[[${movie.director}]]</td>
-                        <td>[[${movie.synopsis}]]</td>
                         <td><img th:src="@{${movie.posterImagePath}}" height="50" width="50" alt=""></td>
                         <td>[[${#lists.size(movie.reviews)}]]</td>
                         <td sec:authorize="hasAnyAuthority('ADMIN')">
                             <a th:href="@{/edit_movie/{id}(id=${movie.movieID})}"
                                href="">Edit</a>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <a th:href="@{'/delete_movie/' + ${movie.movieID}}" href="">Delete</a>
+                            <a th:href="@{/delete_movie/{id}(id=${movie.movieID})}" href="">Delete</a>
                         </td>
 
 
@@ -86,7 +83,7 @@
 
             </div>
 
-            <div class="row">
+            <div class="row justify-content-center text-center">
 
                 <th:block th:each="movie : ${listMovies}">
 
