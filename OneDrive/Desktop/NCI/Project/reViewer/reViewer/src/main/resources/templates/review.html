@@ -74,7 +74,6 @@
                     <div>
                         <form th:action="@{/like_review/{id}(id=${review.reviewID})}" method="post">
                             <div sec:authorize="isAnonymous()">
-                                <button class="btn btn-success btn-sm disabled" >Like Review <i class="far fa-thumbs-up"></i></button>
                                 <button class="btn btn-success btn-sm disabled">
                                     [[${#lists.size(review.reviewLikes)}]]
                                     <i class="fas fa-thumbs-up"></i>
@@ -84,7 +83,6 @@
                                 </p>
                             </div>
                             <div>
-                                <button type="submit" class="btn btn-success btn-sm" sec:authorize="isAuthenticated()">Like Review</button>
                                 <button type="submit" class="btn btn-success btn-sm" sec:authorize="isAuthenticated()">
                                     [[${#lists.size(review.reviewLikes)}]]
                                     <i class="fas fa-thumbs-up"></i>
@@ -129,6 +127,11 @@
                                     [[${#lists.size(c.commentLikes)}]] <i class="fas fa-thumbs-up"></i>
                                 </button>
                             </div>
+                        </form>
+                        <form th:action="@{/delete_comment/{id}(id=${c.commentID})}" method="post">
+                        <button type="submit" class="btn btn-danger btn-sm" sec:authorize="hasAuthority('ADMIN')">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
                         </form>
                         <div class="comment-time">
                             <span >[[${#dates.format(c.createdAt, 'HH:mm dd-MM-yyyy')}]]</span>

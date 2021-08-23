@@ -175,11 +175,14 @@ public class UserController {
     }
 
     @GetMapping("/user_profile")
-    public String viewUserProfile(@AuthenticationPrincipal CustomUserDetails currentUser,
+    public String viewUserProfile(
+                                @AuthenticationPrincipal CustomUserDetails currentUser,
                                   Model model){
-        model.addAttribute("currentUser", currentUser);
+        User user = userRepo.findById(currentUser.getSessionUserID()).get();
+        Long userID = user.getUserID();
 
-        return "user_profile";
+        return "redirect:/user/" + userID;
+
     }
 
     // save movie to favourites

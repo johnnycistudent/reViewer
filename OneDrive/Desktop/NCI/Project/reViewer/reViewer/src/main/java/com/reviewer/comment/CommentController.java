@@ -61,10 +61,12 @@ public class CommentController {
         return "redirect:/review/" + reviewID;
     }
 
-    @GetMapping("/delete_comment/{id}")
+    @PostMapping("/delete_comment/{id}")
     public String deleteComment(@PathVariable(name = "id") Long id, Model model){
+        Long reviewID = commentRepo.findById(id).get().getReview().getReviewID();
         commentRepo.deleteById(id);
 
-        return "redirect:/reviews";
+        //return "redirect:/reviews";
+        return "redirect:/review/" + reviewID;
     }
 }
